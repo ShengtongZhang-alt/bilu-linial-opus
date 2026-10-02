@@ -26,8 +26,14 @@ we can find a signing $\sigma$ such that $A_{\sigma}$ has spectral radius at mos
 Motivated by their study of Ramanujan graphs [[LPS88]](https://doi.org/10.1007/BF02126799), Bilu and Linial conjectured that $s_d = 2\sqrt{d - 1}$, the Alon–Boppana bound [[Alo86]](https://doi.org/10.1007/BF02579166), [[Nil91]](https://doi.org/10.1016/0012-365X(91)90112-F). An implication of their conjecture is that one can iteratively construct Ramanujan graphs using $2$-lifts.
 
 Bilu and Linial originally proved that 
-$$s_d = O(\sqrt{d \cdot \log^3 d})$$ using random signings. Ravichandran and Srivastava [[RS21]](https://doi.org/10.1093/imrn/rnz111) used the interlacing method to prove that
-$$s_d \le 2\sqrt{2(d-1)}.$$ The leading constant has since been refined: Lin and Zhou [[LZ26]](https://arxiv.org/abs/2609.15715) improved the coefficient $2\sqrt2$ to $(3+\sqrt5)/2$, and Jadbabaie, Saberi and Sra [[JSS26]](https://arxiv.org/abs/2609.23855) found signings achieving $2\sqrt{2(d-1)}$ in polynomial time. But the exact leading constant was not known prior to this work.
+
+$$s_d = O(\sqrt{d \cdot \log^3 d})$$ 
+
+using random signings. Ravichandran and Srivastava [[RS21]](https://doi.org/10.1093/imrn/rnz111) used the interlacing method to prove that
+
+$$s_d \le 2\sqrt{2(d-1)}.$$ 
+
+The leading constant has since been refined: Lin and Zhou [[LZ26]](https://arxiv.org/abs/2609.15715) improved the coefficient $2\sqrt2$ to $(3+\sqrt5)/2$, and Jadbabaie, Saberi and Sra [[JSS26]](https://arxiv.org/abs/2609.23855) found signings achieving $2\sqrt{2(d-1)}$ in polynomial time. But the exact leading constant was not known prior to this work.
 
 On the other hand, Xu [[Xu26]](https://arxiv.org/abs/2609.15591) recently disproved the original conjecture of Bilu and Linial, giving an explicit construction showing that $s_3 > 2\sqrt{2}$. This leaves the exact determination of $s_d$ as a tantalizing open question.
 
