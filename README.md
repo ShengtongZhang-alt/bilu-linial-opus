@@ -45,7 +45,7 @@ then we show that $\epsilon_d$ is polynomially small in $d$: for all sufficientl
 
 $$d^{-11/2} \ll \epsilon_d \ll d^{-1/2-2/17}.$$
 
-(The tight draft also claims the sharper lower bound $\epsilon_d \ge (2-o(1))\,d^{-5/2}$, through the Sherrington–Kirkpatrick constant and random regular graphs; that bound is not formalized here.)
+(Astra also claims the sharper lower bound $\epsilon_d \ge (2-o(1)) d^{-5/2}$; that bound is not formalized here.)
 
 More precisely, we prove the following two results, establishing the upper and lower bounds respectively.
 
