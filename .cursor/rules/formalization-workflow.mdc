@@ -1,0 +1,73 @@
+---
+description: Binding workflow for formalizing the Bilu–Linial results in this repository
+alwaysApply: true
+---
+
+# Formalization workflow rules
+
+These rules refine `AGENTS.md` for the coordinator and for every subagent. Where they are
+stricter than `AGENTS.md`, follow them. When you spawn a subagent, include the rules that concern
+its task in its prompt. **Re-read this file and `AGENTS.md` after every context compaction or
+summarization.**
+
+## 1. Speed is the goal
+
+A complete sorry-free formalization of Theorem 1.1 of `docs/asymptotic_bilu_linial.tex` and of
+Theorem B (`docs/COUNTEREXAMPLE_ALL_DEGREES.md`), then Theorem 1.2, as soon as possible. Work on
+the two DAGs at the same time. Prefer the proof route that is fastest to formalize, as long as
+the Challenge statements stay exactly as frozen. For example, in (A) you may define the path-tree
+quantities `a_j(H, v)` and `g_H(v)` through their recursions (Section 3, eq. (tree), and the
+recurrence in Lemma 4.1) instead of building the simple-path tree, provided you prove the facts
+the proof uses (`0 ≤ a_{2j} ≤ ρ^{2j}`, odd moments vanish, `1 ≤ g_H(v) ≤ 1/a`); in (B) you may
+choose `h` through the limit `t(h) → t(∞)` rather than an explicit value.
+
+## 2. A node goes to a prover only after its statement has been checked
+
+Before assigning a DAG node to a prover subagent:
+
+1. **Proof sketch.** Write a sketch of the node's proof from the source, step by step at the
+   level of the Lean proof you expect: the hypotheses each step uses, the lemmas it calls, and
+   every constant together with the point at which it is chosen. If a step needs a hypothesis the
+   statement lacks, or a constant chosen earlier than the statement allows, fix the statement
+   first.
+2. **Parent check.** Prove the node's parent from the statements of its children, with the
+   children left as `sorry`, and make that proof compile. The main proofs in
+   `BiluLinial/Main.lean` are derived from the top-level nodes before any of them is assigned,
+   and a node that is split into sub-lemmas is proved from them before any sub-lemma is assigned.
+3. **Small cases.** Test the statement on small and degenerate instances (empty graph, one
+   vertex, one edge, extreme parameter values) and on the objects the source's own proof builds.
+   A counterexample means the statement is wrong.
+4. **Record.** Write the sketch and the outcome of these checks into the node's entry in
+   `docs/BLUEPRINT.md` before dispatching it, and include the sketch in the prover's prompt.
+
+A prover that finds its statement false stops and reports a counterexample; it does not weaken
+the statement. The coordinator then revises the statement and repeats checks 1–3 before
+reassigning the node. The checks of different nodes may run in parallel in separate subagents.
+
+## 3. Provers may use lemmas that are stated but not yet proved
+
+- A prover may import and call any node that is stated in Lean, whether or not that node is
+  proved yet. Never tell a prover to avoid a stated lemma because it still ends in `sorry`, and
+  never make a prover re-derive a result that is, or should be, a node of its own.
+- A node is `proved` when its own proof contains no `sorry`, even if it uses nodes that are still
+  open. It is `proved*` when it and every node below it are proved. The `#print axioms` check of
+  `AGENTS.md` applies to `proved*` nodes. Record both statuses in `docs/BLUEPRINT.md`.
+- If a proof needs a fact that is not yet a node, add it as a new node, checked as in rule 2,
+  rather than proving it inside another node's file.
+
+## 4. Think before editing
+
+Careful, long reasoning is expected, above all when designing statements, definitions and proof
+plans. Plan a proof before editing a file; avoid trial-and-error compile loops.
+
+## 5. Keep the subagents busy
+
+- The coordinator keeps up to 10 subagents running at all times while there is work to hand
+  out: nodes not yet stated, statements not yet checked, or checked nodes without a prover.
+- Work on independent parts of both DAGs at the same time. Subagents may draft and check the
+  statements of nodes that are not yet stated.
+- **Do not end your turn while work remains.** If fewer than 10 subagents are running and there is
+  work to hand out, dispatch more; otherwise wait on subagent output. Each time a subagent
+  finishes, check its file, commit its result, update `docs/BLUEPRINT.md`, and dispatch the next
+  task. The task is finished only when the acceptance checks of `AGENTS.md` pass for all three
+  theorems.

@@ -1,0 +1,901 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,amsthm,mathtools}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newcommand{\E}{\mathbb E}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\allowdisplaybreaks[1]
+\setlength{\emergencystretch}{2em}
+\title{Second-order bounds for graph signings}
+\author{}
+\date{September 29, 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Let $\gamma_d$ be the supremum, over finite simple graphs of maximum
+degree at most $d$, of the minimum signed adjacency norm. We give a
+proposed proof of $\gamma_d\le 2\sqrt{d-1}+O(d^{1/6})$.
+The proof combines determinant-weighted vertex insertion with a
+regularized resolvent comparison, a second-moment estimate, and a
+coupled scalar inequality that only requires squared lower-tail
+control. We also give a proposed construction showing
+$\liminf_{d\to\infty}(d-1)^{7/2}(\gamma_d-2\sqrt{d-1})\ge1/4$.
+These bounds do not determine the asymptotic order of the excess.
+\end{abstract}
+\begin{center}\small\textit{Research draft. These proposed proofs have not
+undergone independent human review.}\end{center}
+
+\section{Statement and scope}
+For a finite simple graph $G$, let
+\[
+ s(G)=\min_{\sigma:E(G)\to\{-1,1\}}\norm{A_\sigma(G)},
+ \qquad \gamma_d=\sup_{\Delta(G)\le d}s(G).
+\]
+Here $\norm{\cdot}$ is the Euclidean operator norm. The supremum is
+unchanged if one restricts to $d$-regular graphs, by an induced
+regular completion described below. The supremum also equals the
+limit of the corresponding maxima over graphs on at most $n$
+vertices as $n\to\infty$. All estimates here are uniform in graph order.
+
+\begin{theorem}\label{thm:upper}
+There is an absolute constant $C$ such that, for every sufficiently
+large integer $d$, every finite simple graph of maximum degree at
+most $d$ has an edge signing with
+\[
+ \norm{A_\sigma}<2\sqrt d+C d^{1/6}.
+\]
+Consequently $\gamma_d\le2\sqrt{d-1}+O(d^{1/6})$.
+\end{theorem}
+
+The lower-bound construction below gives, more precisely,
+\[
+ \left(\frac14-o(1)\right)(d-1)^{-7/2}
+ \le\gamma_d-2\sqrt{d-1}\le C d^{1/6}.
+\]
+There remains a substantial gap between these estimates.
+
+The determinant weight and vertex-insertion identities used here
+are inherited from the framework of Jadbabaie, Saberi, and
+Sra~\cite[Section~6]{JSS}. The new proposed quantitative argument
+uses the same weighted measure for all terms of a resolvent
+comparison, avoiding a loss in the main contraction under vertex
+deletion. A second-moment estimate then feeds back into the variance
+of a fresh incident-sign quadratic form. The final insertion bound
+clips its positive deviations, so no unbounded positive-tail moment
+is required. No interlacing-family theorem is used.
+The lower-bound construction develops Xu's triangle-and-tree
+obstruction~\cite{Xu}. Neither priority nor correctness of the
+extensions asserted here has been externally verified.
+
+\section{Determinant weights, cofactors, and path trees}
+Fix $R>2\sqrt d$. For each signed graph $H$ put
+\[
+ W_H=\det(I-A_H^2/R^2)\mathbf1_{\{\norm{A_H}<R\}},
+ \qquad Z_H=\E W_H,\qquad Z_\varnothing=1,
+\]
+where expectations without a subscript use independent uniform edge
+signs. A signing with $\norm{A_H}<R$ is called good. When $Z_H>0$,
+let $\nu_H$ have density $W_H/Z_H$ relative to uniform signs. Define
+\[
+ \mathcal J_H(v)=\E\left[W_H\left((I-A_H/R)^{-1}_{vv}
+                       +(I+A_H/R)^{-1}_{vv}\right)
+                         \mathbf1_{\{\norm{A_H}<R\}}\right].
+\]
+The integrand is defined as zero on nongood signings; no inverse is
+used there. All parameters are fixed under vertex deletion.
+
+For $K=H-v$, fix a good core signing and let $s$ be the column of
+incident signs, zero outside $N_H(v)$. Set
+\[
+ q_\pm=R^{-2}s^T(I\pm A_K/R)^{-1}s,\qquad
+ \delta_\pm=1-q_\pm,\qquad
+ \alpha=(\delta_+)_+(\delta_-)_+,
+ \qquad D=(\delta_++\delta_-)\mathbf1_{\{\delta_+>0,\delta_->0\}}.
+\]
+Schur complementation of $I\pm A_H/R$ shows that the extension is
+good exactly when both residuals are positive. It also gives
+\begin{equation}\label{eq:insertion-identities}
+ W_H=W_K\alpha,\qquad
+ \frac{Z_H}{Z_K}=\E_*\alpha,\qquad
+ \frac{\mathcal J_H(v)}{Z_K}=\E_*D,
+\end{equation}
+where $\E_*$ uses $\nu_K$ and independent incident signs. If the core
+is nongood, every extension is nongood, since its adjacency matrix
+is a principal submatrix of the extended adjacency matrix. Thus
+$W_H\le W_K$, because $0\le\alpha\le1$ on good cores. In particular,
+if $Z_H/Z_K\ge1/8$, the density of $\nu_H$ relative to
+$\nu_K$ times independent incident signs is at most $8$.
+The weight is invariant under reversal of every edge sign.
+
+Let $\mathcal T(H,v)$ be the rooted tree of simple paths in $H$
+starting at $v$, with an edge when one path extends the other by
+one vertex. Its adjacency norm is at most $2\sqrt d$: orient away
+from the root and sum
+$2|z_pz_w|\le z_p^2/\sqrt d+\sqrt d\,z_w^2$ over edges.
+For any $\zeta>2\sqrt d$, set
+\[
+ b_H(v)=\bigl[(I-A_{\mathcal T(H,v)}/\zeta)^{-1}\bigr]_{vv}.
+\]
+Removing the root gives a copy of $\mathcal T(H-v,w)$ for each
+neighbor $w$. Therefore
+\begin{equation}\label{eq:path-recursion}
+ b_H(v)=\frac1{1-\zeta^{-2}\sum_{w\sim v}b_{H-v}(w)}.
+\end{equation}
+If $p=d/\zeta^2<1/4$ and $a=(1+\sqrt{1-4p})/2$, induction in
+this recursion gives $1\le b_H(v)\le1/a$. Deleting a different
+vertex removes a rooted subtree, so
+$b_{H-u}(v)\le b_H(v)$. This follows also by termwise comparison
+of the convergent nonnegative closed-walk series. These are the
+only properties of path trees needed below.
+\section{A quantitative cavity estimate with a second-moment bootstrap}
+
+Fix $0<\tau\le 1/2$, $0<\beta\le1/2$, and an integer $d\ge1$.
+Put
+\[
+ p=\frac{1-\beta^2}{4},\qquad
+ \zeta^2=\frac d p,\qquad
+ k=\tau\beta^2,\qquad R^2=\frac{\zeta^2}{1+k},\qquad
+ a=\frac{1+\beta}{2},\qquad B=\frac1a.
+\]
+In particular $R>2\sqrt d$, because
+$(1-\beta^2)(1+\tau\beta^2)<1$.
+All determinant weights and Gibbs measures below use the radius $R$.
+The deterministic reference
+\[
+ b_H(u)=\bigl[(I-A_{\mathcal T(H,u)}/\zeta)^{-1}\bigr]_{uu}
+\]
+uses the larger radius $\zeta$. Its path-tree recursion gives
+$1\le b_H(u)\le B$, and deletion of any vertex $v\ne u$ gives
+$b_{H-v}(u)\le b_H(u)$: the former path tree is a rooted subtree
+of the latter and all its closed-walk contributions are nonnegative.
+
+Let $\mathcal F$ be a finite family of graphs of maximum degree at
+most $d$, closed under induced subgraphs. Suppose that all $Z_H$ are
+positive and, for every $H\in\mathcal F$ and $u\in V(H)$,
+\begin{equation}\label{eq:second-order-assumptions}
+ \frac{Z_H}{Z_{H-u}}\ge\frac18,
+ \qquad
+ \frac{\mathcal J_H(u)}{Z_H}\le2b_H(u)+\beta.
+\end{equation}
+For $z\ge R$ and either sign let
+$G_{H,z}^{\pm}=(I\pm A_H/z)^{-1}$ on good signings.
+Write $G_{H,z}=G_{H,z}^{-}$ when choosing one sign.
+Define the finite maxima
+\[
+ F=\max_{H\in\mathcal F,\ u\in V(H)}
+       \bigl\|(b_H(u)-(G_{H,\zeta})_{uu})_+\bigr\|_{L^2(\nu_H)},
+ \qquad
+ M=\max_{H\in\mathcal F,\ u\in V(H)}
+       \mathbb E_{\nu_H}(G_{H,\zeta}^{\,2})_{uu}.
+\]
+An empty collection has maxima zero. Notice that the square in
+$G_{H,\zeta}^{\,2}$ is a matrix square. Both maxima are finite:
+$F\le B$ and $\|G_{H,\zeta}\|\le C_\zeta$, where
+\[
+ C_\zeta=\frac{\zeta}{\zeta-R}
+ =\frac{1+k+\sqrt{1+k}}{k}\le\frac4k.
+\]
+The same deficit bound applies to the plus sign, because the Gibbs
+measure is invariant under simultaneous reversal of every edge sign.
+
+\begin{lemma}\label{lem:second-order-cavity}
+Under these assumptions there is a constant $C_\tau$, depending only
+on $\tau$, such that
+\[
+ F\le C_\tau\left(d^{-1/2}\beta^{-3/2}
+                         +d^{-1}\beta^{-4}\right).
+\]
+If $K\in\mathcal F$ is extended by a new vertex with at most $d$
+neighbors, let $s$ be its vector of independent incident signs and set
+\[
+ q_{R,\pm}=\frac1{R^2}s^T G_{K,R}^{\pm}s,
+ \qquad q_* =\frac1{\zeta^2}\sum_{w\sim v}b_K(w).
+\]
+Then, under $\nu_K$ and independent incident signs,
+\[
+ \left(\mathbb E(q_*-q_{R,+})_+^2
+             +\mathbb E(q_*-q_{R,-})_+^2\right)^{1/2}
+ \le C_\tau\left(d^{-1/2}\beta^{-3/2}
+                         +d^{-1}\beta^{-4}\right).
+\]
+\end{lemma}
+
+\begin{proof}
+We first bound the matrix-square moment by the deficit itself.
+For each real $|\lambda|<R$, put $u=\lambda^2/R^2$ and
+$\kappa=R/\zeta$. The even resolvent and even square-resolvent
+kernels are
+\[
+ e_z(\lambda)=\frac1{1-\lambda^2/z^2},\qquad
+ h_z(\lambda)=\frac{1+\lambda^2/z^2}{(1-\lambda^2/z^2)^2}.
+\]
+For $u>0$, direct division gives
+\[
+ \frac{h_\zeta(\lambda)-e_\zeta(\lambda)}
+      {e_R(\lambda)-e_\zeta(\lambda)}
+ =\frac{2\kappa^2(1-u)}{(1-\kappa^2)(1-\kappa^2u)}
+ \le\frac2k.
+\]
+At $u=0$ both differences vanish. Applying spectral calculus and
+then sign-reversal symmetry therefore gives
+\begin{equation}\label{eq:ward-bootstrap}
+ \mathbb E(G_{H,\zeta}^{\,2})_{uu}
+ \le \mathbb E(G_{H,\zeta})_{uu}
+   +\frac2k\left[\mathbb E(G_{H,R})_{uu}
+                      -\mathbb E(G_{H,\zeta})_{uu}\right].
+\end{equation}
+The cofactor assumption and sign symmetry imply
+$\mathbb E(G_{H,R})_{uu}\le b_H(u)+\beta/2$.
+Also $\mathbb E(G_{H,\zeta})_{uu}\ge b_H(u)-F$.
+Finally the even resolvent at $\zeta$ is pointwise bounded above
+by the even resolvent at $R$, so sign symmetry gives
+$\mathbb E(G_{H,\zeta})_{uu}\le B+\beta/2$.
+Consequently
+\begin{equation}\label{eq:second-moment-self-bound}
+ M\le B+\frac\beta2+\frac\beta k+\frac{2F}{k}
+   \le C_\tau\left(\beta^{-1}+\beta^{-2}F\right).
+\end{equation}
+
+Next fix $H,u$ and write $K=H-u$. With $s$ denoting the unnormalized
+incident sign vector, put
+\[
+ D=(I-A_K/\zeta)^{-1},\qquad
+ q=\zeta^{-2}s^TDs,\qquad
+ \mu=\zeta^{-2}\sum_{w\sim u}D_{ww},\qquad
+ q_0=\zeta^{-2}\sum_{w\sim u}b_K(w).
+\]
+Schur complements give $G_{uu}=1/(1-q)$ and
+$b_H(u)=1/(1-q_0)$, where $G=G_{H,\zeta}$.
+On the event $G_{uu}<b_H(u)$,
+\[
+ b_H(u)-G_{uu}=b_H(u)G_{uu}(q_0-q)
+               \le B^2(q_0-q).
+\]
+The deterministic monotonicity $b_K(w)\le b_H(w)$ and the inverse
+deletion formula
+\[
+ D_{ww}=G_{ww}-\frac{G_{wu}^2}{G_{uu}}
+\]
+give the pointwise estimate
+\[
+ q_0-q\le\frac1{\zeta^2}
+             \sum_{w\sim u}(b_H(w)-G_{ww})_+
+           +\frac{C_\zeta}{\zeta^2}+|q-\mu|.
+\]
+Here we used positivity of $G$ and
+\[
+ \sum_{w\sim u}\frac{G_{wu}^2}{G_{uu}}
+ \le\frac{(G^2)_{uu}}{G_{uu}}\le\|G\|\le C_\zeta.
+\]
+
+Conditional on a fixed core, the exact Rademacher variance estimate
+is
+\[
+ \mathbb E_{\mathrm{star}}(q-\mu)^2
+ =\frac2{\zeta^4}\sum_{i\ne j\in N_H(u)}D_{ij}^2
+ \le\frac2{\zeta^4}\sum_{i\in N_H(u)}(D^2)_{ii}.
+\]
+The full Gibbs density relative to $\nu_K$ and independent incident
+signs is at most $8$, by the deletion-ratio assumption. Thus
+\[
+ \|q-\mu\|_{L^2(\nu_H)}
+ \le\frac{\sqrt{16dM}}{\zeta^2}.
+\]
+Taking $L^2$ norms, applying Minkowski, and then maximizing over the
+finite family gives
+\[
+ F\le B^2\left(pF+\frac{C_\zeta}{\zeta^2}
+                         +\frac{4\sqrt{dM}}{\zeta^2}\right).
+\]
+Since $1-B^2p=\beta/a$ and $\zeta^{-2}=p/d\le1/(4d)$,
+\begin{equation}\label{eq:cavity-l2-contraction}
+ F\le\frac1{2\beta}
+       \left(\frac{C_\zeta}{d}+4\sqrt{\frac Md}\right).
+\end{equation}
+Combining this with~\eqref{eq:second-moment-self-bound} yields
+\[
+ F\le C_\tau\left(
+       d^{-1}\beta^{-3}
+       +d^{-1/2}\beta^{-3/2}
+       +d^{-1/2}\beta^{-2}\sqrt F\right).
+\]
+Young's inequality absorbs the last term into $F/2$ plus a constant
+multiple of $d^{-1}\beta^{-4}$. Because $\beta\le1$, this proves
+the stated bound for $F$.
+
+For a fresh insertion, first consider the minus sign and put
+$q_\zeta=\zeta^{-2}s^TG_{K,\zeta}s$.
+For every $|\lambda|<R$, the function
+$z\mapsto[z(z-\lambda)]^{-1}$ decreases for $z\ge R$.
+Spectral calculus consequently gives $q_{R,-}\ge q_\zeta$.
+The same statement for the plus sign follows by replacing $A_K$ by
+$-A_K$. The fresh-star quadratic-form estimate, now without the
+factor $8$ from density domination, gives
+\[
+ \|(q_*-q_{R,-})_+\|_2
+ \le pF+\frac{\sqrt{2dM}}{\zeta^2}.
+\]
+By sign symmetry the plus-sign deficit has the same bound.
+Use~\eqref{eq:second-moment-self-bound}, the established bound on $F$,
+and $\sqrt F/(\sqrt d\,\beta)\le F/2+1/(2d\beta^2)$ to obtain the
+claimed joint bound, after enlarging $C_\tau$.
+\end{proof}
+
+
+\section{Scalar insertion bounds}
+\begin{lemma}[Coupling from squared lower-tail errors]
+Let $q\in[0,1/2]$, $r=1-q$, and let $q_+,q_-\ge0$ be
+random variables. Put
+\[
+ u=q_+-q,\qquad v=q_--q,\qquad
+ \alpha=(r-u)_+(r-v)_+,
+ \qquad D=(2r-u-v)\mathbf1_{\{u<r,\ v<r\}}.
+\]
+Suppose $M\ge0$ and $e\ge0$ satisfy
+\[
+ \mathbb E(u+v)\le M,
+ \qquad \mathbb E(u_-^2+v_-^2)\le e^2.
+\]
+Set
+\[
+ C=e\sqrt{r(M+\sqrt2e)},\qquad f=\mathbb E\alpha.
+\]
+Then
+\[
+ f\ge r^2-rM-C,
+ \qquad \mathbb E D-\frac{2f}{r}\le M+\frac{2C}{r}.
+\]
+In particular, if $f>0$ and
+\begin{equation}\label{eq:second-order-scalar-budget}
+ (1+\varepsilon r)M+(2/r+\varepsilon)C
+ \le\varepsilon r^2,
+\end{equation}
+then $\mathbb E D/f\le2/r+\varepsilon$.
+\end{lemma}
+
+\begin{proof}
+The appropriate cross term is capped:
+\[
+ L=u_-\min(v_+,r)+v_-\min(u_+,r).
+\]
+Pointwise on the whole probability space,
+\begin{equation}\label{eq:second-order-pointwise}
+ \alpha\ge r^2-r(u+v)-L,
+ \qquad D-2\alpha/r\le u+v+2L/r.
+\end{equation}
+On $\{u<r,v<r\}$, expand
+$\alpha=r^2-r(u+v)+uv$ and use $uv\ge-L$.
+If, for example, $u\ge r$ and $v\ge0$, the right side of
+the first inequality is nonpositive. If $u\ge r$ and $v<0$,
+it is at most $rv_- - rv_-=0$. This proves the first inequality
+also off the good event. For the second inequality, its left
+side vanishes off the good event; there $u+v\ge r-q\ge0$,
+because $u,v\ge-q$ and at least one is at least $r$.
+
+Writing $P=\mathbb E(u_++v_+)$, one has
+\[
+ P=\mathbb E(u+v)+\mathbb E(u_-+v_-)
+ \le M+\sqrt2e.
+\]
+Vector Cauchy--Schwarz and $\min(w,r)^2\le rw$ for $w\ge0$
+give
+\[
+ \mathbb E L
+ \le e\sqrt{\mathbb E\left[\min(u_+,r)^2+
+                         \min(v_+,r)^2\right]}
+ \le e\sqrt{rP}\le C.
+\]
+Averaging~\eqref{eq:second-order-pointwise} proves both estimates.
+Finally~\eqref{eq:second-order-scalar-budget} is exactly
+\[
+ M+2C/r\le\varepsilon(r^2-rM-C)\le\varepsilon f.
+\]
+\end{proof}
+
+\begin{proposition}[Explicit uniform parameter closure]
+Let $0<\beta\le1/10$ and define
+\[
+ x=\frac{1-\beta^2}{4},\qquad
+ a=\frac{1+\beta}{2},\qquad
+ k=\frac{\beta^2}{1000},\qquad
+ \zeta^2=\frac d x,\qquad R^2=\frac{\zeta^2}{1+k},
+ \qquad x_R=\frac d{R^2}=(1+k)x.
+\]
+Suppose $a\le r\le1$, $q=1-r$, $0\le h\le x_R$, and set
+\[
+ \varepsilon=\beta,\qquad M=\beta h+2kq.
+\]
+If the hypotheses of the preceding lemma hold with
+\[
+ e\le\frac{\beta^{3/2}}{10},
+\]
+then
+\[
+ f>\frac15>\frac18,
+ \qquad \frac{\mathbb E D}{f}\le\frac2r+\beta.
+\]
+Thus these assumptions close the deletion-ratio invariant
+$f\ge c_0=1/8$ and the cofactor invariant
+$\mathbb E D/f\le2/r+\varepsilon$.
+\end{proposition}
+
+\begin{proof}
+Since $x_R=(1-\beta^2)(1+\beta^2/1000)/4\le1/4$ and $2q\le1$,
+\[
+ M\le m:=\beta x_R+k\le\frac{251}{1000}\beta.
+\]
+Also $\sqrt2e\le(45/1000)\beta$, so
+\[
+ C\le\frac1{10}\sqrt{\frac{296}{1000}}\,\beta^2
+ <\frac{11}{200}\beta^2.
+\]
+Consequently
+\[
+ f\ge r^2-rM-C
+ \ge\frac14-\frac{251}{1000}\beta-\frac{11}{200}\beta^2
+ >\frac15.
+\]
+
+It remains to verify the scalar budget. The function
+$r\mapsto\beta r^2-(1+\beta r)m$ is increasing for $r\ge a$,
+since its derivative is $\beta(2r-m)>0$. Hence
+\begin{align*}
+ \beta r^2-(1+\beta r)M
+ &\ge\beta a^2-(1+\beta a)(\beta x_R+k)\\
+ &=\beta^2a(1-x_R)-k\bigl[1+\beta(a+x)\bigr]\\
+ &\ge\left(\frac38-\frac{108}{100000}\right)\beta^2
+ >\frac{37}{100}\beta^2.
+\end{align*}
+Here $a\ge1/2$, $x_R\le1/4$, and
+$1+\beta(a+x)\le1+(1/10)(11/20+1/4)=108/100$.
+On the other hand,
+\[
+ (2/r+\beta)C
+ \le\frac{41}{10}\frac{11}{200}\beta^2
+ =\frac{451}{2000}\beta^2
+ <\frac{37}{100}\beta^2.
+\]
+This verifies~\eqref{eq:second-order-scalar-budget}.
+\end{proof}
+
+
+\section{Proof of the upper bound}
+\begin{proof}[Proof of Theorem~\ref{thm:upper}]
+Fix $\tau=1/1000$ and choose a sufficiently large absolute constant
+$L$. Put $\beta=Ld^{-1/6}$ and take $d$ sufficiently large that
+$\beta\le1/10$. Use the parameters of the preceding proposition;
+in particular, $k=\tau\beta^2$ and $\zeta^2=4d/(1-\beta^2)$.
+The cavity lemma implies that its joint fresh-star deficit $e$
+satisfies
+\[
+ \frac e{\beta^{3/2}}
+ \le C_\tau\left(L^{-3}+L^{-11/2}d^{-1/12}\right).
+\]
+Choosing $L$ and then $d$ sufficiently large makes this at most
+$1/10$. These choices depend on no graph-order parameter.
+
+Induct strongly on the number of vertices, proving simultaneously
+for every graph of maximum degree at most $d$ that $Z_H>0$ and
+\[
+ Z_H/Z_{H-v}\ge1/8,
+ \qquad \mathcal J_H(v)/Z_H\le2b_H(v)+\beta
+ \quad(v\in V(H)).
+\]
+The empty graph is the base case. To insert $v$ into $H$, take
+$K=H-v$ and apply Lemma~\ref{lem:second-order-cavity} to the finite
+family of all induced subgraphs of $K$. Every hypothesis of that
+lemma is already available by induction. The finite maxima within
+its proof are over this known family; no property of $H$ is assumed.
+
+Write $r=1/b_H(v)$ and $q=1-r$. By~\eqref{eq:path-recursion},
+$q=\zeta^{-2}\sum_{w\sim v}b_K(w)$. Put $h=\deg_H(v)/R^2$.
+The core cofactor bound and independent incident signs give
+\begin{align*}
+ \E_*(q_++q_-)
+ &=R^{-2}\sum_{w\sim v}\mathcal J_K(w)/Z_K\\
+ &\le2R^{-2}\sum_{w\sim v}b_K(w)+\beta h
+   =2q+2kq+\beta h.
+\end{align*}
+The cavity lemma supplies the joint squared-deficit bound with
+$e\le\beta^{3/2}/10$. The preceding proposition, together with
+\eqref{eq:insertion-identities}, now gives $Z_H/Z_K>1/5$ and
+$\mathcal J_H(v)/Z_H\le2/r+\beta$. This proves positivity and both
+invariants, for every choice of $v$.
+
+Positive $Z_H$ supplies a signing with norm strictly less than
+\[
+ R=\frac{2\sqrt d}{\sqrt{(1-\beta^2)(1+\beta^2/1000)}}
+   =2\sqrt d+O(L^2d^{1/6}).
+\]
+Finally $2\sqrt d-2\sqrt{d-1}=O(d^{-1/2})$, which is absorbed in
+the asserted additive bound.
+\end{proof}
+% Standalone section snippet.  The lower bound in this section has been
+% independently checked algebraically and through the finite construction.
+\section{An explicit positive excess in every degree}
+
+Put $q=d-1\ge3$, and let $z_q$ be the unique positive solution of
+\begin{equation}\label{eq:lower-root}
+ qz(1+z+z^2+2z^3)=1+z+z^2+4z^4.
+\end{equation}
+Define
+\[
+ R_q=z_q^{-1/2}+qz_q^{1/2}.
+\]
+Then the worst optimal signing norm $\gamma_d$, whether defined over
+finite simple graphs of maximum degree at most $d$ or over finite
+simple $d$-regular graphs, satisfies
+\begin{equation}\label{eq:explicit-lower}
+ \gamma_d\ge R_q
+ =2\sqrt q+(1+O(q^{-1}))q^{-11/2}.
+\end{equation}
+In particular, the exact Ramanujan bound fails in every degree
+$d\ge4$, with an explicit positive quantitative excess.
+
+To prove this, the polynomial obtained by subtracting the right side
+of~\eqref{eq:lower-root} from its left side is
+\[
+ F_q(z)=-1+(q-1)z+(q-1)z^2+qz^3+(2q-4)z^4.
+\]
+It is strictly increasing for $z\ge0$, has $F_q(0)=-1$, and has
+$F_q(1/q)=2q^{-3}-4q^{-4}>0$. Thus $0<z_q<1/q$.
+
+Fix any threshold $R$ with $2\sqrt q<R<R_q$, and set
+\[
+ t=\frac{R-\sqrt{R^2-4q}}{2q},\qquad
+ t_+=\frac{R+\sqrt{R^2-4q}}{2q}=\frac1{qt}.
+\]
+These are the two fixed points of $u\mapsto(R-qu)^{-1}$, and
+$\sqrt{z_q}<t<q^{-1/2}$.
+
+Construct a rooted seed from a triangle by attaching $q-2$ disjoint
+complete rooted $q$-ary trees of height $h$ at its distinguished
+vertex, and $q-1$ such trees at each of the other two vertices.
+Each attachment is by one edge. The distinguished vertex has degree
+$q$, all other nonterminal vertices have degree $q+1$, and terminal
+vertices have degree one.
+
+The seed has unsigned adjacency norm at most $2\sqrt q$. One direct
+verification gives weight $1$ to its three triangle vertices and
+weight $q^{-j/2}$ to vertices at distance $j\ge1$ down each attached
+tree. At interior tree vertices the ratio $(Aw)_v/w_v$ is
+$2\sqrt q$, and at leaves it is smaller. At the two nondistinguished
+triangle vertices it is $2+(q-1)/\sqrt q\le2\sqrt q$, and at the
+root it is smaller still. The positive-vector bound proves the claim.
+The norm of every signing is no greater than the unsigned norm.
+Consequently all seed resolvents at both $R$ and $-R$ exist.
+
+The root response of a complete $q$-ary tree of height $h$ at $R$
+converges increasingly to $t$. Signs on tree edges can be switched
+away. Letting $h\to\infty$, eliminating these trees leaves effective
+diagonal entries
+\[
+ a=R-(q-1)t=t^{-1}+t,
+ \qquad b=R-(q-2)t=t^{-1}+2t.
+\]
+If the triangle sign product is $\eta\in\{-1,1\}$, the root
+response is
+\[
+ g_\eta=\left(b-\frac2{a-\eta}\right)^{-1}.
+\]
+Changing the spectral side exchanges $\eta$ and $-\eta$. The mean
+of the two limiting root responses is therefore independent of the
+signing and equals
+\begin{equation}\label{eq:triangle-mean}
+ m(t)=\frac{g_++g_-}{2}
+ =t\frac{1+t^2+t^4+2t^6}{1+t^2+t^4+4t^8}.
+\end{equation}
+By~\eqref{eq:lower-root},
+\[
+ m(t)>t_+\quad\Longleftrightarrow\quad F_q(t^2)>0.
+\]
+Hence for a sufficiently large finite height $h$, every signing of
+the seed has mean two-sided root response greater than $t_+$.
+
+Starting from this finite seed, repeatedly form a new rooted graph
+by joining a new root to the roots of $q$ disjoint copies of the
+previous graph. Suppose a signing of a graph built this way has norm
+strictly less than $R$. All its principal resolvents are then
+positive definite. If the child branches have mean two-sided root
+response at least $u$, Schur complementation and the harmonic-mean
+inequality give mean response at the new root at least
+\[
+ \frac1{R-qu}.
+\]
+Starting strictly above $t_+$, iterating this scalar map eventually
+exceeds $R/(q+1)$, or a nonpositive required Schur denominator is
+encountered earlier. Indeed, above $t_+$ the map is strictly larger
+than its argument; an increasing bounded iteration would converge
+to a fixed point, and neither fixed point is above $t_+$.
+Joining $q+1$ copies of a sufficiently amplified branch at a final
+central vertex is therefore impossible under the assumed norm bound:
+the two central Schur inequalities would require the sum of the
+child mean responses to be at most $R$.
+
+This gives a finite connected simple graph $H$ of maximum degree
+$d$ for which every signing has norm at least $R$. If regularity is
+desired, take $d$ copies $H^{+,i}$ and $d$ copies $H^{-,i}$, with
+$i\in\mathbb Z/d\mathbb Z$. For each original vertex $v$ of degree
+$d-r_v$, add the edges
+\[
+ v^{+,i}v^{-,i+j},\qquad 0\le j<r_v.
+\]
+The resulting graph is simple and $d$-regular and contains each
+original copy as an induced subgraph. It is connected: $H$ is
+connected and has a leaf, whose deficiency $d-1\ge2$ supplies the
+shifts $0$ and $1$ linking all copies. Its signing norm is at least
+that of the restricted induced copy. Since $R\uparrow R_q$ is
+arbitrary, this proves $\gamma_d\ge R_q$.
+
+Finally, $F_q'(z)=q+O(1)$ uniformly near $z=1/q$, so
+\[
+ z_q=q^{-1}-2q^{-4}+O(q^{-5}).
+\]
+Writing $u_q=\sqrt{qz_q}=1-q^{-3}+O(q^{-4})$ gives
+\[
+ R_q-2\sqrt q
+ =\sqrt q\,(u_q+u_q^{-1}-2)
+ =\sqrt q\,\frac{(u_q-1)^2}{u_q}
+ =(1+O(q^{-1}))q^{-11/2},
+\]
+as asserted.
+% Stronger lower bound. Exact response map, domain, expansion, and finite
+% approximation have been independently checked by two agents.
+\section{A stronger lower bound from repeated triangle sources}
+
+The preceding construction can be strengthened by repeating the
+triangle source, with several tree levels between successive sources.
+The resulting quantitative bound is
+\begin{equation}\label{eq:buffered-main}
+ \liminf_{q\to\infty}q^{7/2}
+ \bigl(\gamma_{q+1}-2\sqrt q\bigr)\ge\frac14.
+\end{equation}
+We give the finite construction and the response estimates explicitly.
+
+Fix $0<c<1/4$, put $s=\sqrt c$, and choose a fixed integer $L\ge2$
+such that
+\begin{equation}\label{eq:buffer-choice}
+ s<\frac{L-1}{2(L+1)}.
+\end{equation}
+For all sufficiently large integers $q$, we will construct a finite
+simple graph of maximum degree $q+1$ for which no signing has norm
+strictly less than
+\[
+ R=2\sqrt q+cq^{-7/2}.
+\]
+Use normalized root responses $g_\pm=\sqrt q\,
+[(RI\mp A_\sigma)^{-1}]_{oo}$ and put
+\[
+ z=R/\sqrt q=2+cq^{-4},\qquad
+ \phi(t)=\frac1{z-t},\qquad
+ \tau=\frac{z-\sqrt{z^2-4}}2,\qquad
+ y_+=\frac{z+\sqrt{z^2-4}}2.
+\]
+Thus $\tau$ and $y_+$ are the two fixed points of $\phi$.
+All response identities below are used under the assumption that the
+signed graph in question has norm less than $R$. Its principal
+resolvents are then positive definite, so every stated denominator
+has the indicated positive sign.
+
+\subsection*{A tree buffer retains information about both responses}
+
+A $q$-join adds a root adjacent to the roots of $q$ disjoint rooted
+graphs. At the new root, each normalized response is $\phi$ applied
+to the average of the corresponding child responses. Let
+\[
+ F_L=\phi^{-L}=(t\mapsto z-t^{-1})^{\circ L}.
+\]
+This is increasing and concave on the interval
+$(\phi^{\circ L}(0),\infty)$. Genuine responses after $L$ joins
+belong to this interval: at every join the average child response is
+positive. If every signing of the initial rooted graph satisfies
+$(g_++g_-)/2\ge y$, then the two responses $\xi_\pm$ after $L$
+successive $q$-join levels satisfy
+\begin{equation}\label{eq:buffer-constraint}
+ F_L(\xi_+)+F_L(\xi_-)\ge2y.
+\end{equation}
+Indeed, at one join $F_1$ recovers the average child response; at
+subsequent joins use concavity of $F_j$ and Jensen's inequality.
+In particular, averaging any number of such buffered response pairs
+preserves~\eqref{eq:buffer-constraint}.
+
+\subsection*{The repeated source and its exact scalar lower bound}
+
+Given a rooted graph $X$ whose root has degree $q$, form a new rooted
+graph as follows. Take a triangle and distinguish one of its
+vertices as the new root. Attach $q-2$ disjoint copies of an
+$L$-level $q$-join buffer of $X$ to this root. At each of the two
+other triangle vertices attach $q-1$ disjoint complete $q$-ary trees.
+For the moment use the limiting normalized tree response $\tau$;
+the trees will be made finite below. All vertices have degree at
+most $q+1$, and the distinguished root again has degree $q$.
+
+Write
+\[
+ b=1-\frac2q,\qquad
+ k_\pm=\frac{2/q}{z-(1-1/q)\tau\mp q^{-1/2}},
+ \qquad a_\pm=z-k_\pm.
+\]
+After eliminating the pure tree branches and the two other triangle
+vertices, the two normalized root responses are
+$[a_\pm-b\bar\xi_\pm]^{-1}$, up to exchanging $+$ and $-$ according
+to the triangle sign product. Here $\bar\xi_\pm$ are the averages
+of the buffered child responses.
+By~\eqref{eq:buffer-constraint}, setting
+$t_\pm=F_L(\bar\xi_\pm)$ gives $t_++t_-\ge2y$. Therefore the new
+mean response is bounded below by the minimum of
+\[
+ \frac{\chi_+(t_+)+\chi_-(t_-)}2,
+ \qquad
+ \chi_\pm(t)=\frac1{a_\pm-b\phi^{\circ L}(t)},
+ \qquad t_++t_-\ge2y.
+\]
+
+Here is an exact formula for this minimum. Write
+\[
+ \begin{pmatrix}A&B\\ C&D\end{pmatrix}
+ =\begin{pmatrix}0&1\\-1&z\end{pmatrix}^{L},
+ \qquad \phi^{\circ L}(t)=\frac{At+B}{Ct+D}.
+\]
+The determinant is one. Define
+\[
+ E_\pm=a_\pm C-bA,\qquad H_\pm=a_\pm D-bB,
+ \qquad E_0=(E_++E_-)/2,\quad H_0=(H_++H_-)/2,
+ \quad\Delta=a_+-a_-.
+\]
+For fixed $L$ and large $q$, $C<0$ and $E_\pm<0$. On the lower
+positive-denominator branch,
+\[
+ \chi_\pm(t)=\frac{Ct+D}{E_\pm t+H_\pm},\qquad
+ \chi_\pm'(t)=\frac b{(E_\pm t+H_\pm)^2}>0,
+ \qquad \chi_\pm''(t)>0.
+\]
+Their poles are $1+1/(L+1)+o(1)$, which lie below the common
+numerator zero $1+1/L+o(1)$. The functions are therefore positive
+and convex on the entire intervals below their respective poles.
+Thus allowing this entire branch, instead of just the smaller set
+of attainable responses, gives a valid lower bound. Monotonicity
+reduces the minimization to $t_++t_-=2y$. Equal derivatives then
+give the unique minimizer $t_\pm=y\pm w$, where
+\[
+ w=-\frac{\Delta(Cy+D)}{2E_0}.
+\]
+For $y$ near $1$ this minimizer lies strictly below both poles.
+Substitution yields the exact lower-bound map
+\begin{equation}\label{eq:buffer-map}
+ M_L(y)=
+ \frac{Cy+D}
+ {E_0y+H_0-\displaystyle\frac{\Delta^2 C(Cy+D)}{4E_0}}.
+\end{equation}
+The terms involving $\Delta^2$ cancel in the determinant, so
+\begin{equation}\label{eq:buffer-map-derivative}
+ M_L'(y)=
+ \frac b
+ {\left(E_0y+H_0-\displaystyle\frac{\Delta^2 C(Cy+D)}{4E_0}\right)^2}.
+\end{equation}
+Consequently the repeated source takes a uniform lower bound $y$
+on mean response to the uniform lower bound $M_L(y)$.
+
+\subsection*{Expansion at the upper tree fixed point}
+
+Set $e=q^{-1/2}$, so $z=2+s^2e^8$. With $L$ and $s$ fixed,
+\[
+ \tau=1-se^4+O(e^8),\qquad
+ y_+=1+se^4+O(e^8),
+\]
+and direct expansion gives
+\[
+ k_\pm=2e^2\pm2e^3\mp2e^5-2(1+s)e^6+O(e^7).
+\]
+The optimizer in~\eqref{eq:buffer-map} has
+$w=-2e^3/(L+1)+O_L(e^5)$. Since $\phi(y_+)=y_+$,
+uniformly for $w=O_L(e^3)$,
+\[
+ \phi^{\circ L}(y_+\pm w)
+ =y_+\pm w+Lw^2+O_L(e^7).
+\]
+Substituting into the two root responses and averaging gives
+\[
+ \frac{\chi_+(y_++w)+\chi_-(y_+-w)}2-y_+
+ =Lw^2+(w+2e^3)^2-(2+4s)e^6+O_L(e^7).
+\]
+Minimizing the displayed quadratic, equivalently using the exact
+optimizer, proves
+\begin{equation}\label{eq:buffer-positive-drift}
+ M_L(y_+)-y_+
+ =\left(\frac{4L}{L+1}-2-4s\right)q^{-3}
+   +O_L(q^{-7/2}).
+\end{equation}
+The leading coefficient is strictly positive by
+\eqref{eq:buffer-choice}.
+Moreover, uniformly for $y\in[\tau-O(q^{-3}),y_+]$,
+\begin{equation}\label{eq:buffer-contraction}
+ M_L'(y)=1-\frac2q+O_L(q^{-2})<1
+\end{equation}
+for sufficiently large $q$. To see the expansion directly in
+\eqref{eq:buffer-map-derivative}, its denominator before squaring is
+$1+O_L(q^{-2})$ on this interval. This follows from
+$A=-(L-1)+O_L(q^{-4})$, $B=L+O_L(q^{-4})$,
+$C=-L+O_L(q^{-4})$, $D=L+1+O_L(q^{-4})$,
+$a_++a_-=4-4/q+O(q^{-3})$, and $\Delta=O(q^{-3/2})$.
+It follows that $M_L(y)-y$ is decreasing on the stated interval.
+Together with~\eqref{eq:buffer-positive-drift}, this gives a uniform
+strict positive drift all the way from the lower tree fixed point
+to the upper one.
+
+\subsection*{All trees and all iterations can be finite}
+
+Fix a sufficiently large $q$. Choose $\beta>0$, independent of $q$
+once $L,s$ are fixed, so that
+\[
+ M_L(y)-y\ge\beta q^{-3}
+ \quad\hbox{for }y\in I:=[\tau-\beta q^{-3}/8,y_+].
+\]
+The normalized response $\tau_h$ of a finite complete $q$-ary tree
+of height $h$ increases to $\tau$. Choose $h$ so large that
+\[
+ \tau_h\in I,\qquad
+ \sup_{y\in I}|M_{L,h}(y)-M_L(y)|<\beta q^{-3}/4,
+\]
+where $M_{L,h}$ is~\eqref{eq:buffer-map} with $\tau$ replaced by
+$\tau_h$ in $k_\pm$. This is possible by continuity of its rational
+coefficients and because all denominators stay bounded away from
+zero on the compact interval $I$. The same lower-branch
+minimization remains valid for these finite tails.
+
+Start $X_0$ as a finite complete $q$-ary tree with normalized root
+response $\tau_h$. Repeatedly apply the triangle operation described
+above, always using pure tails of this same finite height. If a
+resulting signing has norm less than $R$, the preceding estimates
+give lower bounds $y_0=\tau_h$, $y_{j+1}=M_{L,h}(y_j)$ on its mean
+root responses. While $y_j\le y_+$ these increase by at least
+$3\beta q^{-3}/4$. Hence after finitely many steps (in fact
+$O_L(q)$ steps) the lower bound exceeds $y_+$.
+
+Finally, ordinary $q$-joins amplify any mean normalized response
+strictly above $y_+$ by the map $\phi$. After finitely many such
+joins it exceeds $qz/(q+1)$. Attaching $q+1$ resulting branches to
+a central vertex contradicts the two positive Schur-complement
+inequalities at that vertex. Thus the final finite core has no
+signing of norm less than $R$. Its maximum degree is $q+1$.
+The finite induced regular completion used in the preceding section
+produces a connected simple $(q+1)$-regular graph with the same
+obstruction.
+
+We have therefore proved, for each fixed $c<1/4$ and all sufficiently
+large $q$, that
+\[
+ \gamma_{q+1}\ge2\sqrt q+cq^{-7/2}.
+\]
+Letting $c\uparrow1/4$ proves~\eqref{eq:buffered-main}.
+
+\section{What remains unresolved}
+The upper bound proved here does not give a bounded additive error,
+much less identify an asymptotic equivalent for
+$\gamma_d-2\sqrt{d-1}$. The exponent $1/6$ comes from the balance
+\[
+ F=O(d^{-1/2}\beta^{-3/2}+d^{-1}\beta^{-4}),\qquad
+ \text{insertion error}=O(F\sqrt\beta),\qquad
+ \text{available margin}\asymp\beta^2.
+\]
+Thus this method takes $\beta\asymp d^{-1/6}$ and spectral excess
+$\beta^2\sqrt d\asymp d^{1/6}$. This calculation describes the
+present proof's limitations; it is not a lower-bound obstruction
+at that scale. The argument is existential and does not establish
+a polynomial-time algorithm.
+
+\begin{thebibliography}{9}
+\bibitem{JSS} A. Jadbabaie, A. Saberi, and S. Sra,
+\emph{Kadison--Singer partitions and Bilu--Linial graph signings in
+polynomial time}, arXiv:2609.23855v1 (2026).
+\url{https://arxiv.org/abs/2609.23855}.
+\bibitem{Xu} Z. Xu, \emph{A 3-regular counterexample to the Bilu--Linial
+signing conjecture}, arXiv:2609.15591v3 (2026).
+\url{https://arxiv.org/abs/2609.15591}.
+\end{thebibliography}
+\end{document}

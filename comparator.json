@@ -1,0 +1,15 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "BiluLinial.near_ramanujan_signing",
+    "BiluLinial.explicit_excess",
+    "BiluLinial.opNorm_eq_iSup_abs_eigenvalues₀"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

@@ -1,0 +1,2294 @@
+\documentclass[10pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,booktabs}
+\usepackage{amsmath,amssymb,amsthm,mathtools,mathrsfs,hyperref}
+\hypersetup{hidelinks,pdftitle={Bounds for the Bilu--Linial signing constant}}
+\numberwithin{equation}{section}
+\allowdisplaybreaks[1]
+\setlength{\emergencystretch}{2em}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{corollary}[lemma]{Corollary}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Pp}{\mathbb P}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\1}{\mathbf1}
+\newcommand{\R}{\mathbb R}
+\newcommand{\cP}{\mathcal P}
+\newcommand{\cK}{\mathcal K}
+\newcommand{\cD}{\mathcal D}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\begin{document}
+\begin{center}
+{\Large Bounds for the Bilu--Linial signing constant}
+\end{center}
+For a finite simple graph $G$, let $A_\sigma(G)$ be its signed adjacency
+matrix and define
+\[
+ \gamma_d=\sup_{\Delta(G)\le d}\;
+       \min_{\sigma:E(G)\to\{-1,1\}}\|A_\sigma(G)\|,
+\]
+where $\|\cdot\|$ is the Euclidean operator norm.
+\begin{theorem}\label{thm:bounds}
+There is an absolute constant $C$ such that, for all sufficiently large
+integers $q$,
+\[
+ 2\sqrt q+2q^{-5/2}
+ -\left(\frac{32P_*}{\sqrt3}+o(1)\right)q^{-3}
+ \le\gamma_{q+1}\le\sqrt{4q+Cq^{-2/17}}.
+\]
+\end{theorem}
+Here $P_*\approx0.7632$ is the Sherrington--Kirkpatrick ground-state
+constant, and $o(1)$ tends to zero as $q\to\infty$.
+
+\section{Upper bound}
+
+\subsection{Sources, deletion, and the maximum principle}
+Put $q=d-1$, $R^2=4q+\Delta$, $a=R^{-1}$, and define
+\[
+ \frac{q\eta_0^2}{1-\eta_0}=\Delta,\qquad
+ \tau_*=(1-\eta_0)/q,\qquad
+ s=\frac{1+q\tau_*}{1-\tau_*},\qquad r=1+\eta_0/2.
+\]
+In the application $\Delta=4/p$ and
+$p=\lfloor c_0d^{2/17}\rfloor$, where $0<c_0\le1$ is an absolute
+constant chosen below.
+For a graph $H$ of maximum degree $d$ and $0<y_i\le s$, set
+\[
+ c_{ij}(1+c_{ij})=a^2y_iy_j,\quad
+ \tau_{ij}=\frac{c_{ij}}{1+c_{ij}},\quad
+ Z_i(y)=\frac{1+\sum_{j\sim i}c_{ij}}{y_i},\quad D_i=y_iZ_i.
+\]
+Then $\tau_{ij}\le\tau_*$, $s\le2+C/d$,
+$da^2s^2\le1+C/d$, and $c_{ij}\le C/d$.
+Use independent sources $y^+,y^-$ and precisions
+$P^\pm=\operatorname{diag}Z(y^\pm)\pm aA_\sigma$.
+The sign law has weight
+$W(\sigma)=\mathbf1_{\{P^\pm\succ0\}}(\det P^+\det P^-)^p$.
+Write $G^\pm=(P^\pm)^{-1}$ and $h_i^\pm=G^\pm_{ii}/y_i^\pm$.
+Congruence by $\sqrt{\operatorname{diag}y^\pm}$ multiplies all
+weights by the same source-dependent factor and extends the law
+to zero sources. A zero source is an isolated identity row in the
+normalized matrix, with normalized inverse diagonal one and physical
+row zero. All ensuing formulas at zero sources mean these limits.
+
+\begin{lemma}[Deletion and source differentiation]\label{lem:fw-deletion}
+Writing $D_y=\operatorname{diag}y$, one has
+\[
+ DZ=-D_y^{-1}\mathcal B D_y^{-1},\quad
+ \mathcal B_{ii}=1+\sum_j\frac{\tau_{ij}^2}{1-\tau_{ij}^2},
+ \quad \mathcal B_{ij}=-\frac{\tau_{ij}}{1-\tau_{ij}^2}\ (i\sim j).
+\]
+The matrix $\mathcal B$ is positive definite, and
+$K=\mathcal B^{-1}$ is entrywise nonnegative, with
+$K_{ii}\ge1$ and $K_{ij}\ge\tau_{ij}$ on edges.
+For every principal deletion $J=H-v$, there is a deterministic
+$\widehat y\le y|_J$ satisfying $Z^J(\widehat y)=Z^H(y)|_J$.
+\end{lemma}
+\begin{proof}
+Differentiate $c(1+c)=a^2y_iy_j$. The displayed Jacobian follows,
+and its diagonal-dominance margin is
+\[
+ 1-\sum_j\frac{\tau_{ij}}{1+\tau_{ij}}
+ \ge1-\frac{d\tau_*}{1+\tau_*}
+ =\frac{\eta_0}{1+\tau_*}>0.
+\]
+Thus $\mathcal B$ is a positive definite matrix with nonpositive
+off-diagonal entries and nonnegative inverse.
+To increase $Z(y)$ by $u\ge0$, lift the segment $Z(y)+tu$:
+$y'(t)=-D_yKD_yu\le0$.
+The lift remains bounded away from zero since
+$Z_i(y(t))\ge1/y_i(t)$ implies
+$y_i(t)\ge[Z_i(y)+u_i]^{-1}$; compact continuation reaches $t=1$.
+The symmetric negative-definite Jacobian makes $Z$ injective by
+integration along segments. Deletion increases each surviving
+precision above $Z^J(y|_J)$ by $\mathbf1_{i\sim v}c_{iv}/y_i$,
+so the lift proves the assertion.
+
+For completeness, $K_{ij}$ is the sum of products of $\tau_e$
+over nonbacktracking walks from $i$ to $j$, including the empty
+walk. This series converges: the directed walk operator applied
+to $f_{i\to j}=(1+\tau_{ij})^{-1}$ is strictly less than $f$ by
+the same dominance inequality. If $S_{iw}$ is its walk sum and
+$M_{i\to j,w}$ the part starting with $i\to j$, then
+$S_{iw}=\mathbf1_{i=w}+\sum_jM_{i\to j,w}$ and
+$M_{i\to j,w}=\tau_{ij}(S_{jw}-M_{j\to i,w})$.
+Elimination gives $\mathcal B S_{\cdot w}=e_w$, proving the stated
+lower bounds. Treat the two source branches separately.
+\end{proof}
+
+For a deleted core $J=H-v$ and $N=N_H(v)$, use its inherited
+precisions, equivalently the smaller sources above. Put
+\[
+ A=\frac{a^2}{Z_v^+}G_J^+[N,N],\quad
+ B=\frac{a^2}{Z_v^-}G_J^-[N,N],\quad
+ \alpha=(1-\xi^TA\xi)_+,\quad\beta=(1-\xi^TB\xi)_+,
+ \quad\Phi=\alpha^p\beta^p,
+\]
+where $\xi$ is a fresh uniform sign vector before insertion.
+Let $f=\mathbb E_\xi\Phi$ and $F_H=\mathbb E_J f$.
+The actual full-law core marginal is $f/F_H$ times its own law.
+A bad core has no good extension. On a good extension,
+\[
+ Z_v^+G^+_{vv}=\alpha^{-1},\quad Z_v^-G^-_{vv}=\beta^{-1},\quad
+ G^+_{vi}=-a^{-1}(A\xi)_i/\alpha,\quad
+ G^-_{vi}=a^{-1}(B\xi)_i/\beta.                 \tag{F1}\label{eq:fw-schur}
+\]
+
+\begin{lemma}[Uniform insertion floor]\label{lem:fw-floor}
+For sufficiently large $d$, if the proper-core means obey
+$\mathbb E G_{J,ii}^\pm\le1.01y_i^\pm$, then $F_H\ge40^{-p}$.
+Consequently the full law exists and
+$\mathbb E(h_i^\pm)^k\le40^p$ for $1\le k\le p$.
+\end{lemma}
+\begin{proof}
+Set $\kappa=a^2s^2$, $x_\pm=y_v^\pm/s$, $u_i^\pm=y_i^\pm/s$,
+$C_\pm=\kappa x_\pm\sum_Nu_i^\pm$, and $t_\pm=C_\pm/D_v^\pm$.
+For large $d$, $d\kappa\le1.01$, $c_{ij}\le.01$, and
+\[
+ C_\pm\le1.01,\quad D_v^\pm\ge1+C_\pm/1.01,
+ \quad t_\pm\le.505,\quad
+ \mathbb E(q_A+q_B)\le1.01(t_++t_-),
+\]
+where $q_A=\xi^TA\xi$, $q_B=\xi^TB\xi$.
+The parallel-sum formula gives pointwise
+\[
+ q_Aq_B\ge h(q_A+q_B),\qquad
+ h=\min_\pm\frac{a^2y_v^\pm}{D_v^\pm}
+                  \sum_N\frac1{Z_i^++Z_i^-}.
+\]
+Indeed $P_J^++P_J^-$ is diagonal, and for positive matrices $P,Q$
+the variational formula bounds
+$\xi^T(P+Q)^{-1}\xi$ by $ab/(a+b)$, where
+$a=\xi^TP^{-1}\xi$, $b=\xi^TQ^{-1}\xi$; rescaling gives the claim.
+If $t_++t_-\le.95$, then
+$\mathbb E\alpha\beta\ge1-1.01(.95)>1/40$.
+Otherwise $C_\pm>.79$, $x_\pm>.78$,
+$x_\pm/D_v^\pm>.38$, and
+$\sum_N(u_i^++u_i^-)-|N|>.57/\kappa$.
+Using $D_i^\pm\le2.01$ and
+$uv/(u+v)\ge(u+v-1)/2$ on $[0,1]^2$ gives
+$h>.38\cdot.57/(2\cdot2.01)>1/20$.
+The product constraint therefore implies
+$\alpha\beta\ge[1-.95(q_A+q_B)]_+$:
+if one energy exceeds one, their sum is at least $20/19$;
+otherwise expand their product.
+Hence $\mathbb E\alpha\beta\ge1-.95(1.01)^2>1/40$ in either case.
+Jensen proves the floor. Finally $h_v=(D_v\alpha)^{-1}$,
+$D_v\ge1$, so multiplying the insertion weight by $h_v^k$
+leaves nonnegative residual powers and a numerator at most one.
+Deleting each root proves the moment bound.
+\end{proof}
+
+\begin{lemma}[Source maximum and moments]\label{lem:fw-maximum}
+Suppose the law exists throughout a capped source cube and all
+normalized first means are at most $B_0\ge1$. Then, for
+$1\le k\le p-2$,
+\[
+ \sup\mathbb E(h_i^\pm)^k
+       \le\left(\frac{pB_0-k}{p-k}\right)^k.        \tag{F2}\label{eq:fw-moments}
+\]
+At a maximum $\mathbb E h_v^+=r$ of a normalized first mean,
+\[
+ p\operatorname{Cov}(G^+_{vv},G^+_{ii})
+       -\mathbb E(G^+_{vi})^2
+       \le-r y_v^+y_i^+K_{vi}.                    \tag{F3}\label{eq:fw-covariance}
+\]
+In particular $(p-1)\operatorname{Var}(h_v^+)\le r(r-1)$.
+\end{lemma}
+\begin{proof}
+In physical precision coordinates, write
+$C_i=\partial_{Z_i}\mathbb E G_{vv}^k
+=p\operatorname{Cov}(G_{vv}^k,G_{ii})
+-k\mathbb E(G_{vv}^{k-1}G_{vi}^2)$.
+At a maximum $m_k$ of $\mathbb E h_v^k$, decreasing each positive
+source is feasible, so
+$(DZ)^TC\ge k m_k y_v^{k-1}e_v$.
+Multiply by $-D_yKD_y$ to obtain
+$C_i\le-km_k y_v^k y_iK_{vi}$.
+At $i=v$ this yields
+$(p-k)\mathbb E h_v^{k+1}\le m_k(pB_0-k)$.
+Moment log-convexity proves (F2); $k=1$ gives (F3) and its variance
+consequence, since $K_{vv}\ge1$.
+The finite sign sums and the floor justify maxima and derivatives:
+$p-k\ge2$ makes inverse-weighted determinant powers continuously
+differentiable across a support boundary. A zero-source root has
+moment one, and other zero coordinates can be removed first.
+\end{proof}
+
+
+The induction uses a cube expanding from zero. Proper graphs satisfy
+the mean cap; deletion and the floor make the new law positive on
+its whole source cube before any cap is asserted there. A first
+contact supplies (F2)--(F3), with bounded $L^k$ bases through $k\le p/2$.
+Ruling out that contact therefore completes the graph-order induction.
+At the final constant sources $y_i=s$,
+\[
+ Z_i(s\mathbf1)=\frac{1+(\deg(i)-1)\tau_*}{1+q\tau_*}\le1.
+\]
+Positivity of both $P^\pm$ then implies $I\pm A_\sigma/R\succ0$
+for a supported signing.
+
+\subsection{Endpoint comparison and concentration}
+
+All expectations below use the paired law just defined. Constants $C,c>0$
+are absolute and may change. We take
+\[
+ p=\lfloor c_0d^{2/17}\rfloor,\qquad
+ k_*=\left\lceil16p/\log d\right\rceil,
+\]
+and work under the first-mean cap $\mathbb Eh_i^\pm\le r=1+\varepsilon$.
+The source maximum bounds the $L^j$ norms of physical diagonals and of
+$Z_iG_{ii}=D_ih_i$ by an absolute constant for $j\le p/2$.
+Thus all moments of order $8k_*+12$ used below are available for large $d$.
+For a root $v$, write $N=N(v)$, $K=H-v$ and
+\[
+ A=\frac{a^2}{Z_v^+}G_K^+[N,N],\quad
+ B=\frac{a^2}{Z_v^-}G_K^-[N,N],\quad
+ \alpha=(1-\xi^TA\xi)_+,\quad\beta=(1-\xi^TB\xi)_+,\quad
+ \Phi=\alpha^p\beta^p.
+\]
+The own core law is denoted by $\nu_K$; its insertion factor is
+$F_H=\mathbb E_{\nu_K,\xi}\Phi\ge40^{-p}$. The actual core marginal is
+$f/F_H$ times $\nu_K$, where $f=\mathbb E_\xi\Phi$.
+Set $q_M(x)=x^TMx$, $b_i=A_{ii}+B_{ii}$ and $\mu_0=\operatorname{tr}(A+B)$.
+
+\begin{lemma}[Endpoint calculus]\label{cu:endpoint}
+For an incident coordinate $\xi_i$, put
+$\mathcal D_j\psi=W^{-1}\partial_i^j(W\psi)$, with deterministic
+precisions held fixed. Then
+\[
+ \mathbb E[\xi_iG^+_{vi}]
+ =\mathbb E[\mathcal D_1G^+_{vi}-\tfrac13\mathcal D_3G^+_{vi}]
+       +O(p^5a^5).
+ \tag{E1}\label{cu:E1}
+\]
+The error is not divided by an insertion factor.
+\end{lemma}
+\begin{proof}
+On a good endpoint of the two-point edge fiber put
+$D=G^+_{vv}+G^+_{ii}+G^-_{vv}+G^-_{ii}$ and $M=(64pa)^{-1}$.
+Call the fiber regular if both endpoints are good and have $D\le M$.
+A good endpoint with $D\le M/2$ lies on such a fiber: the rank-two
+perturbation has relative norm at most $2aD$, so throughout the segment
+$G^\pm(s)\preceq2G^\pm(\xi_i)$ and $W(s)\le e^{1/16}W(\xi_i)$.
+At every good point,
+\[
+ \partial_iG^\pm_{jl}=\mp a(G^\pm_{jv}G^\pm_{il}+G^\pm_{ji}G^\pm_{vl}),
+ \qquad \partial_i\log W=2pa(G^+_{vi}-G^-_{vi}).
+ \tag{E3}\label{cu:E3}
+\]
+Consequently $|\mathcal D_jG^+_{vi}|\le C_jp^ja^jD^{j+1}$.
+Taylor's endpoint identity
+$\mathbb E_\xi\xi f(\xi)=\mathbb E_\xi(f'(\xi)-f'''(\xi)/3)
++O(\|f^{(5)}\|_\infty)$ is exact through degree four. Applied on regular
+fibers, averaged before dividing by the full normalizer, it costs
+$Cp^5a^5\mathbb ED^6$. On every omitted good endpoint $D>M/2$;
+for $j=0,1,3$, its removed contribution is at most
+$C_jp^ja^j(2/M)^{5-j}\mathbb ED^6$. This proves \eqref{cu:E1}.
+\end{proof}
+
+We also need a high-order comparison whose retained terms are evaluated
+at sign endpoints. Define $c_j$ by
+\[
+ e^{t^2/2}/\cosh t=1+\sum_{j\ge2}c_jt^{2j},
+ \qquad |c_j|\le C^j,\quad c_2=1/12.
+\]
+For a multi-index $\mathbf j$ with entries zero or at least two, put
+$|\mathbf j|_g=\sum_{j_i>0}(j_i-1)$ and $c_{\mathbf j}=\prod c_{j_i}$.
+If $\mathsf G,\mathsf R$ denote Gaussian and sign expectation, then
+\[
+ \mathsf Gf=\sum_{|\mathbf j|_g\le k}c_{\mathbf j}
+       \mathsf R\partial^{2\mathbf j}f+\mathcal E_k(f),\qquad
+ |\mathcal E_k(f)|\le C^{k+1}
+       \sum_{|\mathbf j|_g=k+1}\|\partial^{2\mathbf j}f\|_\infty.
+ \tag{E4}\label{cu:E4}
+\]
+The sum in the remainder uses distinct active coordinates, and every
+derivative has order at most $4k+4$. To prove this, in one coordinate
+Taylor-expand through degree $2L+3$. Matching coefficients of
+$e^{t^2/2}/\cosh t$ leaves a remainder at most
+$C^{L+1}\|\partial^{2L+4}f\|_\infty$. Process the coordinates in order,
+spending grade $j-1$ on a selected derivative $2j$. A first remainder
+has exact total grade $k+1$; the number of grade compositions is at most
+$2^k$. This proves \eqref{cu:E4}, also for bounded weak highest derivatives
+by smoothing. Clipped powers below have the required regularity.
+
+Here is the derivative accounting used with \eqref{cu:E4}. On common
+residual support, the normalized atoms $(Ax)_i/\sqrt{b_i}$ and
+$(Bx)_i/\sqrt{b_i}$ and their normalized derivatives are bounded by one.
+After $n$ derivatives the coefficient mass grows by at most $4p+n+1$.
+Thus, for $n\le4k_*+4$,
+\[
+ \begin{split}
+ |\partial^\nu[(\operatorname{tr}A-q_A)\alpha^{p-1}\beta^p]|
+   &\le(Cp)^n(2+\mu_0)\prod_i b_i^{\nu_i/2},\\
+ |\partial^\nu F|&\le p(Cp)^n\mu_0\prod_i b_i^{\nu_i/2},\quad
+ F=(p-1)q_{A^2}\alpha^{p-2}\beta^p
+                 +pq_{AB}\alpha^{p-1}\beta^{p-1}.
+ \end{split} \tag{E5}\label{cu:E5}
+\]
+The quadratic prefactors, divided by $2+\mu_0$ or $\mu_0$, and their
+first two normalized derivatives are bounded; higher ones vanish.
+These facts prove the bounds by induction. A grade-$k+1$ remainder
+with $l$ active coordinates has total half-order $k+1+l$.
+Since $b_i\le Ca^2(G_{K,ii}^++G_{K,ii}^-)$, core moments and H\"older
+bound its average by $C^{k+l+1}d^{-k-1-l}$; the $d^l$ choices cancel
+the last power. The averaged remainders in \eqref{cu:E5} are therefore
+$(Cp)^{4k+4}d^{-k-1}$ and $p(Cp)^{4k+4}d^{-k-1}$.
+
+At actual sign endpoints, division by $\Phi$ and \eqref{cu:E3} instead
+give coefficient mass $(Cp)^n$, a factor $a^n$, and inverse-entry
+degree $n$. For the first expression of \eqref{cu:E5}, use exactly
+\[
+ \frac{(\operatorname{tr}A-q_A)\alpha^{p-1}\beta^p}{\Phi}
+   =1+(\operatorname{tr}A-1)t,\qquad t=Z_v^+G^+_{vv},
+\]
+and keep $t$ grouped: $\partial_i t=-2atG^+_{vi}$.
+Also $\operatorname{tr}A\le Ca^2\sum_iG^+_{ii}$ by Schur order.
+Diagonal moments then bound a retained grade-$j$ term by
+$(Cp)^{4j}d^{-j}$. For $F/(a^2\Phi)$ there is one free row index,
+inverse degree $n+2$, and coefficient mass $p(Cp)^n$; its grade-$j$
+term has $L^2$ norm at most $p(Cp)^{4j}d^{1-j}$.
+These statements follow directly from
+$|G_{ij}|\le\sqrt{G_{ii}G_{jj}}$ and use moments at most $8j+4$.
+All derivatives vanish at excluded endpoints, so passing to the actual
+law is exact. Finally,
+\[
+ p40^p(Cp)^{4k_*+4}d^{-k_*}\le e^{-cp},
+ \tag{E6}\label{cu:E6}
+\]
+because $p\le d^{1/7}$ makes its logarithm at most
+$[\log40-16(1-4/7)+o(1)]p<0$.
+
+\begin{lemma}[Bias and reference concentration]\label{cu:concentration}
+Put $N_R=\mathsf R[(\operatorname{tr}A-q_A)\alpha^{p-1}\beta^p]$
+and define $N_G$ with Gaussian expectation. Uniformly throughout the
+capped source family,
+\[
+ \left|\mathbb E_{\nu_K}(N_R-N_G)/F_H\right|\le Cp^4/d,
+ \qquad N_G\ge0. \tag{C1}\label{cu:C1}
+\]
+Moreover
+\[
+ \begin{split}
+ &\sup_{i,\pm}\mathbb E(h_i^\pm-1)^2
+  +\sup_{i,\pm}(1-\mathbb Eh_i^\pm)_+
+  +\sup_{v,\pm}a^2\sum_{i\sim v}\mathbb E(G^\pm_{vi})^2\\
+ &\hspace{12mm}
+  +\sup_v\mathbb E_{\rm actual\ core}\operatorname{tr}(A^2+B^2)
+       \le\delta:=C\{\varepsilon+p^4/d+(p/d)^{1/3}\}.
+ \end{split} \tag{C2}\label{cu:C2}
+\]
+\end{lemma}
+\begin{proof}
+Apply \eqref{cu:E4}--\eqref{cu:E6} to the first expression in
+\eqref{cu:E5}: grade one costs $Cp^4/d$, higher grades sum geometrically
+to $Cp^8/d^2$, and the only floor loss is exponentially small.
+For Gaussian nonnegativity, an even log-concave density has covariance
+at most $I$ relative to the standard Gaussian: its convolution with
+a translated Gaussian is even log-concave by Pr\'ekopa's theorem~\cite{Prekopa},
+so its Hessian at zero is nonpositive. Apply this to
+$\alpha^{p-1}\beta^p$ and take its covariance trace against $A$.
+
+Write $\rho=\sup(1-\mathbb Eh_i)_+$ and
+$b=\varepsilon+Cp^4/d+d^{-1}$. The exact Schur identity is
+\[
+ \mathbb E_{\nu_K}N_R/F_H
+ =1-D_v\mathbb Eh_v
+   +a^2\sum_{i\sim v}\mathbb E(G_{vv}G_{ii}-G_{vi}^2).
+ \tag{C3}\label{cu:C3}
+\]
+Since $D_v=1+L_v-C_v$, $L_v=a^2y_v\sum_i y_i\le1+C/d$,
+$C_v=\sum_i c_{vi}^2=O(d^{-1})$, and $\mathbb Eh_i^2\le1+C\varepsilon$,
+\eqref{cu:C1} gives the row bound
+$a^2\mathbb E\sum_iG_{vi}^2\le C(\rho+b)$.
+
+The source second-moment bound already gives
+$\mathbb E(h_i-1)^2\le C\varepsilon+2\rho$.
+For the core kernel put $T_A=\operatorname{tr}A^2$,
+$\mu=\operatorname{tr}A$ and $w=T_A/(1+\mu)\le\mu$.
+Endpoint expansion of the core-constant numerator $w\Phi$ gives
+$|\mathbb E_{\nu_K}w(f_G-f_R)/F_H|\le Cp^4/d$.
+Whiten the Gaussian potential by $I+2(p-1)A$; its remaining factor
+is even log-concave because $-\log(1-q_A)-q_A$ is convex.
+The covariance bound therefore gives
+\[
+ N_G\ge f_G\frac{2(p-1)T_A}{1+2(p-1)\|A\|}\ge f_Gw.
+\]
+Dropping the negative row term in \eqref{cu:C3} yields
+$\mathbb Ew\le C(\rho+b)$.
+Also $\mu\le U=(a^2/Z_v)\sum_iG_{ii}$ and
+$U_0=(a^2/Z_v)\sum_i y_i=L_v/D_v\le1/2+C/d$.
+For $k=\lfloor p/4\rfloor$, Minkowski and the source moment caps give
+$\|U\|_k\le U_0(pr-k)/(p-k)\le3/5$ for sufficiently large $d$.
+Consequently
+\[
+ \mathbb E[T_A1_{\{\mu>1\}}]
+ \le\mathbb E[U^2 1_{\{U>1\}}]\le\mathbb EU^k\le e^{-cp},
+ \qquad T_A1_{\{\mu\le1\}}\le2w.
+ \tag{C3a}\label{cu:core-tail}
+\]
+This uses only the capped moments and is uniform at zero sources.
+Applying the same argument to both branches proves the preclosure bound
+\[
+ \mathbb E\Theta\le C(\rho+b),\qquad
+ \Theta=\operatorname{tr}(A^2+B^2).
+ \tag{C3b}\label{cu:preclosure-core}
+\]
+
+Let $X_z=(P+zI)^{-1}$ and
+$t=\sup_{i,\pm}(1-\mathbb E X_{z,ii}^\pm/y_i^\pm)_+$.
+Then $\rho\le t$ and
+$\mathbb E(G_{ii}^\pm-X_{z,ii}^\pm)\le y_i^\pm(\varepsilon+t)$.
+For a root $v$, write $C_\nu=(P^\nu_{-v})^{-1}$ and
+$C_{z,\nu}=(P^\nu_{-v}+zI)^{-1}$; restrictions to $N=N(v)$
+will be indicated when needed. Put
+\[
+ M=\frac{a^2}{Z_v^+}C_{z,+}[N,N]\preceq A.
+\]
+
+We need a lower bound on the covariance of a Gaussian under the
+fresh-star weight $\Phi=\alpha^p\beta^p$. For this normalized Gaussian
+law, let $\Sigma$ be its covariance and
+$V=-p\log\alpha-p\log\beta$ on its convex support.
+Integration by parts gives
+$\mathbb E[x(x+\nabla V)^T]=I$ and
+$\mathbb E[(x+\nabla V)(x+\nabla V)^T]=I+\mathbb E\nabla^2V$.
+Matrix Cauchy--Schwarz therefore gives
+$\Sigma\succeq(I+\mathbb E\nabla^2V)^{-1}$.
+The boundary terms vanish because $p$ is large; the formulas can
+also be obtained by smoothing the clipped density.
+Since $\nabla^2V\succeq0$ and $I-(I+Q)^{-1}\preceq Q$ for $Q\succeq0$,
+\[
+ \begin{split}
+ \mathsf G[(\operatorname{tr}M-q_M)\Phi]
+ \le{}&2p\,\mathsf G[(\operatorname{tr}(MA)\alpha^{-1}
+                         +\operatorname{tr}(MB)\beta^{-1})\Phi]\\
+ &+4p\,\mathsf G[(q_{AMA}\alpha^{-2}
+                         +q_{BMB}\beta^{-2})\Phi].
+ \end{split}\tag{C4}\label{cu:C4}
+\]
+This follows from
+$\nabla^2(-\log\alpha)=2A/\alpha+4Axx^TA/\alpha^2$ and its
+$B$ analogue. All four terms on the right are nonnegative.
+
+We transfer \eqref{cu:C4} to signs using \eqref{cu:E4}.
+All four right-hand prefactors retain the core factor $\Theta$:
+\[
+ \operatorname{tr}(MA),\operatorname{tr}(MB)\le\Theta,
+ \qquad AMA\preceq\Theta A,\quad BMB\preceq\Theta B.
+\]
+For either quadratic kernel $L$ and the corresponding $Q=A$ or $B$,
+residual support gives
+\[
+ q_L\le\Theta,\quad |\partial_iq_L|\le2\Theta\sqrt{Q_{ii}},
+ \quad |\partial_i\partial_jq_L|\le2\Theta\sqrt{Q_{ii}Q_{jj}}.
+\]
+More explicitly, each unmultiplied right-hand function $F$ satisfies
+at a sign endpoint
+\[
+ |\partial_i^4F|/\Phi
+ \le Cp^4a^4\Theta(1+D_i)^C(1+t_++t_-)^2,
+ \quad t_\nu=Z_v^\nu G^\nu_{vv},
+\]
+where $D_i$ is one plus the four physical inverse diagonals at $v,i$.
+The product rule and the identities
+$\alpha'/\alpha=2aG^+_{vi}$,
+$\alpha''/\alpha=-2a^2(G^+_{vv}G^+_{ii}-(G^+_{vi})^2)$,
+and their minus counterparts prove this bound.
+By \eqref{cu:preclosure-core}, $\rho\le t$ and high-moment
+interpolation, the four right-hand grade-one corrections, including
+their factors $p$, total $Cp^5(t+b)/d$.
+
+For the left function $F_0=(\operatorname{tr}M-q_M)\Phi$, put
+$R_i=|G^+_{vi}|+|G^-_{vi}|$.
+A first residual derivative supplies a root row entry, a second
+supplies two inverse entries, and all higher residual derivatives
+vanish. Hence
+\[
+ \begin{aligned}
+ |\Phi''|/\Phi&\le Ca^2(p^2R_i^2+pD_i^C),\\
+ |\Phi'''|/\Phi&\le Ca^3(p^3R_i^3+p^2R_iD_i^C),\\
+ |\Phi''''|/\Phi&\le Ca^4(p^4R_i^4+p^3R_i^2D_i^C+p^2D_i^C).
+ \end{aligned}
+\]
+Since $q_M\le q_A\le1$, $M_{ii}\le Ca^2G^+_{ii}$,
+$|\partial_iq_M|\le CaD_i$ and
+$|\partial_i^2q_M|\le Ca^2D_i$. Thus
+\[
+ |\partial_i^4F_0|/\Phi
+ \le Ca^4(1+\mu)D_i^C
+ \{p^4R_i^4+p^3(R_i^2+R_i^3)+p^2(1+R_i+R_i^2)\}.
+\]
+For a uniform incident index $I$, padded to $d$ slots, the row bound
+from \eqref{cu:C3} gives $\mathbb ER_I^2\le C(t+b)$.
+Interpolation preserves this scale in every monomial with at least
+two row factors; $t+b\ge b$ has a polynomial lower envelope.
+The left grade-one correction is consequently
+$C\{p^4(t+b)+p^2\}/d$.
+The higher grades of the five functions retain their geometric
+bounds, totaling $Cp^9/d^2$ after the outer factors $p$.
+Their core prefactors have capped high moments, so the final
+insertion-floor remainder is exponentially small as in \eqref{cu:E6}.
+All source factors are dimensionless $t_\nu$ or physical inverse
+entries, so these estimates extend to zero sources.
+
+We next bound the four transferred terms. Write
+\[
+ W=\frac1d\sum_{\nu=\pm}\operatorname{tr}
+                   [(C_\nu-C_{z,\nu})[N,N]]\ge0.
+\]
+The full/core shifted rank-one correction satisfies
+\[
+ \operatorname{tr}[X_z^\nu[N,N]-C_{z,\nu}[N,N]]
+ =a^2(X_z^\nu)_{vv}\,\xi^TC_{z,\nu}[N,N]^2\xi
+ \le\frac{Z_v^\nu}{z}(G^\nu_{vv}-(X_z^\nu)_{vv}).
+ \tag{C5}\label{cu:C5}
+\]
+Indeed $C_\nu-C_{z,\nu}\succeq zC_{z,\nu}^2$, and compressing the
+square dominates the square of the compression. The root Schur
+identities give
+$a^2\xi^T(C_\nu-C_{z,\nu})[N,N]\xi
+=(X_z^\nu)_{vv}^{-1}-(G^\nu_{vv})^{-1}-z$.
+Multiplication by $(X_z^\nu)_{vv}/z$ proves the inequality.
+Since the unshifted full/core correction is nonnegative, it follows
+that $\mathbb EW\le C(t+\varepsilon)$ whenever $dz\ge1$.
+Also $\mathbb EW^2\le C$, since $W$ is bounded by a normalized sum
+of full inverse diagonals. H\"older and the source moments give
+\[
+ \mathbb E[(h_v^++h_v^-)W]
+ \le C(t+\varepsilon)^{1-O(1/p)}\le C(t+\varepsilon).
+\]
+The last step uses $t+\varepsilon\ge\varepsilon$, which is a negative
+power of $d$, whereas $p$ is a positive power.
+
+For either branch $\nu$, positivity gives
+\[
+ \begin{split}
+ \operatorname{tr}(C_{z,+}[N,N]C_\nu[N,N])
+ &\le\tfrac12\operatorname{tr}(C_{z,+}[N,N]^2+C_{z,\nu}[N,N]^2)
+       +z^{-1}\operatorname{tr}(C_\nu-C_{z,\nu})[N,N]\\
+ &\le CdW/z.
+ \end{split}
+\]
+Consequently the expectation of the two trace terms in
+\eqref{cu:C4}, after division by the full normalizer, is at most
+$C(t+\varepsilon)/(dz)$: for example
+$\operatorname{tr}(MA)/\alpha
+=a^4G^+_{vv}\operatorname{tr}(C_{z,+}[N,N]C_+[N,N])/Z_v^+$.
+Here $1/Z_v^+\le s$, and the preceding weighted bound on $W$ applies.
+The quadratic terms are at most
+\[
+ a^2\|M\|\,\mathbb E\sum_i[(G^+_{vi})^2+(G^-_{vi})^2]
+ \le C(t+b)/(dz),
+\]
+since $\|M\|\le Ca^2/z$ and the row bound was proved above.
+Let $q_z=a^2\xi^TC_{z,+}[N,N]\xi$ and
+$\mu_z=a^2\operatorname{tr}C_{z,+}[N,N]$.
+Their normalized bias is therefore
+\[
+ \mathbb E(\mu_z-q_z)/Z_v^+
+ \le Cp(t+b)/(dz)+C\{p^5(t+b)/d+p^2/d+p^9/d^2+e^{-cp}\}.
+ \tag{C6}\label{cu:C6}
+\]
+In the root equation this is multiplied by $y_v^+Z_v^+=D_v^+\le C$.
+The shifted core/full diagonal replacement, using \eqref{cu:C5},
+costs only $C(t+\varepsilon)/(dz)$ after the same normalization.
+To make the last scalar step explicit, put $m_i=\mathbb E(X_z)_{ii}$.
+Jensen gives $m_v^{-1}\le Z_v+z-a^2\sum_i m_i+e_v$, where the
+combined bias and core-replacement errors obey
+$y_ve_v\le Cp(t+b)/(dz)+C\{p^5(t+b)/d+p^2/d+p^9/d^2+e^{-cp}\}$.
+At a maximizing vertex $m_v=y_v(1-t)$ and $m_i\ge y_i(1-t)$.
+Since $y_vZ_v=1+L_v-C_v$, subtraction yields
+\[
+ \frac{t^2}{1-t}\le(L_v-1)t-C_v+y_v(z+e_v).
+\]
+Using $L_v\le1+C/d$, $C_v\ge0$, and $y_v\le C$, we obtain
+\[
+ t^2\le C\{z+p(t+b)/(dz)+p^5(t+b)/d+p^2/d+p^9/d^2+d^{-1}+e^{-cp}\}.
+\]
+Take $u=(p/d)^{1/3}$ and $z=u^2$. Then
+\[
+ t^2\le C\{u^2+u(t+b)+p^5(t+b)/d+p^2/d+p^9/d^2+e^{-cp}\}.
+\]
+For $p\le d^{1/7}$ one has $p^5/d\le u$, $b\le Cu$,
+$p^2/d\le u^2$ and $p^9/d^2\le u^2$.
+Therefore $t\le Cu$. The row, second-moment and core bounds already
+proved in terms of $\rho\le t$ give \eqref{cu:C2} directly.
+\end{proof}
+
+\begin{lemma}[Uniform incident-row gain]\label{lem:global-row-gain}
+Under the capped source law,
+\[
+ \sup_{v,\nu}a^2\sum_{i\sim v}\mathbb E(G^\nu_{vi})^2
+ \le\delta_{\rm row}:=C\delta/p.
+ \tag{GR1}\label{eq:global-row-gain}
+\]
+This improves the incident-row envelope, while the core Frobenius
+envelope remains $\delta$.
+\end{lemma}
+\begin{proof}
+For PSD $A,B$, Royen's full Gaussian correlation monotonicity,
+in the formulation of Milman~\cite[Section 3.3]{Milman}, gives
+\[
+ \mathsf G[q_{AB}\alpha^{p-1}\beta^{p-1}]\ge0.
+\]
+Indeed, if standard Gaussian vectors $X,Y_s$ have cross covariance
+$sI$, then $H(s)=\mathbb E\alpha(X)^p\beta(Y_s)^p$ is nondecreasing
+on $[0,1]$: both factors are nonnegative even quasi-concave functions.
+Gaussian differentiation gives
+$H'(1)=4p^2\mathsf G[q_{AB}\alpha^{p-1}\beta^{p-1}]$.
+Bounded gradient products justify continuity at $s=1$; clipping is
+sufficiently smooth because $p>2$.
+
+Apply \eqref{cu:E4} to $F=q_{AB}\alpha^{p-1}\beta^{p-1}$.
+Its prefactor and first two normalized derivatives are bounded by
+$C\mu_0$, so on residual support
+$|\partial^\nu F|\le(Cp)^{|\nu|}\mu_0\prod_i b_i^{\nu_i/2}$.
+At sign endpoints,
+\[
+ F/(a^2\Phi)=-\sum_{j\sim v}G^+_{vj}G^-_{vj}.
+\]
+After $n$ derivatives its coefficient mass is $(Cp)^n$, with a
+factor $a^n$, inverse degree $n+2$, and one free row index.
+In grade $j$, with $l\le j$ active coordinates, $n=2(j+l)$ and
+$a^nd^{l+1}=O(d^{1-j})$.
+Capped diagonal moments bound the retained grade by
+$(Cp)^{4j}d^{1-j}$ under the actual sign law.
+The only insertion-floor loss is in the final remainder,
+\[
+ 40^p(Cp)^{4k_*+4}d^{-k_*}\le e^{-cp},
+\]
+which holds throughout $p\le d^{1/7}$ since
+$\log40-16(1-4/7)<0$. Hence
+\[
+ T_v:=\sum_{i\sim v}\mathbb E G^+_{vi}G^-_{vi}\le Cp^4.
+\]
+
+Write $m_v=\mathbb Eh_v^+$ and $S_v=\sum_i\mathbb E(G^+_{vi})^2$.
+The diagonal resolvent equation and the endpoint identity give
+\[
+ (2p-1)a^2S_v=B_v+2pa^2T_v+O(p^3/d),\qquad
+ B_v=1-D_v m_v+a^2\sum_i\mathbb E G^+_{vv}G^+_{ii}.
+\]
+The third derivative costs $Cp^3a^4d=Cp^3/d$;
+the fifth-order remainder is $Cp^5a^6d=Cp^5/d^2$.
+With $\rho=\sup(1-\mathbb Eh_i)_+$, the moment caps and
+$D_v=1+L_v-C_v$ imply
+\[
+ B_v\le1-D_v(1-\rho)+L_v(1+C\varepsilon)
+       \le C(\rho+\varepsilon+d^{-1}).
+\]
+Thus $a^2S_v\le C\{(\rho+\varepsilon+d^{-1})/p+p^4/d\}$.
+Use $\rho\le\delta$ from (C2) and
+$p^4/d\le(p/d)^{1/3}/p$ when $p^7\le d$.
+The minus branch is identical. All derivatives involve physical
+inverse entries, so the proof remains valid at zero sources.
+\end{proof}
+
+\subsection{Shifted means and random-profile weak comparisons}
+
+Put $T=a^2A_H$, where $A_H$ is the unsigned adjacency matrix, and
+$X_\pm=(P^\pm+hI)^{-1}$. We use $h=\kappa_0p^{-4}$ below.
+The sharp scalar inequality proved from \eqref{cu:C6}, before choosing
+its shift, gives
+\[
+ t_h^2\le C\{h+p(t_h+b)/(dh)+p^5(t_h+b)/d
+                    +p^2/d+p^9/d^2+d^{-1}+e^{-cp}\},
+\]
+where $t_h=\sup_{i,\pm}(1-\mathbb EX^\pm_{ii}/y_i^\pm)_+$ and
+$b=\varepsilon+Cp^4/d+d^{-1}$. For the chosen $p=\lfloor c_0d^{2/17}\rfloor$ and
+$h=\kappa_0p^{-4}$, the coefficient of $t_h$ is $o(\sqrt h)$,
+and the other constant terms are $o(h)$ as $d\to\infty$ with
+$c_0,\kappa_0$ fixed. Thus $t_h\le C\sqrt h$ with an absolute
+constant $C$, and
+\[
+ 0\le\mathbb E(G^\pm_{ii}-X^\pm_{ii})/y_i^\pm\le C\sqrt h.
+ \tag{S1}\label{eq:mean-shift}
+\]
+The nonnegative difference is bounded by $G^\pm_{ii}$.
+High-moment interpolation therefore preserves this estimate after
+multiplication by any fixed-degree product of normalized inverse
+diagonals. The interpolation loss is bounded because all parameter
+scales are polynomial and $p/\log d\to\infty$.
+
+\begin{lemma}[Random-profile weak loop]\label{lem:random-weak}
+Let $X_\epsilon=(P^\epsilon+hI)^{-1}$ and
+$X_\nu=(P^\nu+hI)^{-1}$, with $\epsilon,\nu\in\{+1,-1\}$.
+Put
+\[
+ K_\sigma=(X_\epsilon\circ X_\nu)/4,\qquad
+ M_\sigma=D_{(X_\epsilon)_{ii}(X_\nu)_{ii}/4},\qquad
+ u=1_N/\sqrt d,\quad b_\sigma=4TM_\sigma u,\quad
+ w_\sigma=u-\epsilon\nu b_\sigma.
+\]
+Let $H$ be $1$, $(G^+_{vv}/2)^2$, or $G^+_{vv}G^-_{vv}/4$.
+For either $f=u$ or $f=b_\sigma$, set $U=X_\epsilon D_fX_\nu$ and
+$F_{ji}=(X_\epsilon)_{ii}U_{ji}-(X_\epsilon)_{ji}U_{ii}$.
+Let $D_*$ be one plus the largest physical inverse diagonal of either
+branch on $N\cup N_H(N)$ and at $v$. Then
+\[
+ \left|\mathbb E[H w_\sigma^TK_\sigma f]
+                  -\mathbb E[H u^TM_\sigma f]\right|
+ \le \mathsf S_f+C\{p/(dh)+1/(dh^{3/2})\},
+ \tag{W1}\label{eq:random-weak-error}
+\]
+where the score retains its physical weight:
+\[
+ \mathsf S_f=Ca\sum_{i\in N,j\sim i}u_i\mathbb E\bigl[
+ |F_{ji}|\{2paH(|G^+_{ij}|+|G^-_{ij}|)+|\partial_{ij}H|\}\bigr].
+\]
+All its moments below are finite; no a priori smallness of this score
+is assumed.
+\end{lemma}
+\begin{proof}
+The following identity holds before taking expectation. For any
+possibly random diagonal mask $f$, let $U=X_\epsilon D_fX_\nu$ and
+\[
+ F_{ji}=(X_\epsilon)_{ii}U_{ji}-(X_\epsilon)_{ji}U_{ii}.
+\]
+Subtract the scalar root equation multiplied by $U_{ii}$ from the
+masked equation multiplied by $(X_\epsilon)_{ii}$ to get
+\[
+ U_{ii}-f_i(X_\epsilon)_{ii}(X_\nu)_{ii}
+       =-\epsilon a\sum_{j\sim i}\sigma_{ij}F_{ji}.       \tag{W2}
+\]
+All expressions are physical products, with no inverse source or
+inverse diagonal. With $f$ temporarily fixed, differentiation in
+edge $ij$ gives exactly
+\[
+ \partial_{ij}F_{ji}=-a\{2\epsilon(X_\epsilon)_{ij}F_{ji}
+ +\nu(X_\nu)_{ij}F_{ji}
+ +\nu(X_\epsilon)_{ii}(X_\nu)_{ii}U_{jj}
+ -\nu(X_\nu)_{ii}(X_\epsilon)_{ij}U_{ij}\}.              \tag{W3}
+\]
+First-order endpoint integration by parts in (W2), multiplying by
+$Hu_i$ and summing $i\in N$, therefore gives
+\[
+ \mathbb E[H w_\sigma^TK_\sigma f]
+       =\mathbb E[H u^TM_\sigma f]+\mathrm{Err}.           \tag{W4}
+\]
+The leading term in (W3) used here is
+$\epsilon\nu a^2(X_\epsilon)_{ii}(X_\nu)_{ii}U_{jj}$.
+The determinant derivative is $2pa(G^+_{ij}-G^-_{ij})$.
+A derivative of either physical root weight is a bounded-degree
+root diagonal product times $aG^\tau_{vi}G^\tau_{vj}$.
+Taking absolute values bounds these contributions by $\mathsf S_f$.
+
+Both masks $f=u$ and $f=b_\sigma$ are supported on the deterministic
+set $N\cup N_H(N)$, of size at most $d+d^2$.
+For the maximum $D_*$ defined above and $k\asymp p$, its
+$L^k$ norm is bounded: the factor $(Cd^2)^{1/k}$ is bounded because
+$p/\log d\to\infty$. In particular
+$\|f\|_\infty\le CD_*^2/\sqrt d$ pointwise.
+Put $r_i^\tau=(X_\tau^2)_{ii}$.
+Since $X_\tau^2\preceq h^{-1}(G^\tau-X_\tau)$, the mean shift gives
+\[
+ \mathbb E[D_*^C r_i^\tau]\le Ch^{-1/2}.
+ \tag{W5}
+\]
+For the weighted assertion interpolate $r_i^\tau/y_i^\tau$,
+whose pointwise envelope is $h^{-1}h_i^\tau$; the loss
+$h^{-O(1/p)}$ is bounded and zero sources follow by continuity.
+Write $m=\|f\|_\infty$. Operator norm and Cauchy--Schwarz give
+\[
+ \|Ue_i\|\le mh^{-1}\sqrt{r_i^\nu},\quad
+ |U_{ii}|\le m\sqrt{r_i^\epsilon r_i^\nu},\quad
+ \|F_{\cdot i}\|\le2mh^{-1}D_*\sqrt{r_i^\nu}.
+\]
+Consequently, for $\tau=\epsilon,\nu$,
+\[
+ \sum_{j\sim i}|(X_\tau)_{ij}F_{ji}|
+ \le2mh^{-1}D_*\sqrt{r_i^\tau r_i^\nu},\qquad
+ \sum_{j\sim i}|(X_\epsilon)_{ij}U_{ij}|
+ \le mh^{-1}r_i^\epsilon.
+\]
+Using $m\le CD_*^2/\sqrt d$ and (W5), each expectation is at most
+$Cd^{-1/2}h^{-3/2}$, including fixed-degree diagonal and root weights.
+Multiplication by $a^2u_i$ and summation over $i\in N$ show that the
+three secondary terms in (W3) cost $C/(dh^{3/2})$.
+
+For the random mask $f=b_\sigma$, its first derivative is
+\[
+ \partial_{ij}f_k
+ =-2a\sum_{l\in N}T_{kl}u_l
+ \{\epsilon(X_\nu)_{ll}(X_\epsilon)_{li}(X_\epsilon)_{lj}
+    +\nu(X_\epsilon)_{ll}(X_\nu)_{li}(X_\nu)_{lj}\}.
+\]
+Using $T_{kl}\le C/d$, $u_l\le d^{-1/2}$ and Cauchy--Schwarz
+in $l$ retains the quadratic diagonals:
+\[
+ \|\partial_{ij}f\|_\infty
+ \le\frac{CaD_*}{d\sqrt d}
+          \sum_{\tau\in\{\epsilon,\nu\}}\sqrt{r_i^\tau r_j^\tau}.
+\]
+For any mask $g$, $|F_{ji}(g)|\le Ch^{-1}D_*^2\|g\|_\infty$.
+Weighted Cauchy--Schwarz and (W5) therefore imply
+\[
+ \mathbb E[D_*^C|F_{ji}(\partial_{ij}f)|]
+       \le Ca/(d\sqrt d\,h^{3/2}).
+\]
+There are at most $d^2$ pairs $(i,j)$; the outer factor $a u_i$
+thus makes the entire random-mask derivative cost $C/(dh^{3/2})$.
+
+Finally the endpoint remainder is $Cp/(dh)$. Use the uniform incident
+row bound with $\rho_{\rm row}=\delta_{\rm row}\le Cp^{-2}$.
+For an edge $ij$ let $R_{ij}=|G^+_{ij}|+|G^-_{ij}|$ and
+$\ell=\log W$. Exact inverse differentiation gives
+\[
+ |\ell'|\le CpaR_{ij},\quad
+ |\ell''|\le Cpa^2D_*^2,\quad
+ |\ell'''|\le Cpa^3R_{ij}D_*^2.
+\]
+Consequently
+\[
+ \begin{split}
+ |W''|/W&\le Ca^2(p^2R_{ij}^2+pD_*^2),\\
+ |W'''|/W&\le Ca^3(p^3R_{ij}^3+p^2R_{ij}D_*^2).
+ \end{split}
+\]
+Differentiating $U$ preserves one $U$ block, or produces
+$X_\epsilon D_{\partial f}X_\nu$; further derivatives have the
+same form. For $0\le r\le3$,
+$\|\partial_{ij}^r f\|_\infty\le C_ra^rD_*^{C_r}/\sqrt d$,
+and all extra inverse entries are bounded by physical diagonal products.
+Thus for either mask the fixed derivatives of the observable satisfy
+\[
+ |\partial_{ij}^r(HF_{ji})|
+ \le C_r a^r D_*^{C_r}/(\sqrt d\,h),\qquad 0\le r\le3.
+\]
+The bound includes derivatives of the random mask and physical root
+weight, and introduces neither a power of $p$ nor an extra $h^{-1}$. The product rule therefore gives
+\[
+ W^{-1}|\partial_{ij}^3(WHF_{ji})|
+ \le \frac{Ca^3D_*^C}{\sqrt d\,h}
+ \{p^3R_{ij}^3+p^2R_{ij}+p^2R_{ij}^2+p+1\}.
+\]
+Average jointly over $i\in N$, padded to $d$ slots, and a uniform
+neighbor $j$, also padded to $d$ slots. Capped moments and
+interpolation give $\mathbb E[D_*^C R_{ij}^k]\le C\rho_{\rm row}$
+for $k=2,3$, and at most $C\sqrt{\rho_{\rm row}}$ for $k=1$.
+Thus the averaged coefficient is
+\[
+ C\{p^3\rho_{\rm row}+p^2\sqrt{\rho_{\rm row}}+p\}\le Cp.
+\]
+The first-order endpoint identity, summed with the outer $a u_i$,
+therefore has remainder $Cp/(dh)$ rather than $Cp^3/(dh)$.
+
+For completeness this estimate can be transferred along each regular
+two-point edge fiber. If the endpoint diagonal sum is at most
+$(64pa)^{-1}$, inverse order bounds every diagonal along the segment
+by twice its endpoint value. Moreover inverse differentiation gives
+\[
+ \sup_{s\in[-1,1]}R_{ij}(s)
+ \le R_{ij}(\sigma)+CaD_*^2.
+\]
+Thus one may replace $\rho_{\rm row}$ above by
+$\rho_{\rm row}+d^{-1}$, which remains $O(p^{-2})$ in the current
+parameter range. Weight ratios on a regular segment are bounded.
+On every omitted good endpoint the local diagonal sum exceeds
+$c/(pa)$. Using eight extra capped moments bounds its total
+contribution, including the first derivative term, by
+$Cp^8d^{-7/2}h^{-1}=o(p/(dh))$ for $p\le d^{1/7}$.
+All bounds involve physical entries and are uniform at zero sources.
+
+Here $\rho_{\rm row}=\delta_{\rm row}=C\delta/p$ and
+$\delta=C\{\varepsilon+p^4/d+(p/d)^{1/3}\}$, so
+$\rho_{\rm row}\le Cp^{-2}$ for $p\le d^{1/7}$.
+Thus the weak remainder is
+\[
+ B_0=C\{p/(dh)+1/(dh^{3/2})+e^{-cp}\}.
+\]
+This proves (W4) with error (W1).
+This applies to both stated masks; symmetry of $K_\sigma$ gives
+the corresponding first and second weak identities.
+\end{proof}
+
+\paragraph{Weighted fresh-star quadratic domination.}
+Freeze the graph obtained by deleting a vertex $i$, and let $\xi$ be
+the at most $d$ incident signs.  Let $\Phi=\alpha_+^p\alpha_-^p$
+be its paired insertion weight, with the conventions and actual-core
+normalization of (E4).  Write $G_\tau=(P_\tau)^{-1}$,
+$X_\tau=(P_\tau+hI)^{-1}$, and
+$C_\tau=(P_{\tau,-i}+hI)^{-1}$.
+Here $d^{-C_h}\le h\le1$, $p/\log d\to\infty$, and $p\le d^{1/7}$.
+
+The weights below are fixed-degree products of physical inverse
+diagonals, shifted or unshifted. No maximum of inverse diagonals
+is included in the Gaussian weight; maxima are used only afterward
+in capped-moment interpolation.
+
+For the cavity application set $J=N(i)$, $N=N(v)$,
+$u_k=1_N(k)/\sqrt d$, and let $\epsilon\in\{+,-\}$.  Restrict all
+matrices below to the deleted core, omitting the zero $i$ coordinate.
+The two admissible linear maps from $\mathbb R^J$ to $\mathbb R^J$ are
+\[
+ \begin{split}
+ (T_{\rm dir})_{jl}
+   &=1_{\{l\in N\}}(C_\epsilon)_{jl}u_l(C_+)_{ll},\\
+ (T_{\rm cav})_{jl}
+   &=\sum_{k\in N\setminus\{i,l\}}
+               (C_\epsilon)_{jk}u_k(C_+)_{kl}.
+ \end{split}                                                    \tag{WT1}
+\]
+Let $L=T^TT\succeq0$ for either map, or for a sum of a bounded number
+of their positive quadratic forms.  Let
+\[
+ H=H_0(X_\epsilon)_{ii}^2(X_+)_{ii}^2,
+\]
+where $H_0$ is such a fixed-degree diagonal product whose indices
+lie in the radius-two ball under consideration.
+For every fixed $M>0$, writing $\vartheta=d^{-M}$, one has
+\[
+ \boxed{\quad
+ \mathbb E[Hq_L(\xi)]\le C\mathbb E[H\operatorname{tr}L]
+                                  +C\vartheta+e^{-cp}.
+ \quad}                                                         \tag{WT2}
+\]
+Constants may depend on the fixed degrees, $M$, and $C_h$; they are
+uniform in the graph order and in all sources, including limits of
+zero sources.  This statement is restricted to the cavity kernels
+(WT1), rather than to arbitrary PSD kernels with uncontrolled source
+or residual-support dependence.
+
+\paragraph{The weighted Gaussian step.}
+For a branch suppress its sign and write $m,n$ for the total powers
+of unshifted and shifted denominator determinants in $H$.  The
+corresponding part of $\det(P)^pH$ is a product of positive powers of
+principal determinants and
+\[
+ \det(P)^{p-m-n}
+            \left(\frac{\det P}{\det(P+hI)}\right)^n.
+\]
+It is log-concave on $P\succ0$: principal log determinants are
+concave, and
+\[
+ \log\det P-\log\det(P+hI)
+       =-\int_0^h\operatorname{tr}(P+tI)^{-1}\,dt
+\]
+is concave because trace inverse is convex.  The exponent $p-m-n$
+is nonnegative.  Extension by zero preserves log-concavity.  The
+vertex gauge flip at $i$ takes $\xi$ to $-\xi$ and leaves every
+principal determinant unchanged.  Thus the normalized Gaussian law
+with density $H\Phi$ is even and has covariance at most the identity
+by the Brascamp--Lieb covariance inequality (proved below in the
+shifted comparison).  In particular, conditionally on every core,
+\[
+ \mathsf G[Hq_L\Phi]\le
+                   (\operatorname{tr}L)\mathsf G[H\Phi].          \tag{WT3}
+\]
+This applies to non-core-constant root diagonal weights as well.
+
+\paragraph{Retained comparison terms preserve the unknown mass.}
+Put
+\[
+ x=\mathbb E[Hq_L],\qquad y=\mathbb E[H\operatorname{tr}L],
+\]
+and let $x_G,y_G$ be their Gaussian numerators divided by the same
+full sign insertion normalizer.  Apply (E4) to $Hq_L\Phi$ and
+$H(\operatorname{tr}L)\Phi$.  A retained grade $g$ with $l$ active
+coordinates has derivative order $n=2(g+l)\le4g$.  At sign endpoints,
+derivatives of $H\Phi$, divided by $\Phi$, preserve $H$ up to
+fixed-degree diagonal multipliers and coefficient mass $(Cp)^n a^n$.
+For inverse diagonals this follows by inverse differentiation and
+Cauchy--Schwarz in the associated positive inverse matrix;
+there is no inverse-source loss.
+
+At most two derivatives hit $q_L$.  Summing the distinguished
+coordinates before estimating them gives the following four bounds,
+with the remaining diagonal multipliers suppressed:
+\[
+ \begin{array}{c|c}
+ \text{derivatives on }q_L&\text{sum at grade }g\\ \hline
+ 0&a^n d^lq_L\le C^g d^{-g}q_L\\
+ 1&a^{n-1}d^{l-1}\sum_s|(L\xi)_s|
+                  \le C^g d^{-g}\sqrt{(\operatorname{tr}L)q_L}\\
+ 2\text{ on one coordinate}
+      &a^{n-2}d^{l-1}\sum_sL_{ss}
+                  \le C^g d^{-g}\operatorname{tr}L\\
+ 2\text{ on distinct coordinates}
+      &a^{n-2}d^{l-2}\sum_{s,t}|L_{st}|
+                  \le C^g d^{-g}\operatorname{tr}L.
+ \end{array}                                                     \tag{WT4}
+\]
+Here $|(L\xi)_s|^2\le L_{ss}q_L$,
+$\sum_s\sqrt{L_{ss}}\le\sqrt{d\operatorname{tr}L}$, and
+$\sum_{s,t}|L_{st}|\le d\operatorname{tr}L$.
+The last line only occurs when $l\ge2$.
+
+The existing capped-moment interpolation, with the deterministic floor
+$\vartheta$, bounds each suppressed fixed-degree multiplier against
+the nonnegative masses $Hq_L$ and $H\operatorname{tr}L$.  For example,
+the mixed term is bounded by $C\sqrt{(x+\vartheta)(y+\vartheta)}$.
+At grade $g$ the extra degree is $O(g)$, and the polynomial-floor
+factor is at most $C^g$ since $p/\log d\to\infty$.
+Consequently the retained comparison terms sum to
+\[
+ |x_G-x|+|y_G-y|
+ \le C\frac{p^4}{d}(x+y+\vartheta)+e^{-cp}.                       \tag{WT5}
+\]
+
+\paragraph{Why the absolute remainder has no hidden source or shift loss.}
+For completeness, (WT5) uses the following specific envelope of (WT1).
+Let $Q=(P_{+,-i})^{-1}$ be the unshifted plus core.  On residual
+support,
+\[
+ \xi^TQ[J,J]\xi\le Z_i^+/a^2,\qquad
+ C_+^2\preceq h^{-1}C_+\preceq h^{-1}Q,
+ \qquad
+ \xi_l^2\le Z_l^+\,\xi^TQ[J,J]\xi.
+\]
+The last inequality follows by padding $\xi$ by zero and using
+Cauchy--Schwarz in $Q$; $(Q^{-1})_{ll}=Z_l^+$.
+These inequalities bound the full and diagonal-subtracted maps in
+(WT1) by a fixed polynomial in $d,h^{-1}$, capped core diagonal
+factors (including $Z_l^+Q_{ll}$), and at most one factor $Z_i^+$.
+The latter cancels against $(X_+)_{ii}^2$ in $H$:
+\[
+ (X_+)_{ii}\le G^+_{ii}=(Z_i^+\alpha_+)^{-1},
+ \qquad (Z_i^+)^{-1}\le C.
+\]
+Other physical inverse diagonals are bounded on residual support by
+their core diagonal times a fixed inverse power of $\alpha_+$ or
+$\alpha_-$.  Shifted inverses are bounded by unshifted ones.
+Their derivatives cost $a$ per derivative and further residual powers;
+they do not cost a new factor $h^{-1}$ per derivative.  Two derivatives
+of $q_L$ remove its $\xi$ dependence, and the preceding envelope also
+bounds its first derivative by PSD Cauchy--Schwarz.
+
+Thus the grade-$k_*+1$ absolute remainder is at most a fixed polynomial
+in $d,h^{-1}$ times
+\[
+ 40^p(Cp)^{4k_*+4}d^{-k_*-1},\qquad
+ k_*=\lceil16p/\log d\rceil.
+\]
+The fixed polynomial is harmless in the exponential reserve of (E6).
+This verifies the remainder used in (WT5) without any additional
+small-source lower bound.  Finally (WT3), (WT5), and $p^4/d=o(1)$
+give $x\le y+C(p^4/d)(x+y+\vartheta)+e^{-cp}$; absorb $x$ to prove
+(WT2).
+
+\subsection{Comparison of fresh-star row energies}
+
+\begin{lemma}[Contact row comparison]\label{cu:star-comparison}
+At a plus mean contact $\mathbb Eh_v^+=r$, let $\delta$ be the global
+concentration envelope in (C2), $N=N(v)$ and
+$S_+=\sum_{i\in N}\mathbb E(G^+_{vi})^2$.
+Suppose $a^2S_++\mathbb E\operatorname{tr}A^2\le\lambda$,
+where $\lambda$ is a polynomial envelope with $\lambda\le C\delta$. Put
+\[
+ \mathcal R_v=(p-1)\sum_N(G^+_{vi})^2-p\sum_NG^+_{vi}G^-_{vi},
+ \qquad \mathcal R=\mathbb E\mathcal R_v.
+\]
+For the numerator $F$ in \eqref{cu:E5},
+\[
+ \left|\mathcal R-\frac{\mathbb E_{\nu_K}\mathsf GF}{a^2F_H}\right|
+ \le E_{\rm row},
+\]
+where
+\[
+ E_{\rm row}
+ =C\{p^5\sqrt{\lambda\delta}+p^{13}/d^2+e^{-cp}\}
+ \tag{CR1}
+\]
+\end{lemma}
+\begin{proof}
+For each free row index $j\in N$ and each incident index $k\in N$, put
+\[
+ x_j=G^+_{vj},\quad c_{kj}=G^+_{vv}G^+_{kj},\qquad
+ z_j=G^-_{vj},\quad d_{kj}=G^-_{vv}G^-_{kj}.
+\]
+For $D_i=a^{-1}\partial_i$, direct differentiation gives
+\[
+ \begin{split}
+ D_ix_j&=-x_ix_j-c_{ij},\\
+ D_ic_{kj}&=-2x_ic_{kj}-x_kc_{ij}-G^+_{vv}G^+_{ki}x_j,
+ \end{split}
+ \qquad
+ \begin{split}
+ D_iz_j&=z_iz_j+d_{ij},\\
+ D_id_{kj}&=2z_id_{kj}+z_kd_{ij}+G^-_{vv}G^-_{ki}z_j.
+ \end{split}
+ \tag{CR2}
+\]
+Thus arbitrary derivative words preserve a plus marked factor in
+$\{x_j,c_{kj}\}$ or a minus marked factor in $\{z_j,d_{kj}\}$;
+the second index remains the original free index $j$, and every first
+index $k$ introduced into a two-index mark is an active derivative
+coordinate. Multiplication by the score $2p(x_i-z_i)$ preserves all
+existing marks. Starting from $(p-1)x_j^2-px_jz_j$, every monomial
+therefore retains two plus marks or one mark of each branch.
+
+
+Let $I,J$ be independent uniform indices in $N$, padded to $d$ slots
+with zeros. The root marked factors satisfy
+\[
+ \mathbb E|x_J|^2\le C\lambda,\qquad
+ \mathbb E|z_J|^2\le C\delta.
+\]
+For the other marked factors, Schur decomposition gives
+\[
+ a^4(G^+_{vv})^2\|G^+[N,N]\|_F^2
+ \le2(Z_v^+G^+_{vv})^2\operatorname{tr}A^2
+       +2\left(a^2\sum_N(G^+_{vi})^2\right)^2.
+\]
+Both nonnegative random quantities on the right have first moment
+$O(\lambda)$ by the hypothesis, before multiplication or squaring, and have
+bounded $L^{cp}$ norms by the source cap. High-moment interpolation
+therefore yields
+\[
+ \mathbb E|c_{IJ}|^2\le C\lambda.
+\]
+The same argument using (C2) gives $\mathbb E|d_{IJ}|^2\le C\delta$.
+Here the expectation includes both independent indices $I,J$.
+All root source factors remain in the normalized products
+$Z_v^\pm G^\pm_{vv}$; no positive lower bound on a source is used.
+
+Only the first two retained grades need the marked bounds.
+Their derivative words are $D_i^4$, $D_i^6$ and $D_i^4D_k^4$.
+Every active coordinate has a uniform marginal independent of the
+free index $J$; hence the preceding moment bounds also apply when
+coordinates repeat or $J$ equals an active coordinate.
+High-moment interpolation bounds a mixed marked monomial by
+$C\sqrt{\lambda\delta}$, and a two-plus monomial by $C\lambda$.
+The first two grades consequently cost
+$Cp^5\sqrt{\lambda\delta}$ and
+$Cp^9d^{-1}\sqrt{\lambda\delta}$.
+All grades at least three may use the original unmarked bounds:
+they sum geometrically to $Cp^{13}/d^2$.
+The final insertion-floor remainder is exponentially small.
+This proves (CR1), since $p^4/d=o(1)$.
+
+\end{proof}
+
+\paragraph{Separating incident-row and core marks.}
+Suppose the incident-row envelopes are $\lambda_r,\rho_r$, and the
+marked-core envelopes are $\lambda_c,\delta_c$, respectively, with
+$\lambda_r\le\rho_r$, $\lambda_c\le\delta_c$,
+$\lambda_r\le\lambda_c$ and $\rho_r\le\delta_c$.
+The row-observable comparison improves to
+\[
+ E_{\rm row}=C\{p^5\sqrt{\lambda_r\rho_r}
+             +p^4\sqrt{\lambda_c\delta_c}+p^{13}/d^2+e^{-cp}\}.
+ \tag{CR3}\label{eq:split-row-comparison}
+\]
+Indeed, in
+$\partial_i^4(\Phi\mathcal R_v)=\Phi^{(4)}\mathcal R_v
++\sum_{k=1}^4\binom{4}{k}\Phi^{(4-k)}\partial_i^k\mathcal R_v$,
+the first term retains the original free incident factors
+$x_j^2$ or $x_jz_j$ and has coefficient $O(p^5a^4)$.
+Every other term differentiates the observable at least once,
+so its coefficient is at most $Cp^4a^4$ and the core-mark estimate
+applies. The marked second grade costs
+$Cp^9d^{-1}\sqrt{\lambda_c\delta_c}$, absorbed into the core-mark
+term since $p^5/d=o(1)$. The higher-grade tail is unchanged.
+
+\begin{lemma}[Multiplicative shifted trace comparison]\label{cu:shifted-star}
+Let $Y_\pm=(P^\pm_{H-v}+hI)^{-1}_{NN}$ and let $E_{\rm row}$
+be any available raw comparison error for the row observable $F$.
+Put
+\[
+ \begin{split}
+ Q=a^2\mathbb E\{&(p-1)(G^+_{vv})^2\operatorname{tr}Y_+^2
+       +pG^+_{vv}G^-_{vv}\operatorname{tr}(Y_+Y_-)\}\ge0,\\
+ \eta_{\rm BL}&=C\{p/(dh)+p^4/d\},\qquad
+ \epsilon_{\rm BL}=C(p^5+p^2/h)d^{-10}+e^{-cp}.
+ \end{split}
+\]
+Then
+\[
+ \mathcal R\ge(1-\eta_{\rm BL})Q-E_{\rm row}-\epsilon_{\rm BL}.
+ \tag{B1}\label{eq:BLstar}
+\]
+At the parameters used below, $\eta_{\rm BL}=o(1)$ and
+$\epsilon_{\rm BL}=o(p^{-1})$. In particular
+$\mathcal R\ge-E_{\rm row}-\epsilon_{\rm BL}$, and
+$\mathcal R,E_{\rm row}\le Cp$ imply $Q\le Cp$.
+\end{lemma}
+\begin{proof}
+Fix the core and set
+\[
+ M=a^2Y_+/Z_v^+,\qquad N=a^2Y_-/Z_v^-,\qquad
+ H=2(p-1)M/\alpha+2pN/\beta.
+\]
+Thus $0\preceq M\preceq A$, $0\preceq N\preceq B$, and
+$\|M\|,\|N\|\le Ca^2/h$ because $1/Z_v^\pm\le y_v^\pm\le s$.
+Let $\nu$ be the normalized Gaussian law with weight
+$\alpha^{p-1}\beta^p$. Its potential, apart from $|x|^2/2$, is
+$V=-(p-1)\log\alpha-p\log\beta$, and $\nabla^2V\succeq H$.
+The Brascamp--Lieb variance inequality~\cite{BL} for linear functions gives
+\[
+ \Sigma_\nu\preceq\mathbb E_\nu(I+\nabla^2V)^{-1}
+ \preceq\mathbb E_\nu(I+H)^{-1}.
+\]
+The density is even, so $\Sigma_\nu=\mathbb E_\nu xx^T$.
+For completeness, the variance inequality follows by solving
+$Lw=f-\mathbb E_\nu f$, where $L=-\Delta+\nabla U\cdot\nabla$ and
+$U=|x|^2/2+V$. Integration by parts and weighted Cauchy--Schwarz give
+\[
+ (\operatorname{Var}_\nu f)^2
+ \le \mathbb E_\nu[\nabla f^T(\nabla^2U)^{-1}\nabla f]
+       \mathbb E_\nu[\nabla w^T\nabla^2U\nabla w].
+\]
+The Bochner identity bounds the last factor by
+$\mathbb E_\nu(Lw)^2=\operatorname{Var}_\nu f$.
+Smooth convex approximation proves the statement for these clipped
+powers on their convex support. Since $I-\Sigma_\nu$
+is PSD, $A\succeq M$, and $H(I+H)^{-1}\succeq H-H^2$,
+\[
+ \operatorname{tr}A-\mathbb E_\nu q_A
+ \ge\mathbb E_\nu\operatorname{tr}\{M(H-H^2)\}.
+\]
+Writing $F=(p-1)q_{A^2}\alpha^{p-2}\beta^p
+ +pq_{AB}\alpha^{p-1}\beta^{p-1}$, Gaussian integration by parts gives
+$2\mathsf GF=\mathsf G[(\operatorname{tr}A-q_A)\alpha^{p-1}\beta^p]$.
+Therefore
+\begin{align*}
+ \mathsf GF\ge\mathsf G\biggl[\Phi\biggl\{
+ &(p-1)\frac{\operatorname{tr}M^2}{\alpha^2}
+  +p\frac{\operatorname{tr}MN}{\alpha\beta}
+  -\frac{\operatorname{tr}(MH^2)}{2\alpha}\biggr\}\biggr].       \tag{B2}
+\end{align*}
+Write
+\[
+ X_1=\operatorname{tr}M^2\alpha^{-2},\quad
+ X_2=\operatorname{tr}(MN)\alpha^{-1}\beta^{-1},\quad
+ x=\mathbb E(X_1+X_2),\quad \vartheta=d^{-10}.
+\]
+No bound on $x$ is assumed. With $t_+=\alpha^{-1}=D_v^+h_v^+$,
+$t_-=\beta^{-1}=D_v^-h_v^-$ and $\mu_A=\operatorname{tr}A$,
+$\mu_B=\operatorname{tr}B$, one has
+\[
+ X_1\le\mu_A^2t_+^2,\qquad X_2\le\mu_A\mu_Bt_+t_-.
+\]
+These envelopes have bounded $L^{cp}$ moment bases by Schur order,
+Minkowski and the capped diagonal moments. Interpolation consequently
+gives, for any fixed-degree product $Z$ of normalized inverse diagonals,
+\[
+ \mathbb E[(X_1+X_2)Z]\le C(x+\vartheta).
+ \tag{B3}
+\]
+Indeed the usual bound is $Cx^{1-C/p}$; split at $x=\vartheta$ and
+use $\vartheta^{-C/p}=O(1)$. A product of degree $O(j)$ similarly
+costs at most $C^{O(j)}(x+\vartheta)\vartheta^{-Cj/p}$.
+
+Apply \eqref{cu:E4} to the four nonnegative numerators
+\[
+ \operatorname{tr}M^2\alpha^{p-2}\beta^p,\quad
+ \operatorname{tr}(MN)\alpha^{p-1}\beta^{p-1},\quad
+ \operatorname{tr}M^2\alpha^{p-3}\beta^p,\quad
+ \operatorname{tr}(MN)\alpha^{p-1}\beta^{p-2}.
+\]
+Every derivative retains its core-constant trace factor. Under the
+actual sign law the normalized grade-$j$ correction is bounded by
+\[
+ (Cp^4/d)^j(x+\vartheta)\vartheta^{-Cj/p}.
+\]
+The extra factor is absorbed into the geometric base, so the retained
+corrections total $C(p^4/d)(x+\vartheta)$.
+For the last two numerators the additional $t_+$ or $t_-$ is included
+in (B3). The final remainder is exponentially small by \eqref{cu:E6}:
+the trace coefficients are bounded by $\mu_A^2$ or $\mu_A\mu_B$,
+and require only a fixed number of extra core moments.
+All excluded endpoint derivatives still vanish.
+Writing $\langle\cdot\rangle_G$ for Gaussian numerator expectation,
+averaged over the own core and divided by $F_H$, we obtain
+\[
+ \begin{aligned}
+ \left|\langle\Phi((p-1)X_1+pX_2)\rangle_G
+       -\mathbb E((p-1)X_1+pX_2)\right|
+ &\le Cp^5d^{-1}(x+\vartheta)+e^{-cp},\\
+ \langle\Phi(X_1t_++X_2t_-)\rangle_G
+ &\le C(x+\vartheta)+e^{-cp}.
+ \end{aligned}
+ \tag{B4}
+\]
+Use $(H_1+H_2)^2\preceq2H_1^2+2H_2^2$ and the operator norm only
+once to bound the cubic term in (B2):
+\[
+ \alpha^{-1}\operatorname{tr}(MH^2)
+ \le Cp^2a^2h^{-1}(X_1t_++X_2t_-).
+ \tag{B5}
+\]
+The row-observable comparison and (B4)--(B5), after the raw scale,
+give
+\[
+ \mathcal R\ge Q-E_{\rm row}
+                  -C(p^5+p^2/h)(x+\vartheta)-e^{-cp},
+\]
+where the Schur identities identify
+$Q=a^{-2}\mathbb E[(p-1)X_1+pX_2]$ with the stated physical traces.
+Since $Q\ge(p-1)a^{-2}x$ and $a^2\asymp d^{-1}$, absorbing the
+multiple of $x$ into $Q$ proves \eqref{eq:BLstar}.
+All residual factors $t_\pm=D_v^\pm h_v^\pm$ are normalized, so this
+argument is uniform at zero sources.
+\end{proof}
+
+
+\subsection{The contact estimate and conclusion}
+
+All expectations in this section use the full Gibbs law, including
+expectations of functions of a principal core. Put $q=d-1$ and choose
+\[
+ p=\lfloor c_0d^{2/17}\rfloor,\quad R^2=4q+4/p,\quad a=R^{-1},
+ \quad \frac{q\eta_0^2}{1-\eta_0}=\frac4p,
+ \quad s=\frac{2-\eta_0}{1-(1-\eta_0)/q},\quad r=1+\eta_0/2.
+ \tag{D1}\label{eq:compressed-parameters}
+\]
+Thus $r-1\asymp(pd)^{-1/2}$, $s=2+O(d^{-1}+\eta_0)$, and
+\[
+ \bar L=da^2s^2=\frac{dq(1-\eta_0)}{(q-1+\eta_0)^2},
+ \qquad d(r-1)(1-r\bar L)=p^{-1}+O(\eta_0+p^{-1}d^{-1}).
+ \tag{D2}\label{eq:compressed-geometric-drift}
+\]
+We rule out a first contact $\mathbb E h_v^+=r$ in the two source
+cubes $0\le y_i^\pm\le s$. Sources equal to zero are interpreted by
+continuity; the contacting source is positive. Set $N=N(v)$ and
+\[
+ \ell_i=a^2y_v^+y_i^+,\quad L=\sum_N\ell_i,\quad
+ C_+=\sum_N(c_{vi}^+)^2,\quad D_+=Z_v^+y_v^+=1+L-C_+,
+ \quad D_-=Z_v^-y_v^-,
+\]
+\[
+ \begin{gathered}
+ \delta_i=r-\mathbb E h_i^+\ge0,\quad
+ J=\sum_N\ell_i(\mathcal B(y^+)^{-1})_{vi},\quad
+ x_i=G^+_{vi},\quad z_i=G^-_{vi},\\
+ S=\sum_N\mathbb E x_i^2,\quad T=\sum_N\mathbb E x_iz_i,
+ \quad \mathcal R=(p-1)S-pT.
+ \end{gathered}
+\]
+The deterministic source inequalities give $L\le\bar L$,
+$J\ge C_+$ and $C_+/a^2=O(1)$.
+
+\paragraph{Exact loop and bootstrap.}
+Define the fourth-order term explicitly by
+\[
+ P_i=G^+_{vv}G^+_{ii},\quad Q_i=G^-_{vv}G^-_{ii},\quad
+ U_i=(p-1)x_i-pz_i,\quad
+ V_i=(p-1)(P_i+x_i^2)+p(Q_i+z_i^2),
+\]
+\[
+ \begin{gathered}
+ W_i=(p-1)(3P_ix_i+x_i^3)-p(3Q_iz_i+z_i^3),\qquad
+ Q_*=(a^4/3)\sum_N\mathbb E K_i,\\
+ K_i=x_i(8U_i^3-12U_iV_i+4W_i)
+          -3(P_i-x_i^2)(4U_i^2-2V_i).
+ \end{gathered}
+\]
+For a direct derivation let $\alpha=1-\xi^TA\xi$ and
+$\beta=1-\xi^TB\xi$ on positive endpoints. The Schur formula gives
+$\Phi x_i=-a^{-1}(A\xi)_i\alpha^{p-1}\beta^p$,
+$(A\xi)_i/\alpha=-ax_i$ and
+$A_{ii}/\alpha=a^2(P_i-x_i^2)$.
+Three differentiations therefore give
+$\Phi^{-1}\partial_i^3(\Phi x_i)=a^3K_i$.
+The endpoint identity supplies the term $Q_*$ directly; no fresh
+normalization is required. This polynomial has degree four in
+inverse entries and coefficients of degree at most three in $p$.
+The corrected loop and the source-maximum covariance inequality are
+\[
+ D_+r=1+a^2\sum_N\mathbb E
+ [G^+_{vv}G^+_{ii}-(2p-1)x_i^2+2px_iz_i]
+       +Q_*+O(p^5d^{-2}),
+\]
+\[
+ p\operatorname{Cov}(G^+_{vv},G^+_{ii})
+ \le\mathbb E x_i^2-r y_v^+y_i^+(\mathcal B(y^+)^{-1})_{vi}.
+\]
+Substitute the second formula in the first and use
+$\sum c_{vi}^+=L-C_+$. This gives the exact scalar inequality
+\[
+ \begin{split}
+ &(r-1)(1-rL)+r\sum_N\ell_i\delta_i
+ +(1-p^{-1})a^2S+(r/p)J+2a^2\mathcal R\\
+ &\hspace{30mm}\le Q_*+rC_++O(p^5d^{-2}).
+ \end{split}\tag{D3}\label{eq:compressed-drift}
+\]
+The row-free part of $K_i$ is
+$6[(p-1)P_i^2+pP_iQ_i]$. Every other monomial has at least two
+root-row factors and coefficient $O(p^3)$. Averaging over a uniform
+neighbor index, the precontact row bound gives mean square at most
+$C\delta$ for either root row. H\"older with capped high moments
+therefore bounds every such monomial by
+$C\delta^{1-O(1/p)}\le C\delta$.
+Since $a^2d=O(1)$, we obtain
+$|Q_*|/a^2\le C(p+p^3\delta)\le Cp$ for the parameters below.
+Since
+\[
+ (r-1)(1-rL)=(r-1)(1-r\bar L)+r(r-1)(\bar L-L),
+\]
+all terms on the left of \eqref{eq:compressed-drift} other than
+$2a^2\mathcal R$ are nonnegative. Consequently
+$\mathcal R\le C(p+p^5/d)$. If $\mathcal R\ge-b$, the same
+inequality, term by term, gives
+\[
+ S+a^{-2}\sum_N\ell_i\delta_i\le C(1+p+p^5/d+b),\qquad
+ \bar L-L\le\frac{Ca^2(1+p+p^5/d+b)}{r-1}.
+ \tag{D4}\label{eq:compressed-bootstrap}
+\]
+No row saturation is assumed in these estimates.
+
+\paragraph{A single contact bootstrap.}
+Fix $0<\kappa_0\le1$ and use
+\[
+ h=\kappa_0p^{-4},\qquad
+ \delta=C\{r-1+p^4/d+(p/d)^{1/3}\}
+           \le Cc_0^{17/6}p^{-5/2}.
+ \tag{D5}\label{eq:compressed-shift}
+\]
+All little-$o$ estimates below hold as $d\to\infty$ with
+$\kappa_0,c_0$ fixed. Define the unknown deterministic mass
+\[
+ \lambda=a^2S+\mathbb E\operatorname{tr}A^2+\vartheta,
+ \qquad \vartheta=d^{-10}.
+\]
+By (C2), $\vartheta\le\lambda\le C\delta$, so $\lambda$ is a valid
+polynomial envelope in Lemma~\ref{cu:star-comparison}. Its error is
+\[
+ E_\lambda=C\{p^5\sqrt{\lambda\delta}+p^{13}/d^2+e^{-cp}\}.
+\]
+The exact Gaussian identity $N_G=2\mathsf GF$ and $N_G\ge0$ give
+$\mathcal R\ge-E_\lambda$. Thus \eqref{eq:compressed-bootstrap}
+and the already proved $\mathcal R\le Cp$ imply
+\[
+ a^2S\le C(p+E_\lambda)/d,
+ \qquad \mathbb E_{\nu_K}N_G/F_H\le C(p+E_\lambda)/d.
+\]
+For $w=\operatorname{tr}A^2/(1+\operatorname{tr}A)$, the Gaussian
+whitening bound is $N_G\ge f_Gw$.
+Apply the unknown-mass interpolation and endpoint-transfer argument
+of (B3)--(B4) to $w\Phi$: $w$ has bounded $L^{cp}$ moments and
+every derivative retains it. With $x=\mathbb Ew$,
+\[
+ x\le\mathbb E_{\nu_K}(wf_G)/F_H
+                   +C(p^4/d)(x+\vartheta)+e^{-cp}
+   \le C(p+E_\lambda)/d+C(p^4/d)(x+\vartheta)+e^{-cp}.
+\]
+Absorb the multiple of $x$ and use the uniform tail estimate
+\eqref{cu:core-tail}. Combining the row and core bounds yields
+\[
+ \lambda\le Cp/d+Cp^5\sqrt{\lambda\delta}/d
+                         +Cp^{13}/d^3+C\vartheta.
+\]
+Young's inequality absorbs the square-root term, giving
+\[
+ \lambda\le C\{p/d+p^{10}\delta/d^2+p^{13}/d^3+\vartheta\}
+       \le Cp/d=:\lambda_1.
+ \tag{D6}\label{eq:compressed-row-bootstrap}
+\]
+The last inequality follows from $p^7\le d$ and the displayed
+formula for $\delta$. In particular $E_\lambda\le Cp$.
+Returning to \eqref{eq:compressed-bootstrap} gives
+\[
+ S\le Cp,\qquad \sum_N\ell_i\delta_i\le Cp a^2,\qquad
+ \bar L-L\le\varepsilon_s:=Cp^{3/2}d^{-1/2}.
+ \tag{D7}\label{eq:compressed-saturation}
+\]
+Since $\bar L-L=a^2[ds^2-y_v^+\sum_Ny_i^+]$, with all sources at
+most $s$, it follows that
+\[
+ |y_v^+-2|+\left|\frac{|N|}{d}-1\right|
+       +\frac1d\sum_N|y_i^+-2|
+       \le C(\varepsilon_s+\eta_0+d^{-1}).
+ \tag{D8}\label{eq:compressed-profile-saturation}
+\]
+No shifted trace budget or source saturation was used to close
+$\lambda$.
+
+The global incident-row gain gives the minus envelope
+$\delta_{\rm row}=C\delta/p$. Retain the actual plus row mass in
+\eqref{eq:split-row-comparison}, taking
+$\lambda_r=C(S+1)/d$, $\rho_r=\delta_{\rm row}$,
+$\lambda_c=\lambda_1=Cp/d$ and $\delta_c=C\delta$.
+The required envelope ordering follows from $S\le Cp$ and
+$p^2/d\le C\delta$; the added $1$ supplies a polynomial floor.
+With $\Gamma=p^4\sqrt{p\delta/d}$, the comparison error is
+\[
+ E_{\rm row}=C\{\Gamma\sqrt{S+1}+p^{13}/d^2+e^{-cp}\}.
+ \tag{D9a}\label{eq:postcontact-row-error}
+\]
+In particular $E_{\rm row}\le Cp$, and the positive shifted prefactors
+are covered by \eqref{eq:BLstar}.
+
+\paragraph{The contact trace budget.}
+Put $Y_\pm=(P^\pm_{H-v}+hI)^{-1}_{NN}$,
+$\Omega_+=(G^+_{vv}/2)^2$, and
+$\Omega_-=G^+_{vv}G^-_{vv}/4$.
+The bounds $\mathcal R,E_{\rm row}\le Cp$ and
+\eqref{eq:BLstar} give $Q\le Cp$ directly. Equivalently,
+\[
+ \mathbb E[\Omega_+d^{-1}\operatorname{tr}Y_+^2]
+ +\mathbb E[\Omega_-d^{-1}\operatorname{tr}(Y_+Y_-)]\le C.
+ \tag{D9b}\label{eq:contact-trace-budget}
+\]
+Since $G^+_{vv}\ge1/Z_v^+\ge c$ after saturation, this also bounds
+$\mathbb E[d^{-1}\operatorname{tr}Y_+^2]$.
+For the full/core correction $\Delta_\pm=X_\pm[N,N]-Y_\pm$,
+\eqref{cu:C5} gives
+\[
+ 0\le\operatorname{tr}\Delta_\pm
+ \le h^{-1}Z_v^\pm(G^\pm_{vv}-(X_\pm)_{vv}).
+\]
+The normalized mean-shift estimate and $Z_v^\pm y_v^\pm\le C$
+therefore give $\mathbb E[\Omega\operatorname{tr}\Delta_\pm]
+\le Ch^{-1/2}$ for either fixed-degree root weight $\Omega$.
+High-moment interpolation preserves this bound uniformly at zero
+sources. Every shifted compression has norm at most $h^{-1}$, so
+expanding either trace product costs $C/(dh^{3/2})$ after normalization.
+Thus the same budgets hold for the full compressions $X_\pm[N,N]$.
+
+Since $Q\le Cp$, the multiplicative loss in \eqref{eq:BLstar}
+is at most $Cp^5/d+Cp^2/(dh)$.
+Consequently
+\[
+ \begin{split}
+ \mathcal R\ge a^2\mathbb E\{&
+ (p-1)(G^+_{vv})^2\operatorname{tr}X_+[N,N]^2
+ +pG^+_{vv}G^-_{vv}\operatorname{tr}(X_+[N,N]X_-[N,N])\}\\
+ &-C\{E_{\rm row}+p^5/d+p^2/(dh)+p/(dh^{3/2})\}.
+ \end{split}\tag{D10}\label{eq:compressed-positive-trace}
+\]
+Both physical root weights have been retained.
+
+\paragraph{Retaining both physical root weights.}
+Put
+\[
+ c=G^+_{vv}/2,\quad d_v=G^-_{vv}/2,\quad
+ a_i=(X_+)_{ii}/2,\quad b_i=(X_-)_{ii}/2,
+ \quad \Omega_+=c^2,\quad\Omega_-=cd_v.
+\]
+Use the pointwise PSD matrices
+\[
+ K_{+,\sigma}=X_+\circ X_+/4,\qquad
+ K_{-,\sigma}=X_+\circ X_-/4,
+ \quad M_{+,\sigma}=\operatorname{diag}(a_i^2),\quad
+ M_{-,\sigma}=\operatorname{diag}(a_ib_i).
+\]
+Let $b_{\pm,\sigma}=4TM_{\pm,\sigma}u$, and set
+\[
+ \begin{aligned}
+ q_+&=\mathbb E[\Omega_+u^TK_{+,\sigma}u],&
+ \zeta&=\mathbb E[\Omega_+u^TK_{+,\sigma}b_{+,\sigma}],\\
+ z&=\mathbb E[\Omega_+b_{+,\sigma}^TK_{+,\sigma}b_{+,\sigma}],&
+ t_+&=\mathbb E[\Omega_+u^TM_{+,\sigma}u],\\
+ \alpha&=\mathbb E[\Omega_+u^TM_{+,\sigma}b_{+,\sigma}],&
+ q_-&=\mathbb E[\Omega_-u^TK_{-,\sigma}u],\\
+ t_-&=\mathbb E[\Omega_-u^TM_{-,\sigma}u],&
+ \beta&=\mathbb E[\Omega_-u^TM_{-,\sigma}b_{-,\sigma}],\\
+ z_-&=\mathbb E[\Omega_-b_{-,\sigma}^TK_{-,\sigma}b_{-,\sigma}].
+ \end{aligned}
+\]
+The pointwise matrices and weights are PSD/nonnegative, so
+$\zeta\ge0$ and $\zeta^2\le q_+z$ after Cauchy--Schwarz in the
+weighted direct-sum space. No random mask is pulled out of an expectation.
+For this part of the proof suppress the signing subscript, and write
+$q=q_+$ and $t=t_+$. The full-compression trace budget gives $q_+\le C$.
+Also $q-t\ge0$ and $\zeta-\alpha\ge0$ exactly, since they are
+plus off-diagonal Schur energies.
+
+\paragraph{A nonnegative mask is controlled by its own Schur energy.}
+Let $X,Y$ be symmetric positive semidefinite matrices with
+$\|X\|,\|Y\|\le h^{-1}$. For a nonnegative mask $b$, put
+\[
+ B=\operatorname{diag}b,\quad U=XBY,\quad
+ K=X\circ Y/4,\quad F_{ji}=X_{ii}U_{ji}-X_{ji}U_{ii}.
+\]
+Let $I$ be any set of column indices, and suppose $X_{ii}\le D$
+for $i\in I$. Then the following deterministic inequality holds:
+\[
+ \boxed{\quad
+ \sum_{i\in I,j}F_{ji}^2
+       \le16D^2h^{-2}\,b^TKb.
+ \quad}                                                   \tag{BM1}
+\]
+The sum over $j$ may in particular be restricted to incident edges.
+Only the physical diagonal maximum on $I$ is needed.
+
+For the first part of $F$, spectral order and trace positivity give
+\[
+ \begin{split}
+ \sum_{i\in I,j}X_{ii}^2U_{ji}^2
+ &\le D^2\operatorname{tr}(U^TU)
+   =D^2\operatorname{tr}(BX^2BY^2)\\
+ &\le D^2h^{-2}\operatorname{tr}(BXBY).
+ \end{split}                                               \tag{BM2}
+\]
+Each trace comparison is valid by congruence and positivity:
+$BX^2B\preceq h^{-1}BXB$, then $Y^2\preceq h^{-1}Y$.
+
+For the second part, Cauchy--Schwarz in the $X$ inner product gives
+\[
+ U_{ii}^2\le X_{ii}(YBXBY)_{ii}.
+\]
+Using $(X^2)_{ii}\le h^{-1}X_{ii}$ and the positivity of $YBXBY$,
+\[
+ \begin{split}
+ \sum_{i\in I,j}X_{ji}^2U_{ii}^2
+ &\le h^{-1}D^2\operatorname{tr}(YBXBY)\\
+ &=h^{-1}D^2\operatorname{tr}(BXBY^2)
+ \le D^2h^{-2}\operatorname{tr}(BXBY).
+ \end{split}                                               \tag{BM3}
+\]
+Finally $(r-s)^2\le2r^2+2s^2$ and
+$\operatorname{tr}(BXBY)=4b^TKb\ge0$ prove (BM1).
+The proof permits a random $b$, since every statement is pointwise.
+
+Apply this with $(X,Y,b)=(X_+,X_+,b_+)$ or
+$(X_-,X_+,b_-)$. Capped high-moment interpolation, with
+$\theta=d^{-2}$, preserves the respective nonnegative energies $z,z_-$
+after fixed-degree diagonal multipliers, so
+\[
+ \sum_{i\in N,j}\mathbb E[D_*^C\Omega_\pm F_{ji}(b_\pm)^2]
+                       \le Ch^{-2}(z_\pm+\theta),\qquad z_+=z.
+ \tag{BM4}
+\]
+Indeed each energy has a polynomial envelope and a bounded high-moment
+base. If its first moment exceeds $\theta$, interpolation costs at most
+$\theta^{-O(1/p)}h^{-O(1/p)}=O(1)$; otherwise it gives $C\theta$.
+The mixed weight need not be bounded below.
+
+\paragraph{The fixed mask is controlled by the off-diagonal propagated energy.}
+Set $\beta_h=(dh)^{-1}$ and $\theta=d^{-2}$.
+For $\epsilon\in\{+,-\}$, $H\in\{1,\Omega_+,\Omega_-\}$ and
+$U=X_\epsilon D_uX_+$, define the same Schur column
+$F_{ji}=(X_\epsilon)_{ii}U_{ji}-(X_\epsilon)_{ji}U_{ii}$.
+Then
+\[
+ \sum_{i\in N,j\sim i}\mathbb E[H F_{ji}^2]
+ \le C h^{-2}\{\zeta-\alpha+\beta_h(q-t)+\theta\}
+                         +C h^{-1/2}.
+ \tag{FS1}
+\]
+The estimate also holds with any fixed-degree physical diagonal
+multiplier on the left. Source saturation gives $\Omega_+\ge c>0$,
+so $H\le D_*^C\Omega_+$; all such multipliers can be interpolated
+against the nonnegative energies on the right, with the floor $\theta$.
+
+To prove this, delete $i$ and write
+$C_i^\tau=(P^\tau_{-i}+hI)^{-1}$, embedded with zero $i$ coordinate,
+and $\xi=(\sigma_{il})_{l\sim i}$. Exact Schur complementation gives
+\[
+ F_{ji}=-a(X_\epsilon)_{ii}(X_+)_{ii}
+ \sum_{\substack{k\in N\setminus\{i\}\\l\sim i}}
+ (C_i^\epsilon)_{jk}u_k(C_i^+)_{kl}\xi_l.
+ \tag{FS2}
+\]
+Split the sum into $k=l$ and $k\ne l$. These are exactly the two
+core-fixed linear maps in (WT1). Apply (WT2) with weight
+$H(X_\epsilon)_{ii}^2(X_+)_{ii}^2$ to each positive quadratic form.
+The total polynomial-floor and exponential errors remain smaller
+than $\theta$ after the at most $d$ stars and all displayed polynomial
+factors, by choosing the fixed exponent in (WT2) sufficiently large.
+
+For the off-diagonal part, $\|C_i^\epsilon\|\le h^{-1}$ gives
+\[
+ C h^{-2}\mathbb E\left[D_*^C\Omega_+
+ \frac{a^2}{d}\sum_{i\in N}(X_+)_{ii}^2
+ \sum_{\substack{l\sim i,\ k\in N\setminus\{i,l\}}}
+                        (C_i^+)_{kl}^2\right]+C\theta.
+ \tag{FS3}
+\]
+The exact core/full relation is
+$(C_i^+)_{kl}=(X_+)_{kl}-(X_+)_{ki}(X_+)_{il}/(X_+)_{ii}$.
+Multiply by $(X_+)_{ii}^2$ before estimating its square; this
+introduces no inverse source. The first term is bounded by
+\[
+ \frac{a^2}{d}\sum_{i\in N}(X_+)_{ii}^2
+       \sum_{l\sim i,\ k\in N\setminus\{l\}}(X_+)_{kl}^2
+       =4u^T(K_+-M_+)b_+.
+\]
+For the rank-one term, $\sum_l(X_+)_{il}^2\le h^{-1}(X_+)_{ii}$ gives
+\[
+ \frac{a^2}{d}\sum_{i,k\in N,\ k\ne i}(X_+)_{ki}^2
+                    \sum_{l\sim i}(X_+)_{il}^2
+ \le\frac{CD_*}{dh}\frac1d
+           \sum_{i,k\in N,\ k\ne i}(X_+)_{ki}^2.
+\]
+The two weighted first moments are respectively
+$4(\zeta-\alpha)$ and $4(q-t)$.
+Their polynomial envelopes and the capped high moments give
+$\mathbb E[D_*^C Y]\le C(\mathbb EY+\theta)$ for either weighted
+nonnegative energy $Y$. This proves the first term in (FS1).
+
+For the direct part, (WT2) instead gives
+\[
+ Ca^2\sum_{i\in N,\ k\in N\cap N(i)}u_k^2
+ \mathbb E\left[H(X_\epsilon)_{ii}^2(X_+)_{ii}^2
+                (C_i^+)_{kk}^2((C_i^\epsilon)^2)_{kk}\right]
+ +C\theta.
+\]
+Here $(C_i^+)_{kk}\le(X_+)_{kk}$. Do not square this matrix order.
+Use the exact Schur subtraction to obtain
+\[
+ (X_\epsilon)_{ii}^2((C_i^\epsilon)^2)_{kk}
+ \le2(X_\epsilon)_{ii}^2(X_\epsilon^2)_{kk}
+              +2(X_\epsilon)_{ik}^2(X_\epsilon^2)_{ii}.
+\]
+The mean Ward bound (W5), with physical diagonal multipliers, bounds
+both expectations by $Ch^{-1/2}$. Since
+$a^2\sum_{i,k\in N}u_k^2 1_{\{i\sim k\}}\le C$, the entire direct
+part costs $Ch^{-1/2}$. This proves (FS1).
+
+\paragraph{Closing the four weak errors.}
+The generic weak score is estimated with its physical weight retained:
+the determinant contribution is $2paH|F|(|G^+_{ij}|+|G^-_{ij}|)$,
+and the root derivative contribution is $|F\partial_{ij}H|$.
+For either nonconstant root weight, positivity gives
+\[
+ \frac{|\partial_{ij}H|^2}{H}
+ \le Ca^2D_*^C\{(G^+_{vi})^2+(G^-_{vi})^2\},
+ \tag{FS4}
+\]
+with the quotient interpreted by continuity at $H=0$.
+Indeed $(G^\tau_{vi}G^\tau_{vj})^2/G^\tau_{vv}
+\le G^\tau_{jj}(G^\tau_{vi})^2$; no inverse source is retained.
+Joint-index Cauchy--Schwarz, (GR1), and (FS1) therefore give
+\[
+ \mathsf S_u\le
+ Ce\sqrt{\zeta-\alpha+\beta_h(q-t)+\theta}+Ce h^{3/4},
+ \qquad e=\frac{p\sqrt{\delta_{\rm row}}}{\sqrt d\,h}.
+ \tag{FS5}
+\]
+The same calculation with (BM1) gives
+$\mathsf S_{b_+}\le Ce\sqrt{z+\theta}$ and
+$\mathsf S_{b_-}\le Ce\sqrt{z_-+\theta}$, where
+$z=\mathbb E[\Omega_+b_+^TK_+b_+]$ and
+$z_-=\mathbb E[\Omega_-b_-^TK_-b_-]$.
+No comparison between plus and minus masks is needed.
+
+Let $r_0=q-\zeta-t$ and $r_1=\zeta-z-\alpha$ be the two actual
+plus residuals. The weak loop, applied directly to $f=u$ and $f=b_+$,
+gives
+\[
+ \begin{split}
+ |r_1|&\le Ce\sqrt{z+\theta}+CB_0,\\
+ |r_0|&\le Ce\sqrt{z+|r_1|+\beta_h(q-t)+\theta}
+                                      +Ce h^{3/4}+CB_0,\\
+ B_0&=p/(dh)+1/(dh^{3/2})+e^{-cp}.
+ \end{split}\tag{FS6}
+\]
+The contact trace budget gives $q\le C$, hence $0\le q-t\le C$.
+Moreover $e\sqrt{|r_1|}\le C(e\sqrt z+e^2+B_0+e\sqrt\theta)$.
+Thus every plus or mixed weak residual, with either $f=u$ or its
+nonnegative mask $f=b_\pm$, is at most
+\[
+ E_c=C\{e\sqrt z+e\sqrt{z_-}+e^2+B_0
+                  +e[h^{3/4}+(dh)^{-1/2}+\sqrt\theta]\}.
+ \tag{FS7}
+\]
+The mixed identities use linearity of $F$ and (BM1); their fixed-mask
+part is covered by the same plus energies in (FS5). All comparison
+normalizers are the actual full sign normalizer as in (WT2).
+
+Consequently the four identities, each with absolute error $O(E_c)$, are
+\[
+ q_+-\zeta=t_++O(E_c),\qquad \zeta-z=\alpha+O(E_c),
+\]
+\[
+ \mathbb E[\Omega_-u^TK_-(u+b_-)]=t_-+O(E_c),\qquad
+ \mathbb E[\Omega_-b_-^TK_-(u+b_-)]=\beta+O(E_c).
+\]
+Every random mask remains inside its expectation.
+
+\paragraph{Averaged profile inequalities.}
+Let
+\[
+ \chi_+=\sqrt{\varepsilon/p+\varepsilon^2+p/d}
+             +\varepsilon_s+\eta_0+d^{-1},\qquad
+ \rho_v=\varepsilon/p+\varepsilon^2,
+ \quad \xi=\sqrt h+\chi_++\sqrt{\rho_v}+\varepsilon+d^{-1}.
+\]
+The $k=2$ case of (F2) gives
+$\mathbb E(h_i^+-1)^2\le2\delta_i+C(\varepsilon/p+\varepsilon^2)$,
+while source saturation and (D7) give
+$\sum_{i\in N}y_i^+\delta_i\le Cp$.
+Weighted Cauchy--Schwarz and the source bounds yield the stated
+$\chi_+$ estimate. The contact neighbor estimates and the mean shift bound give
+$d^{-1}\sum_N\mathbb E|a_i-1|\le C(\sqrt h+\chi_+)$,
+also with any fixed-degree diagonal multiplier. At the contacting
+root, the variance bound and source saturation give
+$\mathbb E|c-1|\le C(\sqrt{\rho_v}+\varepsilon_s+\eta_0+d^{-1})$.
+All assertions are uniform at zero sources.
+By the fourth moment cap and Holder,
+\[
+ 0\le t_+,t_-\le1+C\varepsilon.
+ \tag{RC1}
+\]
+For example, $\mathbb E[cd_va_ib_i]$ is bounded above by the product
+of the four normalized fourth-moment norms times $(s/2)^4$.
+
+Write $P=A_H/d$ and $\alpha_0=u^TPu$. Replacing $4T$ by $P$ costs
+$O(d^{-1})$ in these scalar profiles. Replacing all plus factors in
+$\alpha$ by one gives $|\alpha-\alpha_0|\le C\xi$.
+In $\beta$ replace only $c,a_i,a_j$ by one. The remaining product
+satisfies
+\[
+ \mathbb E[d_v b_i b_j]
+ \le(s/2)^3\mathbb E[h_v^-h_i^-h_j^-]\le1+C\varepsilon.
+\]
+The error is $C\xi$ by the preceding weighted mean estimates.
+Consequently
+\[
+ \beta\le\alpha+C\xi.                                  \tag{RC2}
+\]
+No lower bound on a minus source, and no pointwise cap on a random
+profile, is used.
+
+\paragraph{A reserve in both quadratic mask energies.}
+Put $A_p=p-1$. The preceding four weak identities, the PSD kernels,
+and (RC1)--(RC2) imply
+\[
+ \boxed{\quad
+ A_p(q_+-t_+)+p(q_--t_-)
+ \ge\frac{A_p}2 z+\frac p2 z_-
+          -\frac1{4A_p}-Cp(E_c+\xi).
+ \quad}                                                    \tag{JR2}
+\]
+No upper bound on either quadratic energy is required.
+
+Here is a source-uniform perturbation proof. Plus-kernel PSD gives
+$\zeta^2\le q_+z$; combining this with the four weak identities and the upper bound
+on $t_+$ yields
+\[
+ \alpha\le\frac\zeta{1+\zeta}+C(E_c+\varepsilon).
+\]
+This follows by substituting
+$q_+\le\zeta+1+C(E_c+\varepsilon)$ and
+$z=\zeta-\alpha+O(E_c)$; the resulting rational expression is
+uniformly Lipschitz in its additive error. When $q_+=0$, PSD
+forces $\zeta=0$ and the same conclusion follows from the four weak identities.
+Choose
+\[
+ \widehat\alpha=(\alpha-C_0(E_c+\varepsilon))_+
+\]
+with an absolute sufficiently large $C_0$. Then
+$0\le\widehat\alpha\le\zeta/(1+\zeta)<1$ and
+$|\alpha-\widehat\alpha|\le C_0(E_c+\varepsilon)$.
+
+For the mixed kernel, put $w=u+b_-$ and
+$\lambda_m=\beta/(t_-+\beta)\in[0,1]$, with $\lambda_m=0$ when the denominator
+vanishes. The PSD test $b_--\lambda_m w$ and the four weak identities give
+\[
+ z_-\ge2\lambda_m\beta-\lambda_m^2(t_-+\beta)-CE_c
+      =\frac{\beta^2}{t_-+\beta}-CE_c
+      \ge\frac{\beta^2}{1+\beta}-C(E_c+\varepsilon).
+ \tag{JR3}
+\]
+The error is uniform because $\lambda_m\le1$; no division by a small
+$t_-$ is used. Expanding the four weak identities also gives
+$q_--t_-=z_--\beta+O(E_c)$.
+
+Write $\mathscr P=A_p(q_+-t_+)+p(q_--t_-)$. The last identities imply
+\[
+ \mathscr P-\frac{A_p}2z-\frac p2z_-
+ \ge\frac{A_p}2\zeta+\frac{A_p}2\alpha+\frac p2z_--p\beta-CpE_c.
+\]
+Apply (JR3). The function
+$f(x)=x^2/[2(1+x)]-x$ is decreasing and $1$-Lipschitz on
+$[0,\infty)$. Thus $\beta\le\alpha+C\xi$ allows replacement of
+$f(\beta)$ by $f(\alpha)-C\xi$. Replacing $\alpha$ by $\widehat\alpha$
+costs at most $Cp(E_c+\varepsilon)$. Finally
+$\zeta\ge\widehat\alpha/(1-\widehat\alpha)$ gives
+\[
+ \begin{split}
+ \frac{A_p}2\zeta+\frac{A_p}2\widehat\alpha+p f(\widehat\alpha)
+ &\ge-\widehat\alpha+\frac{\widehat\alpha^2}{2}
+       \left\{\frac{A_p}{1-\widehat\alpha}+\frac p{1+\widehat\alpha}\right\}\\
+ &\ge A_p\widehat\alpha^2-\widehat\alpha\ge-\frac1{4A_p}.
+ \end{split}
+\]
+This proves (JR2), with the unchanged scalar loss
+$c_p=1/[4(p-1)]$.
+
+Substitute (FS7) and absorb $Cpe\sqrt z$ and $Cpe\sqrt{z_-}$
+into the two positive reserves by Young's inequality. The result is
+\[
+ \begin{split}
+ &(p-1)(q_+-t_+)+p(q_--t_-)\\
+ &\quad\ge-\frac1{4(p-1)}
+ -Cp\{e^2+B_0+e[h^{3/4}+(dh)^{-1/2}+\sqrt\theta]+\xi\}.
+ \end{split}\tag{RC3}
+\]
+
+\paragraph{Exact retained fourth-order center.}
+Define the unshifted scalar centers
+\[
+ t_{+,0}=\frac1{16d}\mathbb E[(G^+_{vv})^2\sum_N(G^+_{ii})^2],\qquad
+ t_{-,0}=\frac1{16d}\mathbb E[G^+_{vv}G^-_{vv}
+                                      \sum_NG^+_{ii}G^-_{ii}],
+\]
+and $L_d=16da^2=4+O(d^{-1})$.
+The mean shift estimate, with fixed-degree physical diagonal weights,
+gives
+\[
+ 0\le t_{+,0}-t_+\le C\sqrt h,\qquad
+ 0\le t_{-,0}-t_-\le C\sqrt h.                         \tag{RC4}
+\]
+The positive full shifted traces in the BL comparison equal
+$L_d[(p-1)q_++pq_-]$. The row-free part of $Q_*/a^2$ equals
+\[
+ 2L_d[(p-1)t_{+,0}+pt_{-,0}]                            \tag{RC5}
+\]
+exactly. Thus one may center $\mathcal R$ at
+$L_d[(p-1)t_{+,0}+pt_{-,0}]$, without replacing either root diagonal.
+Only the $O(p\sqrt h)$ shift error remains.
+
+For the row-containing remainder, use the deterministic envelopes
+$d^{-1}\sum_N\mathbb Ex_i^2\le\lambda_1=Cp/d$ and
+$d^{-1}\sum_N\mathbb Ez_i^2\le\delta_{\rm row}$.
+At $x_i=0$, the row-containing remainder is exactly
+$-6p(2p-1)P_i z_i^2\le0$. Subtracting this term leaves only monomials
+with a plus row factor and at least one further row factor. Hence
+\[
+ Q_*/a^2\le2L_d[(p-1)t_{+,0}+pt_{-,0}]
+                    +Cp^3\sqrt{\lambda_1\delta_{\rm row}}.          \tag{D13}\label{eq:compressed-centering}
+\]
+
+
+
+Combining the rational inequality, the exact centers and
+\eqref{eq:compressed-positive-trace} gives
+\[
+ \mathcal D:=\mathcal R-L_d[(p-1)t_{+,0}+pt_{-,0}]
+      \ge-L_dc_p-\mathcal E,
+ \qquad c_p=\frac1{4(p-1)},
+ \tag{D12}\label{eq:compressed-residual}
+\]
+where the error is accounted for below.
+
+\paragraph{The final drift.}
+Moreover $C_+/a^2=4+O(\varepsilon_s+\eta_0+d^{-1})$.
+For
+\[
+ \mathfrak D=(2p-1-p^{-1})a^2S-2pa^2T+(r/p)J-Q_*-rC_+,
+\]
+use $J\ge C_+$ in \eqref{eq:compressed-centering} to obtain
+\[
+ \mathfrak D/a^2\ge2\mathcal D+(1-p^{-1})(S-4)-\mathcal E.
+ \tag{D14}\label{eq:compressed-centered-drift}
+\]
+The exact row equation
+$a\sum_N\sigma_{vi}x_i=1-Z_v^+G^+_{vv}$ gives
+\[
+ S\ge\frac{(rD_+-1)^2}{a^2|N|}
+       \ge4-C(\varepsilon_s+\eta_0+d^{-1}).
+ \tag{D15}\label{eq:compressed-row-lower}
+\]
+
+Retain the positive row surplus in \eqref{eq:compressed-centered-drift}.
+By \eqref{eq:compressed-row-lower} and Young's inequality,
+\[
+ C\Gamma\sqrt{S+1}\le\tfrac14(S-4)
+ +C\{\Gamma+\Gamma^2+\varepsilon_s+\eta_0+d^{-1}\}.
+\]
+After absorbing the first term, the remaining error is bounded by
+an absolute constant times
+\[
+ \begin{split}
+ &\Gamma+\Gamma^2+p^{13}/d^2+p^5/d+p^2/(dh)+p/(dh^{3/2})
+                  +p^3\sqrt{\lambda_1\delta_{\rm row}}\\
+ &\qquad+p\{B_0+e^2+e[h^{3/4}+(dh)^{-1/2}+\sqrt\theta]+\xi\},
+ \end{split}
+\]
+plus $\epsilon_{\rm BL}=o(p^{-1})$ and exponentially small terms.
+At $p=\lfloor c_0d^{2/17}\rfloor$, the critical terms satisfy
+\[
+ \begin{aligned}
+ p\sqrt h&=\sqrt{\kappa_0}\,p^{-1},\\
+ \Gamma&\le Cc_0^{17/3}p^{-1},\\
+ pe^2&\le C\kappa_0^{-2}c_0^{34/3}p^{-1}.
+ \end{aligned}\tag{D16}\label{eq:compressed-ledger}
+\]
+For fixed $c_0,\kappa_0$, every other term is $o(p^{-1})$. Indeed
+\[
+ \begin{gathered}
+ d\asymp p^{17/2},\quad\delta=O(p^{-5/2}),\quad
+ \delta_{\rm row}=O(p^{-7/2}),\quad\lambda_1=O(p^{-15/2}),\\
+ \varepsilon=O(p^{-19/4}),\quad\rho_v=O(p^{-23/4}),\quad
+ \varepsilon_s=O(p^{-11/4}),\quad \chi_+=O(p^{-11/4}),\quad e=O(p^{-1}),
+ \end{gathered}
+\]
+which gives
+\[
+ \begin{gathered}
+ \Gamma^2=O(p^{-2}),\quad p^{13}/d^2=O(p^{-4}),\quad p^5/d=O(p^{-7/2}),\\
+ p^2/(dh)=O(p^{-5/2}),\quad p/(dh^{3/2})=O(p^{-3/2}),\quad
+ pB_0=O(p^{-3/2}),\\
+ peh^{3/4}=O(p^{-3}),\quad pe(dh)^{-1/2}=O(p^{-9/4}),\quad
+ pe\sqrt\theta=O(p^{-17/2}),\\
+ p^3\sqrt{\lambda_1\delta_{\rm row}}=O(p^{-5/2}),\quad
+ p(\chi_++\sqrt{\rho_v}+\varepsilon)=O(p^{-7/4}).
+ \end{gathered}
+\]
+Thus the total error, including the final drift errors, is at most
+\[
+ C\{\sqrt{\kappa_0}+c_0^{17/3}
+                 +\kappa_0^{-2}c_0^{34/3}\}p^{-1}+o(p^{-1}).
+\]
+First choose $\kappa_0$ sufficiently small and then $c_0>0$
+sufficiently small so that this coefficient is less than $1/4$.
+All choices are absolute.
+From \eqref{eq:compressed-residual}--\eqref{eq:compressed-row-lower}
+and $L_d=16da^2$, $da^2=1/4+O(d^{-1})$ we get
+$d\mathfrak D\ge-2c_p-\mathcal E_0$, where the total error
+$\mathcal E_0$ satisfies $\mathcal E_0\le(1/4+o(1))p^{-1}$
+by the preceding choice of constants. But
+\eqref{eq:compressed-drift} says
+\[
+ (r-1)(1-r\bar L)+r(r-1)(\bar L-L)
+       +r\sum_N\ell_i\delta_i
+       \le-\mathfrak D+O(p^5d^{-2}).
+\]
+The last two terms on its left are nonnegative. Multiplying by $d$
+and using \eqref{eq:compressed-geometric-drift} gives the contradiction
+\[
+ p^{-1}\le 2c_p+(1/4+o(1))p^{-1}
+                   =(3/4+o(1))p^{-1}.
+\]
+
+\paragraph{Closing the induction.}
+Induct on graph order at this fixed $d$. The deletion
+reparametrization places every proper core in a smaller source
+cube; its induction hypothesis and the insertion estimate make
+the full normalizer positive before a possible first mean contact.
+The exact moment maximum then supplies every moment used above.
+Starting from zero sources, continuity and the contradiction rule
+out such a contact throughout both cubes. All degree thresholds
+are independent of graph order. At $y^+=y^-=s\mathbf1$, the
+Bethe diagonal satisfies $Z_i\le1$. Any signing in the nonempty
+support has $P^\pm\succ0$, hence
+$I\pm aA_\sigma=P^\pm+\operatorname{diag}(1-Z)\succ0$.
+Therefore
+\[
+ \gamma_d^2\le4(d-1)+4/\lfloor c_0d^{2/17}\rfloor
+                \le4(d-1)+Cd^{-2/17}.
+\]
+
+\section{Lower bound}
+
+\begin{proof}
+Put $e=q^{-1/2}$, $t=e^2$, $k=q-1$, $p=k/q=1-t$, and
+$L=\lceil q^6\rceil$. We first choose a simple $k$-regular graph $F$
+on $3N$ vertices, partitioned into triples, such that
+\begin{equation}\label{eq:lower-host}
+ \left\|q^{-1}A_F\bigm|_{\mathbf1^\perp}\right\|
+ \le\frac{2\sqrt{k-1}+1}{q},\qquad
+ \operatorname{girth}(J)>2L+6,\qquad
+ \operatorname{MaxCut}(J)\le\frac{DN}{4}
+       +\frac{(P_*+\epsilon_D)N\sqrt D}{2},\quad D=3k,
+\end{equation}
+where $J$ is obtained by contracting the triples and
+$\epsilon_D>0$ is a deterministic sequence tending to zero.
+To obtain $F$, pair uniformly the $k$ half-edges at each of its
+$3N$ vertices. Grouping triples gives the $D$-regular configuration
+model on $N$ vertices. For fixed $q,L$, as $N\to\infty$ through
+admissible parities, the contracted girth condition has positive
+limiting probability by the short-cycle law~\cite{MWW}; it implies
+that both $J$ and $F$ are simple. Conditional on simplicity, $F$
+is uniform simple regular, so its spectral condition fails with
+probability tending to zero by Friedman's theorem~\cite{Bordenave}.
+Likewise, conditional on simplicity, $J$ is uniform simple
+$D$-regular. The random-regular MaxCut theorem of
+Dembo--Montanari--Sen~\cite[Theorem 1.6(b)]{DMS} gives the displayed
+cut bound with probability tending to one, for a suitable
+$\epsilon_D\to0$. Intersecting these events with the positive-probability
+girth event proves that all conditions in \eqref{eq:lower-host}
+hold for some finite $N$.
+Add a triangle on each triple to obtain $G$. The contracted girth
+makes $G$ simple, and the spectral condition makes it connected;
+its degree is $q+1$.
+
+Fix $c\in[1,3]$, set $z=2+ce^6$, $\delta=ce^6$, and suppose that
+$\|A_\sigma(G)\|<z\sqrt q$. All $O(\cdot)$ constants below are absolute,
+uniform in $c$, $N$, and $\sigma$. Write $\tau_v\in\{\pm1\}$ for the
+flux of the triangle containing $v$, and $\varepsilon\in\{\pm1\}$.
+For each directed external edge $v\to w$, let
+$g^{(j)}_{v\to w,\varepsilon}$ be the root diagonal of
+$(zI-\varepsilon eA_\sigma)^{-1}$ on the depth-$j$ tree of triangles
+on the $v$ side with $vw$ omitted; depth zero is the root triangle.
+The girth condition makes these trees and their one-block extensions
+through depth $L+1$ induced subgraphs of $G$. Their matrices are
+positive definite, so principal-submatrix inversion and insertion
+of a message at the neighboring triangle give
+\[
+ 1/z\le g^{(j)}\le g^{(j+1)},\qquad g^{(j)}<z/t\le3q
+ \qquad(0\le j\le L).
+\]
+For the upper bound, positivity of the neighboring effective diagonal
+$z-t\sum g^{(j)}$ bounds each summand by $z/t$.
+Let $\mathbb E$ average over directed edges of $F$ and both signs
+$\varepsilon$; for vertex fields it is also the uniform vertex/sign
+average. Some $1\le j\le L$ has
+$\mathbb E(g^{(j)}-g^{(j-1)})\le3q/L$. Set
+\begin{equation}\label{eq:lower-defect}
+ g=g^{(j-1)},\quad \widehat g=g^{(j)},\quad x=g-1,\quad
+ h=g^{-1}-\widehat g^{-1};
+ \qquad 0\le h\le3,\quad\mathbb Eh\le27q/L=O(e^{10}).
+\end{equation}
+
+Define
+\[
+ (Pf)_{v,\varepsilon}=t\sum_{u\sim_Fv}f_{u\to v,\varepsilon},
+ \qquad (Qf)_{v\to w,\varepsilon}=(Pf)_{v,\varepsilon}
+                                  -tf_{w\to v,\varepsilon}.
+\]
+Their row sums are $p$ and $1-2t$, and
+$\mathbb EQf=(1-2t)\mathbb Ef$. For a triangle $v,a,b$, let
+$a_u=1+t+\delta-(Px)_{u,\varepsilon}$. Switching its internal signs
+shows that its self-energy at $v$ is
+\begin{equation}\label{eq:lower-recursion}
+ S_{v,\varepsilon}
+ =t(1,1)\begin{pmatrix}a_a&-\varepsilon\tau_ve\\
+                  -\varepsilon\tau_ve&a_b\end{pmatrix}^{-1}\binom11,
+ \qquad
+ g^{-1}=1+2t+\delta-Qx-S+h.
+\end{equation}
+The displayed matrix is positive definite. Its inverse quadratic
+form is convex in its diagonal entries. Its tangent at
+$a_a=a_b=1+t$ therefore gives
+\begin{equation}\label{eq:lower-tangent}
+ S=s_{\varepsilon\tau}
+   -k_{\varepsilon\tau}\{2\delta-(Px)_a-(Px)_b\}+T,\qquad T\ge0,
+ \quad
+ s_\eta=\frac{2t}{1+t-\eta e},\quad
+ k_\eta=\frac{t}{(1+t-\eta e)^2}.
+\end{equation}
+Write $s_\eta=s_0+\eta s_1$ and $k_\eta=k_0+\eta k_1$. Directly,
+\begin{equation}\label{eq:lower-coefficients}
+ s_0=2t-2e^6+O(e^8),\quad
+ s_1=2e^3+O(e^5),\quad k_0=t+t^2+O(e^6),\quad
+ k_1=2e^3+O(e^5),\quad k_0p-t=O(e^6).
+\end{equation}
+Put
+\[
+ V=\mathbb E(x^2/g),\qquad M_1=\mathbb E|x|,\qquad
+ C_1=\mathbb E_{v,\varepsilon}[\varepsilon\tau_v(Px)_{v,\varepsilon}].
+\]
+Weighted Cauchy--Schwarz gives
+$M_1^2\le V\mathbb Eg\le V(1+M_1)$, hence
+$M_1\le V+\sqrt V$, and $|C_1|\le pM_1$.
+Since $\tau$ is constant on each triangle, averaging
+\eqref{eq:lower-tangent} and \eqref{eq:lower-recursion} gives the exact identity
+\begin{equation}\label{eq:lower-energy}
+ (1+2k_0)\delta
+ =V+(s_0-2t)+2(k_0p-t)\mathbb Ex+2k_1C_1+\mathbb ET-\mathbb Eh.
+\end{equation}
+Here one uses $\mathbb E(g^{-1})=1-\mathbb Ex+V$.
+Discarding $T\ge0$ first yields
+$V\le O(e^6)+O(e^3)(V+\sqrt V)$; absorption, and then
+\eqref{eq:lower-energy} again, imply
+\begin{equation}\label{eq:lower-small}
+ V=O(e^6),\qquad M_1=O(e^3),\qquad\mathbb ET=O(e^6),\qquad
+ \mathbb E|S-2t-2\varepsilon\tau e^3|=O(e^5).
+\end{equation}
+The last assertion follows from \eqref{eq:lower-tangent} and
+\eqref{eq:lower-coefficients}.
+
+To retain the first correction, set $u=g^{-1}-1$, $v=x^2/g$, so
+$x=-u+v$, and let $U_{v,\varepsilon}$ average $u_{v\to w,\varepsilon}$
+over its $k$ outgoing edges. Since $u^2\le3x^2/g$ and
+\eqref{eq:lower-recursion} has the form
+$u_{v\to w}=F_{v,\varepsilon}+tg_{w\to v}+h_{v\to w}$,
+\begin{equation}\label{eq:lower-projection}
+ \|U\|_2=O(e^3),\qquad
+ \mathbb E|u-U|\le2tM_1+2\mathbb Eh=O(e^5).
+\end{equation}
+The same recursion, using $x+u=v$, gives
+\begin{equation}\label{eq:lower-forcing}
+ x-Qx=2\varepsilon\tau e^3+r,\qquad\mathbb E|r|=O(e^5).
+\end{equation}
+Multiplying by $\varepsilon$ and averaging shows that the vertex mean
+$\mu$ of $\tau$ satisfies
+$2t\mathbb E(\varepsilon x)=2\mu e^3+O(e^5)$, whence $\mu=O(e^2)$.
+
+Let $\mathsf P=q^{-1}A_F$ act on vertex fields, and use uniform vertex
+inner products, also averaging $\varepsilon$ when present. Replacing
+$x=-u+v$ and using \eqref{eq:lower-projection}, with
+$\mathbb Ev=O(e^6)$, gives
+\[
+ C_1=-\langle\varepsilon\mathsf P\tau,U\rangle+O(e^5),\qquad
+ U-\alpha\mathsf P U=-2\varepsilon\tau e^3+R_0,
+ \quad \mathbb E|R_0|=O(e^5),\quad \alpha=(k-1)/k.
+\]
+The second equality is the outgoing-edge average of
+\eqref{eq:lower-forcing}; the factor $\alpha$ excludes the reversed edge.
+By \eqref{eq:lower-host} and $\mu=O(e^2)$,
+\[
+ \|\mathsf P^2\tau\|_2
+ \le p^2|\mu|+\|\mathsf P|_{\mathbf1^\perp}\|^2\|\tau-\mu\|_2
+ =O(e^2),\qquad \kappa:=\langle\tau,\mathsf P\tau\rangle=O(e).
+\]
+Pair the preceding equation for $U$ with $\varepsilon\mathsf P\tau$.
+Its error is $O(e^5)$ since $\|\mathsf P\tau\|_\infty\le p$, and
+$|\langle\varepsilon\mathsf P^2\tau,U\rangle|=O(e^5)$. Thus
+\begin{equation}\label{eq:lower-correlation}
+                         C_1=2e^3\kappa+O(e^5).
+\end{equation}
+
+Finally put $B_1=\mathbb E[\varepsilon\tau_vx_{v\to w,\varepsilon}]$.
+External regularity gives
+$\mathbb E[\varepsilon\tau_v(Qx)_{v\to w,\varepsilon}]=\alpha C_1$,
+so \eqref{eq:lower-forcing} implies
+$B_1=2e^3+\alpha C_1+O(e^5)$.
+Since $B_1^2\le V\mathbb Eg=V(1+O(e^3))$, it follows that
+\[
+ V\ge4e^6+4e^3C_1-O(e^8).
+\]
+Insert this into \eqref{eq:lower-energy}, discard $\mathbb ET\ge0$,
+and use \eqref{eq:lower-correlation}:
+\[
+ \delta\ge V-2e^6+4e^3C_1-O(e^8)
+          \ge2e^6+16e^6\kappa-O(e^8).
+\]
+Since $\tau$ is constant on triples, the cut bound gives
+\[
+ \kappa=\frac{\tau^TA_J\tau}{3Nq}
+ =\frac{DN-4\operatorname{Cut}_J(\tau)}{3Nq}
+ \ge-\frac{2(P_*+\epsilon_D)\sqrt D}{3q}
+ \ge-\frac{2(P_*+\epsilon_D)}{\sqrt3}\,e.
+\]
+Consequently the supposed signing requires
+$c\ge2-32(P_*+\epsilon_D)e/\sqrt3-C_0e^2$, for an absolute
+$C_0\ge1$. Choose
+$c=2-32(P_*+\epsilon_D)e/\sqrt3-2C_0e^2\in[1,3]$ for sufficiently
+large $q$. This contradicts the requirement. The finite graph was
+chosen independently of $c$ and $\sigma$. Since $\epsilon_D\to0$,
+multiplying $z=2+ce^6$ by $\sqrt q$ proves the lower bound.
+\end{proof}
+
+\begin{thebibliography}{9}
+\bibitem{Milman}E. Milman,
+\emph{Gaussian Correlation via Inverse Brascamp--Lieb},
+Probability Theory and Related Fields (2025), Section 3.3,
+\url{https://doi.org/10.1007/s00440-025-01445-x}.
+
+\bibitem{BL}H. J. Brascamp and E. H. Lieb,
+\emph{On extensions of the Brunn--Minkowski and Pr\'ekopa--Leindler
+ theorems, including inequalities for log concave functions, and with
+ an application to the diffusion equation},
+Journal of Functional Analysis \textbf{22} (1976), 366--389.
+
+\bibitem{Prekopa}A. Pr\'ekopa,
+\emph{On logarithmic concave measures and functions},
+Acta Scientiarum Mathematicarum \textbf{34} (1973), 335--343.
+
+\bibitem{Bordenave}C. Bordenave,
+\emph{A new proof of Friedman's second eigenvalue theorem and its
+extension to random lifts}, arXiv:1502.04482.
+
+\bibitem{MWW}B. D. McKay, N. C. Wormald, and B. Wysocka,
+\emph{Short cycles in random regular graphs},
+Electronic Journal of Combinatorics \textbf{11} (2004), R66.
+\bibitem{DMS}A. Dembo, A. Montanari, and S. Sen,
+\emph{Extremal cuts of sparse random graphs},
+Annals of Probability \textbf{45} (2017), 1190--1217;
+arXiv:1503.03923.
+\end{thebibliography}
+\end{document}

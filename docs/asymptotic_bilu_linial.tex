@@ -1,0 +1,728 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\hypersetup{pdftitle={Asymptotically optimal graph signings},pdfauthor={}}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Prob}{\mathbb P}
+\newcommand{\ind}{\mathbf 1}
+\newcommand{\tr}{\operatorname{tr}}
+\allowdisplaybreaks[1]
+\setlength{\emergencystretch}{2em}
+\title{Asymptotically optimal graph signings}
+\author{}
+\date{September 29, 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+We give a proposed proof that every finite simple graph of maximum
+degree at most $d$ admits an edge signing whose signed adjacency
+matrix has norm $(2+o_d(1))\sqrt d$, uniformly in the number of
+vertices. More quantitatively, the argument gives
+$\bigl(2+O(\log\log d/\log d)\bigr)\sqrt d$.
+The proof uses a nonnegative determinant weight supported on
+signings satisfying a prescribed spectral bound. Uniform lower
+bounds on its vertex-deletion ratios imply that each fixed diagonal
+moment, under the associated weighted measure, approaches the
+corresponding moment of a simple-path tree. Polynomial minorants
+then give simultaneous lower bounds on the two insertion Schur
+forms. A coupled estimate for the determinant and its diagonal
+cofactors closes the vertex induction at every radius greater than
+$2\sqrt d$. The proof is self-contained and existential.
+\end{abstract}
+
+\begin{center}
+\small\textit{Research draft. The proposed proof has not undergone
+independent human review.}
+\end{center}
+
+\section{Introduction}
+
+An edge signing of a finite simple graph $G=(V,E)$ is a map
+$\sigma:E\to\{-1,1\}$. Its signed adjacency matrix is the real
+symmetric matrix
+\[
+ (A_\sigma)_{uv}=
+ \begin{cases}
+ \sigma(uv),&uv\in E,\\
+ 0,&uv\notin E.
+ \end{cases}
+\]
+In particular, its diagonal is zero. We write $\norm{\cdot}$ for
+the Euclidean operator norm. The signing determines a $2$-lift of
+$G$, and the eigenvalues newly introduced by the lift are exactly
+the eigenvalues of $A_\sigma$.
+
+Bilu and Linial~\cite{BL} conjectured that every $d$-regular graph
+has a signing with norm at most $2\sqrt{d-1}$. They proved the
+weaker bound $O(\sqrt{d\log^3d})$. Marcus, Spielman, and
+Srivastava~\cite{MSS} obtained the sharp one-sided bound
+$\lambda_{\max}(A_\sigma)\le2\sqrt{d-1}$; spectral symmetry gives
+the two-sided bound for bipartite graphs. For general graphs,
+Ravichandran and Srivastava~\cite{RS} obtained
+$2\sqrt{2(d-1)}$, and Lin and Zhou~\cite{LZ} improved the coefficient
+to $(3+\sqrt5)/2$. Xu~\cite{Xu} recently disproved the exact
+conjecture by constructing a cubic graph for which every signing
+has norm greater than $2\sqrt2$.
+
+The approximate question asks whether the constant $2$ remains
+valid asymptotically as the degree tends to infinity. The result
+below addresses that question, including the essential requirement
+that the error term be independent of graph order.
+
+\begin{theorem}\label{thm:main}
+For every $\gamma>0$ there is an integer $d_0(\gamma)$ such that,
+for every integer $d\ge d_0(\gamma)$ and every finite simple graph
+$G$ of maximum degree at most $d$, there is an edge signing
+$\sigma$ satisfying
+\[
+ \norm{A_\sigma}<(2+\gamma)\sqrt d.
+\]
+\end{theorem}
+
+\begin{theorem}\label{thm:rate}
+There is an absolute constant $C$ such that, for every sufficiently
+large integer $d$, every finite simple graph of maximum degree at
+most $d$ has an edge signing $\sigma$ satisfying
+\[
+ \norm{A_\sigma}
+ \le \left(2+C\frac{\log\log d}{\log d}\right)\sqrt d.
+\]
+\end{theorem}
+
+The proof works directly with graphs of bounded maximum degree,
+so it accommodates all vertex deletions without a regular
+completion. No connectedness assumption or bound on $|V(G)|$ is
+needed.
+
+\subsection{Proof strategy}
+
+Fix a radius $R>2\sqrt d$. We assign a signing the weight
+$\det(I-A_\sigma^2/R^2)$ when its norm is less than $R$, and weight
+zero otherwise. Let $Z_H$ be the average weight on a graph $H$.
+Proving $Z_H>0$ proves existence of a desired signing.
+Determinant weights and their insertion/deletion identities also
+appear in the randomized repair method of
+Jadbabaie, Saberi, and Sra~\cite[Section~6]{JSS}. We use those
+elementary identities inside an induction on graph order.
+
+The induction controls both $Z_H/Z_{H-v}$ and a normalized diagonal
+cofactor. A lower bound on all deletion ratios transfers
+concentration from independent incident signs to the
+determinant-weighted measure. The formal Schur recursion for
+diagonal moments then agrees with the recursion on the simple-path
+tree. Since moment order decreases in this comparison, its
+constants do not grow with the number of vertices.
+
+The two resolvents at the insertion vertex are bounded below by
+finite geometric polynomials. Moment comparison therefore
+controls their lower tails even when the actual resolvents are
+large. Finally, if the two positive insertion residuals
+$\delta_+,\delta_-$ are at most $s$, the elementary inequality
+\[
+ \delta_++\delta_-\le s+\frac{\delta_+\delta_-}{s}
+\]
+couples the cofactor to the insertion determinant. Retaining the
+product on the right is what permits the induction to close at
+every $R>2\sqrt d$.
+
+\subsection{Notation and parameters}
+
+All graphs below are finite, simple, and undirected. For
+$v\in V(H)$, write $H-v$ for the induced graph obtained by deleting
+$v$, and $N_H(v)$ for its neighbor set. All unweighted expectations
+over signings refer to independent uniform signs. The norm and
+determinant of an empty matrix are taken to be $0$ and $1$,
+respectively. For a real number $t$, put $t_+=\max(t,0)$.
+The notation $B\preceq C$ means that $C-B$ is positive semidefinite.
+All logarithms are natural.
+
+Until Section~\ref{sec:rate}, fix a real number $0<x<1/4$ and an
+integer degree bound $d\ge1$, and set
+\begin{equation}\label{eq:parameters-basic}
+ Q=d/x,\qquad R=\sqrt Q,\qquad
+ a=\frac{1+\sqrt{1-4x}}2,\qquad \rho=2\sqrt x<1.
+\end{equation}
+Thus $a>1/2$ and $x=a(1-a)$. These parameters remain fixed when
+vertices are deleted: they are not recomputed from the maximum
+degree of an induced subgraph.
+It suffices to prove positivity of $Z_H$ for every graph of maximum
+degree at most $d$, once $d$ is sufficiently large in terms of $x$.
+
+\section{Determinant weights and vertex insertion}\label{sec:weights}
+
+For a graph $H$ and signing $\sigma$, put $T_H=A_\sigma(H)/R$ and
+\[
+ W_H(\sigma)=
+ \begin{cases}
+ \det(I-T_H^2),&\norm{T_H}<1,\\
+ 0,&\norm{T_H}\ge1.
+ \end{cases}
+ \qquad Z_H=\E_\sigma W_H(\sigma).
+\]
+We call a signing good when $\norm{T_H}<1$, and put $Z_\varnothing=1$.
+For a vertex $v$ define
+\[
+ \mathcal J_H(v)=
+ \E_\sigma\left[
+ W_H(\sigma)\left((I-T_H)^{-1}_{vv}+(I+T_H)^{-1}_{vv}\right)
+ \mathbf1_{\{\norm{T_H}<1\}}\right].
+\]
+The integrand is defined to be zero on nongood signings; inverses
+there are not used. When $Z_H>0$, write $\nu_H$ for the probability
+measure with density $W_H/Z_H$ relative to uniform signs.
+For clarity, $Z_H$ and $\mathcal J_H(v)$ are defined even if
+$Z_H=0$; the probability measure $\nu_H$ is used only after
+positivity has been established.
+
+Delete a vertex $v$, set $K=H-v$, and fix a good signing of $K$.
+Let $U=T_K$ and let $c$ be the normalized incident column at $v$,
+with entries $\pm Q^{-1/2}$ on $N_H(v)$ and zero elsewhere. Define
+\[
+ q_\pm=c^T(I\pm U)^{-1}c,\quad
+ \delta_\pm=1-q_\pm,\quad
+ \alpha=(\delta_+)_+(\delta_-)_+,\quad S=q_++q_-.
+\]
+Order $v$ first, so that
+\[
+ T_H=\begin{pmatrix}0&c^T\\c&U\end{pmatrix}.
+\]
+Because $I\pm U$ are positive definite, the extension is good
+exactly when both $\delta_+$ and $\delta_-$ are positive. Also
+$\det(I-T_H^2)=\det(I-T_H)\det(I+T_H)$.
+The determinant and inverse Schur-complement formulas therefore give
+\begin{align}
+ W_H&=W_K\alpha,\nonumber\\
+ W_H\left((I-T_H)^{-1}_{vv}+(I+T_H)^{-1}_{vv}\right)
+ &=W_K(\delta_++\delta_-)
+   \mathbf1_{\{\delta_+>0,\delta_->0\}}.
+ \label{eq:star}
+\end{align}
+Indeed, on a good extension the two inverse diagonal entries
+are $1/\delta_-$ and $1/\delta_+$, whose sum multiplied by
+$\delta_+\delta_-$ is $\delta_++\delta_-$.
+On a nongood extension both left-hand integrands are defined to be
+zero. This includes the boundary $\norm{T_H}=1$; the strict
+indicator in the second identity is essential.
+If $K$ is not good, no extension is good, by interlacing.
+Since $q_\pm\ge0$, we have $0\le\alpha\le1$, and therefore
+\begin{equation}\label{eq:domination}
+ W_H\le W_{H-v}.
+\end{equation}
+In particular, if $Z_H/Z_{H-v}\ge c_0>0$, then for every nonnegative
+function $F$ of the core signing and incident signs,
+\begin{equation}\label{eq:density}
+ \E_{\nu_H}F
+ \le c_0^{-1}\E_{\nu_{H-v}}\E_{\mathrm{star}}F.
+\end{equation}
+More precisely, relative to $\nu_{H-v}$ times uniform incident
+signs, the density of $\nu_H$ is $\alpha/(Z_H/Z_{H-v})$.
+We will use both the full domination in~\eqref{eq:density} and its
+consequence for the marginal distribution of the core.
+
+\section{The simple-path tree}\label{sec:path-tree}
+
+Let $\mathcal T(H,v)$ be the tree whose vertices are the simple
+paths $(v=v_0,v_1,\ldots,v_k)$ in $H$ starting at $v$. Two paths
+are adjacent if one is obtained from the other by appending one
+vertex at the end. The root is the path $(v)$, which is also denoted by
+$v$ when indexing matrices. Removing the root leaves one component
+for each $u\in N_H(v)$, rooted at $(v,u)$ and isomorphic to
+$\mathcal T(H-v,u)$.
+Its maximum degree is at most $d$, so its adjacency norm is at most
+$2\sqrt d$. For completeness, orient a tree away from its root and
+sum
+$2|z_pz_w|\le z_p^2/\sqrt d+\sqrt d\,z_w^2$
+over parent--child edges; every resulting coefficient is at most
+$2\sqrt d$.
+
+Write
+\[
+ a_j(H,v)=
+ \left[\left(A_{\mathcal T(H,v)}/R\right)^j\right]_{vv},
+ \quad
+ g_H(v)=\sum_{j\ge0}a_j(H,v),
+ \quad r_H(v)=1/g_H(v).
+\]
+The tree is bipartite, so $a_j=0$ for odd $j$, and
+$0\le a_{2j}\le\rho^{2j}$. The series converges absolutely.
+Root Schur complementation gives
+\begin{equation}\label{eq:tree}
+ g_H(v)=
+ \frac1{1-Q^{-1}\sum_{u\in N_H(v)}g_{H-v}(u)}.
+\end{equation}
+For an isolated root, $g_H(v)=1$. If
+$g_{H-v}(u)\le1/a$ for all neighbors, the denominator
+in~\eqref{eq:tree} lies between $1-x/a=a$ and $1$.
+Induction on the number of vertices consequently gives
+\begin{equation}\label{eq:r-range}
+ 1\le g_H(v)\le1/a,\qquad a\le r_H(v)\le1.
+\end{equation}
+For $K=H-v$ set
+\[
+ h=\deg_H(v)/Q,\quad r=r_H(v),\quad q=1-r.
+\]
+Then
+\begin{equation}\label{eq:q-reference}
+ 0\le h\le x,\qquad
+ q=\frac1Q\sum_{u\in N_H(v)}g_K(u).
+\end{equation}
+
+\section{Moment comparison and lower resolvent estimates}\label{sec:moments}
+
+\begin{lemma}\label{lem:moments}
+Fix $0<x<1/4$ and $0<c_0\le1$. Suppose that a family of graphs is closed
+under vertex deletion, has maximum degree at most $d$, and satisfies
+$Z_F>0$ and $Z_F/Z_{F-u}\ge c_0$ for every graph and vertex in the
+family. For every integer $j\ge0$ there is a constant $C_j=C_j(x,c_0)$,
+independent of $d$, graph order, and the family, such that
+\[
+ \left\|(T_F^j)_{uu}-a_j(F,u)\right\|_{L^2(\nu_F)}
+ \le \frac{C_j}{\sqrt Q}.
+\]
+\end{lemma}
+\begin{proof}
+We induct on $j$, proving the assertion simultaneously for all
+graphs in the family and all choices of root. The cases $j=0,1$
+are exact because both matrices have zero diagonal.
+For a fixed graph $F$ and root $u$, put $K=F-u$ and
+$h=\deg_F(u)/Q$. Let $c$ be the normalized incident column
+at $u$, as in Section~\ref{sec:weights}, and define
+\[
+ b_\ell=c^TT_K^\ell c,\qquad
+ \beta_\ell=\frac1Q\sum_{w\in N_F(u)}a_\ell(K,w).
+\]
+On good core signings, $|b_\ell|\le h\le x$ and
+$|\beta_\ell|\le x$. Conditional on the core,
+\[
+ \E_{\mathrm{star}}b_\ell
+ =\frac1Q\sum_{w\in N_F(u)}(T_K^\ell)_{ww},\qquad
+ \operatorname{Var}_{\mathrm{star}}(b_\ell)
+ \le\frac{2\deg_F(u)}{Q^2}\le\frac{2x}{Q}.
+\]
+Indeed, for a symmetric $k$ by $k$ matrix $M$ and independent signs
+$s_i$, $\operatorname{Var}(s^TMs)=2\sum_{i\ne j}M_{ij}^2$.
+The relevant principal submatrix of $T_K^\ell$ has norm at most one.
+Write
+$\bar b_\ell=Q^{-1}\sum_{w\in N_F(u)}(T_K^\ell)_{ww}$.
+Full measure domination in~\eqref{eq:density} gives
+\[
+ \|b_\ell-\bar b_\ell\|_{L^2(\nu_F)}
+ \le \sqrt{\frac{2x}{c_0Q}}.
+\]
+For $\ell\le j-2$, marginal domination, Minkowski's inequality,
+and the lower-order hypothesis on $K$ give
+\begin{align*}
+ \|\bar b_\ell-\beta_\ell\|_{L^2(\nu_F)}
+ &\le c_0^{-1/2}
+ \left\|\frac1Q\sum_{w\in N_F(u)}
+       \bigl((T_K^\ell)_{ww}-a_\ell(K,w)\bigr)
+ \right\|_{L^2(\nu_K)}\\
+ &\le\frac{\deg_F(u)}{Q\sqrt{c_0}}\,
+       \frac{C_\ell}{\sqrt Q}
+ \le\frac{xC_\ell}{\sqrt{c_0Q}}.
+\end{align*}
+Combining the last two estimates yields
+\begin{equation}\label{eq:b-moment}
+ \|b_\ell-\beta_\ell\|_{L^2(\nu_F)}
+ \le\frac{\sqrt{2x}+xC_\ell}{\sqrt{c_0Q}}.
+\end{equation}
+
+Let $M_j=(T_F^j)_{uu}$. Formal Schur complementation at the root gives
+\[
+ \sum_{j\ge0}M_jz^j
+ =\frac1{1-\sum_{\ell\ge0}b_\ell z^{\ell+2}},
+ \qquad
+ M_j=\sum_{\ell=0}^{j-2}b_\ell M_{j-2-\ell}\quad(j\ge2).
+\]
+Exactly the same recurrence holds for $a_j(F,u)$ with $b_\ell$
+replaced by $\beta_\ell$, by the definition of the path tree.
+Subtract the recurrences in the form
+\[
+ M_j-a_j
+ =\sum_{\ell=0}^{j-2}
+ \left[(b_\ell-\beta_\ell)M_{j-2-\ell}
+       +\beta_\ell(M_{j-2-\ell}-a_{j-2-\ell})\right].
+\]
+On the support of $\nu_F$, $|M_t|\le1$. Thus the desired estimate
+follows from~\eqref{eq:b-moment}, using only moment orders at most
+$j-2$. For example, the finite recursive constants
+\[
+ C_0=C_1=0,\qquad
+ C_j=(j-1)\sqrt{2x/c_0}
+      +x(1+c_0^{-1/2})\sum_{\ell=0}^{j-2}C_\ell
+\]
+suffice. This is induction on moment order, not on the size of the
+graph, which is why the constants are uniform in graph order.
+\end{proof}
+
+\begin{lemma}\label{lem:lower-q}
+Fix $0<x<1/4$, $0<c_0\le1$, and $\eta>0$. For sufficiently large $d$,
+the following holds for every graph $H$ of maximum degree at most
+$d$ and every $v\in V(H)$. Put $K=H-v$ and suppose its induced
+subgraphs form a family satisfying the hypotheses of
+Lemma~\ref{lem:moments}. Sample the core from $\nu_K$ and the
+incident signs independently, and define
+$q_\pm=c^T(I\pm T_K)^{-1}c$ as in Section~\ref{sec:weights}.
+Then
+\[
+ \Prob\{q_+<q-\eta\ \text{or}\ q_-<q-\eta\}\le\eta,
+ \qquad q=1-r_H(v).
+\]
+\end{lemma}
+\begin{proof}
+Put $U=T_K$. For an integer $m\ge1$ define
+\[
+ P_{\pm,m}(U)=\sum_{j=0}^{2m-1}(\mp U)^j.
+\]
+For $\norm U<1$, the scalar geometric-series identity gives
+\[
+ 0\preceq P_{\pm,m}(U)\preceq(I\pm U)^{-1},
+ \qquad \norm{P_{\pm,m}(U)}\le2m.
+\]
+Consequently $q_\pm\ge\ell_\pm:=c^TP_{\pm,m}(U)c$.
+Define the deterministic truncated reference
+\[
+ q_m=\frac1Q\sum_{u\in N_H(v)}
+            \sum_{j=0}^{m-1}a_{2j}(K,u).
+\]
+Conditional on $U$, the quadratic-form variance estimate gives
+\[
+ \|\ell_\pm-\E_{\mathrm{star}}\ell_\pm
+       \|_{L^2(\nu_K\times\mathrm{star})}
+ \le \frac{2m\sqrt{2x}}{\sqrt Q}.
+\]
+The conditional mean is
+$Q^{-1}\sum_{u\in N_H(v)}(P_{\pm,m}(U))_{uu}$.
+All odd reference moments vanish, and the coefficients of
+$P_{\pm,m}$ have absolute value one. Thus
+Lemma~\ref{lem:moments} and Minkowski's inequality give
+\[
+ \|\E_{\mathrm{star}}\ell_\pm-q_m\|_{L^2(\nu_K)}
+ \le\frac{x}{\sqrt Q}\sum_{j=0}^{2m-1}C_j.
+\]
+In particular,
+\[
+ \|\ell_\pm-q_m\|_{L^2(\nu_K\times\mathrm{star})}
+ \le\frac{B_m}{\sqrt Q},
+ \qquad
+ B_m=2m\sqrt{2x}+x\sum_{j=0}^{2m-1}C_j.
+\]
+Also
+\[
+ 0\le q-q_m\le\frac{x\rho^{2m}}{1-\rho^2}.
+\]
+Choose $m$ so this last bound is at most $\eta/2$. A union bound and
+Chebyshev's inequality then bound the probability in the statement
+by $8B_m^2/(Q\eta^2)$, which is at most $\eta$ for sufficiently large
+$d$. All parameters are independent of the order of $H$.
+\end{proof}
+
+\section{Coupled insertion and cofactor estimates}\label{sec:coupling}
+
+\begin{lemma}\label{lem:scalar-coupling}
+Let $q_+,q_-\ge0$, and define
+$\delta_\pm=1-q_\pm$, $\alpha=(\delta_+)_+(\delta_-)_+$, and
+$D=(\delta_++\delta_-)\mathbf1_{\{\delta_+>0,\delta_->0\}}$.
+Fix $q'\in[0,1)$ and put $s=1-q'$. If $q_\pm\ge q'$, then
+\[
+ 1-\alpha\le s(q_++q_-)+(q')^2,\qquad
+ D\le s+\alpha/s.
+\]
+If the lower bounds $q_\pm\ge q'$ hold only on an event $E$, then
+pointwise
+\[
+ 1-\alpha\le s(q_++q_-)+(q')^2+\mathbf1_{E^c},
+ \qquad D\le s+\alpha/s+2\mathbf1_{E^c}.
+\]
+\end{lemma}
+\begin{proof}
+Fix $0\le q'<1$ and put $s=1-q'$. If $q_\pm\ge q'$, then
+\begin{equation}\label{eq:loss}
+ 1-\alpha\le s(q_++q_-)+(q')^2.
+\end{equation}
+If both $q_\pm<1$, expand the product and use
+$(q_+-q')(q_--q')\ge0$. If either is at least one, then
+$q_++q_-\ge1+q'$ and the right side is at least one.
+For the cofactor, on a good extension one has
+$0\le\delta_\pm\le s$. Therefore
+$(s-\delta_+)(s-\delta_-)\ge0$, or
+\begin{equation}\label{eq:coupling}
+ (\delta_++\delta_-)\mathbf1_{\{\delta_\pm>0\}}
+ \le s+\alpha/s.
+\end{equation}
+This is also true on nongood extensions, where the left side is zero.
+On any exceptional event where the assumption $q_\pm\ge q'$ is
+unavailable, add one to the right side of~\eqref{eq:loss}, and two to
+the right side of~\eqref{eq:coupling}. These additions suffice because
+the loss is at most one and the good-extension cofactor is at most
+two. In particular, there is no unbounded resolvent multiplied by an
+exceptional-event indicator.
+\end{proof}
+
+\section{Proof of Theorem~\ref{thm:main}}\label{sec:induction}
+
+\begin{proof}
+
+Choose a number $\varepsilon>0$ such that
+\[
+ D_*:=a^2-a\varepsilon x>x.
+\]
+Such a choice exists because $a^2-x=a(2a-1)>0$.
+For example $\varepsilon=(a^2-x)/(2ax)$ works.
+Set $c_0=D_*/2$, and choose $\eta>0$ sufficiently small that, with
+\[
+ \kappa=\eta\varepsilon x+\eta^2+\eta,
+\]
+both
+\begin{equation}\label{eq:parameters}
+ \kappa\le D_*/2,\qquad
+ \kappa(1/a+\varepsilon)+3\eta
+ \le\varepsilon(D_*-x)
+\end{equation}
+hold. Finally choose $d$ large enough for Lemma~\ref{lem:lower-q}
+with these fixed $x,c_0,\eta$.
+
+We prove simultaneously for every graph $H$ of maximum degree at
+most $d$ that
+\begin{equation}\label{eq:invariants}
+ Z_H>0,\qquad
+ \frac{Z_H}{Z_{H-v}}\ge c_0,\qquad
+ \frac{\mathcal J_H(v)}{Z_H}\le2g_H(v)+\varepsilon
+ \quad(v\in V(H)).
+\end{equation}
+Use strong induction on the number of vertices, starting with the
+empty graph. Fix $H,v$ and set $K=H-v$. Every induced subgraph of
+$K$ satisfies the ratio hypothesis by induction, so
+Lemma~\ref{lem:lower-q} applies. Let $\E_*$ denote expectation under
+$\nu_K$ and independent incident signs. Set
+\[
+ q=1-r_H(v),\quad r=1-q,\quad
+ q'=\max(q-\eta,0),\quad t=q-q'\in[0,\eta],\quad s=1-q'=r+t.
+\]
+The event $E=\{q_\pm\ge q'\}$ has probability at least $1-\eta$.
+Moreover, by independent incident signs and the cofactor invariant
+on $K$,
+\begin{align}
+ \E_*S
+ &=\frac1Q\sum_{u\in N_H(v)}\frac{\mathcal J_K(u)}{Z_K}
+ \nonumber\\
+ &\le\frac1Q\sum_{u\in N_H(v)}(2g_K(u)+\varepsilon)
+ =2q+\varepsilon h,\qquad h=\deg_H(v)/Q\le x.
+ \label{eq:mean-S}
+\end{align}
+Using~\eqref{eq:loss} on $E$ and adding $\mathbf1_{E^c}$ elsewhere
+gives
+\begin{align*}
+ f:=\frac{Z_H}{Z_K}=\E_*\alpha
+ &\ge1-s(2q+\varepsilon h)-(q-t)^2-\eta\\
+ &=r^2-r\varepsilon h-t\varepsilon h-t^2-\eta\\
+ &\ge r^2-r\varepsilon h-\kappa.
+\end{align*}
+Since $D_*>x$ implies $\varepsilon x<a$, the function
+$r\mapsto r^2-r\varepsilon x$ is increasing for $r\ge a$.
+Thus
+\begin{equation}\label{eq:f-lower}
+ f\ge D_*-\kappa\ge c_0>0.
+\end{equation}
+This proves positivity and all required deletion-ratio bounds.
+
+For the cofactor, apply~\eqref{eq:coupling} on $E$ and add
+$2\mathbf1_{E^c}$ elsewhere. Using~\eqref{eq:star},
+\[
+ \frac{\mathcal J_H(v)}{Z_K}
+ \le s+\frac f s+2\eta,
+ \qquad
+ \frac{\mathcal J_H(v)}{Z_H}
+ \le\frac1r+\frac{r+3\eta}{f}.
+\]
+Consequently~\eqref{eq:f-lower} and~\eqref{eq:parameters} give
+\begin{align*}
+ \frac{\mathcal J_H(v)}{Z_H}-\frac2r
+ &\le\frac{(r^2-f)/r+3\eta}{f}\\
+ &\le\frac{\varepsilon h+\kappa/r+3\eta}{f}\\
+ &\le\frac{\varepsilon x+\kappa/a+3\eta}{D_*-\kappa}
+ \le\varepsilon.
+\end{align*}
+This closes~\eqref{eq:invariants}.
+Since $v$ was arbitrary, the induction is complete.
+
+Positive $Z_H$ implies that some signing has positive weight, and
+therefore norm strictly less than $R=\sqrt{d/x}$.
+Given $\gamma>0$, take $x=(2+\gamma)^{-2}<1/4$.
+This proves Theorem~\ref{thm:main}.
+\end{proof}
+
+
+\section{A quantitative error term}\label{sec:rate}
+
+\begin{proof}[Proof of Theorem~\ref{thm:rate}]
+Put $s=\sqrt{1-4x}$ and restrict to $0<s\le1/2$. Thus
+$x=(1-s^2)/4$, $a=(1+s)/2$, and $x=a(1-a)$.
+Choose the auxiliary parameters exactly as follows:
+\[
+ \varepsilon=\frac{a^2-x}{2ax}=\frac{s}{2x},\qquad
+ D_*=\frac a2,\qquad c_0=\frac a4\ge\frac18,\qquad
+ \eta=\frac{s^2}{100}.
+\]
+These choices satisfy~\eqref{eq:parameters}. Indeed,
+$\varepsilon x=s/2\le1/4$ and $\eta\le1/400$, so
+\[
+ \kappa=\eta(1+\varepsilon x)+\eta^2
+ \le\frac{501}{400}\eta.
+\]
+Also $1/a\le2$, $\varepsilon\le4/3$, and consequently
+\[
+ \kappa(1/a+\varepsilon)+3\eta
+ \le\frac{287}{40}\eta
+ =\frac{287}{4000}s^2
+ <\frac{s^2}{2}
+ \le\frac{as^2}{4x}
+ =\varepsilon(D_*-x).
+\]
+Finally, $\kappa\le501/160000<1/8\le D_*/2$.
+
+We next make the degree threshold explicit. In
+Lemma~\ref{lem:moments}, uniformly for $x\le1/4$ and $c_0\ge1/8$,
+\[
+ \sqrt{2x/c_0}\le2,\qquad
+ x(1+c_0^{-1/2})\le\frac{1+\sqrt8}{4}<1.
+\]
+Hence the recursive constants satisfy
+\[
+ C_j\le2(j-1)+\sum_{\ell=0}^{j-2}C_\ell,\qquad C_0=C_1=0.
+\]
+Induction gives $C_j\le2^j$: using the bounds for lower indices, the
+right side is at most $2(j-1)+2^{j-1}-1\le2^j$ for $j\ge2$.
+Thus, for $m\ge1$,
+\[
+ B_m\le\sqrt2\,m+\frac{4^m-1}{4}\le4^m.
+\]
+For the last inequality, use $m\le4^{m-1}$ and $1+\sqrt2<4$.
+
+Choose
+\begin{equation}\label{eq:explicit-m}
+ m=\left\lceil
+       \frac{\log(100/s^4)}{-\log(1-s^2)}
+    \right\rceil.
+\end{equation}
+Then $(4x)^m=(1-s^2)^m\le s^4/100$, so the reference tail in
+Lemma~\ref{lem:lower-q} is at most
+\[
+ \frac{x(4x)^m}{1-4x}\le\frac{s^2}{400}<\frac{\eta}{2}.
+\]
+The exceptional probability is at most
+$8\cdot16^m/(Q\eta^2)$, and is therefore at most $\eta$ whenever
+\begin{equation}\label{eq:explicit-Q}
+ Q\ge \frac{8\cdot10^6\,16^m}{s^6}.
+\end{equation}
+All the hypotheses of the preceding induction then hold.
+
+Take $x=(2+\gamma)^{-2}$ with $\gamma>0$ sufficiently small.
+Since $s^2\asymp\gamma$, equations~\eqref{eq:explicit-m}
+and~\eqref{eq:explicit-Q} show that a sufficient degree threshold
+can be chosen with
+\begin{equation}\label{eq:d-threshold}
+ \log d_0(\gamma)
+ \le K\gamma^{-1}\log(1/\gamma)
+\end{equation}
+for an absolute constant $K$ and all sufficiently small $\gamma$.
+Here one may take the integer ceiling of $x$ times the right side
+of~\eqref{eq:explicit-Q} as the degree threshold.
+
+Choose an absolute $C>K$ and set
+$\gamma=C\log\log d/\log d$. For sufficiently large $d$,
+$\log(1/\gamma)\le\log\log d$, and therefore
+\[
+ K\gamma^{-1}\log(1/\gamma)
+ \le(K/C)\log d<\log d.
+\]
+Thus $d\ge d_0(\gamma)$, and Theorem~\ref{thm:main} gives the
+claimed quantitative bound.
+\end{proof}
+
+\section{Scope and dependence of the estimates}
+
+\subsection{Uniformity in graph order}
+The moment constants recurse in moment degree, not graph order.
+For fixed $x<1/4$, the path-tree series has a uniform geometric tail,
+so only finitely many moments are needed. The single-vertex
+partition-function ratios stay above a fixed $c_0>0$ throughout the
+induction. The order of parameter choices is
+$x$, then $\varepsilon,c_0$, then $\eta$, then the truncation degree,
+then $d_0$. No parameter depends on the number of vertices.
+
+\subsection{Role of the cofactor coupling}
+Replacing~\eqref{eq:coupling} by the weaker bound
+$\delta_++\delta_-\le2s$ would lose the term $\alpha/s$.
+The resulting error recurrence has a factor of two too much near
+the tree threshold. Retaining $\alpha$ permits the stability margin
+$a^2-x>0$ for every $x<1/4$.
+
+
+
+\subsection{Existence and limitations}
+
+The argument proves positivity of a finite partition function; it
+does not give an efficient method to sample the weighted measure
+or compute its deletion ratios. Accordingly, the result here is
+an existence theorem, with no polynomial-time algorithm asserted.
+The degree threshold obtained from~\eqref{eq:explicit-Q} is very
+large, and no effort has been made to optimize it.
+The conclusion concerns the regime $d\to\infty$ and does not
+assert the exact bound $2\sqrt{d-1}$ at fixed degree.
+
+\begin{thebibliography}{9}
+
+\bibitem{BL}
+Y. Bilu and N. Linial,
+\emph{Lifts, discrepancy and nearly optimal spectral gap},
+Combinatorica \textbf{26} (2006), no.~5, 495--519.
+\url{https://doi.org/10.1007/s00493-006-0029-7}.
+
+\bibitem{JSS}
+A. Jadbabaie, A. Saberi, and S. Sra,
+\emph{Kadison--Singer partitions and Bilu--Linial graph signings
+in polynomial time},
+arXiv:2609.23855 (2026).
+\url{https://arxiv.org/abs/2609.23855}.
+
+\bibitem{LZ}
+F. Lin and H. Zhou,
+\emph{Improved bounds for the Bilu--Linial conjecture via spectral
+recovery from mixed determinantal polynomials},
+arXiv:2609.15715 (2026).
+\url{https://arxiv.org/abs/2609.15715}.
+
+\bibitem{MSS}
+A. W. Marcus, D. A. Spielman, and N. Srivastava,
+\emph{Interlacing families I: Bipartite Ramanujan graphs of all degrees},
+Annals of Mathematics (2) \textbf{182} (2015), no.~1, 307--325.
+\url{https://arxiv.org/abs/1304.4132}.
+
+\bibitem{RS}
+M. Ravichandran and N. Srivastava,
+\emph{Asymptotically optimal multi-paving},
+International Mathematics Research Notices \textbf{2021} (2021),
+no.~14, 10908--10940.
+\url{https://doi.org/10.1093/imrn/rnz111}.
+
+\bibitem{Xu}
+Z. Xu,
+\emph{A $3$-regular counterexample to the Bilu--Linial signing
+conjecture},
+arXiv:2609.15591 (2026).
+\url{https://arxiv.org/abs/2609.15591}.
+
+\end{thebibliography}
+\end{document}
